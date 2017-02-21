@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>RyWebChat.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A11CFA271E54695700AFBCE1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A12145661E546BCE0037DBC0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A12A11421E556FF800100325</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A1431F361E4C0A6A001BF142</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A166C68F1E559EB200B70552</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A168FC2E1E54621E00A313AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A17FD9CF1E557BF00041C2F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A17FD9F41E5586700041C2F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A17FDA231E5588090041C2F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

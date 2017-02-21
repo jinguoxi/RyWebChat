@@ -1,0 +1,13 @@
+//
+//  RyChat-PrefixHeader.pch
+//  RyWebChat
+//
+//  Created by nwk on 2017/2/15.
+//  Copyright © 2017年 nwkcom.sh.n22. All rights reserved.
+//
+
+#ifndef RyChat_PrefixHeader_pch
+#define RyChat_PrefixHeader_pch
+
+
+#endif /* RyChat_PrefixHeader_pch */

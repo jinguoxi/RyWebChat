@@ -16,7 +16,7 @@
 #import "MASatisfactionView.h"
 
 #define MACLIENTSERVERADDR @"http://118.242.18.190/webchat" //服务器地址
-//#define MACLIENTSERVERADDR @"http://192.168.2.80.8980/webchat" //服务器地址
+//#define MACLIENTSERVERADDR @"http://192.168.2.80:8980/webchat" //服务器地址
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userName;

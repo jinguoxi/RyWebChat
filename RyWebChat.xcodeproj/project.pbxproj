@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		538B085534BBA9D5974F50E3 /* libPods-RyWebChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2D949C3E5F6BEDA70379934 /* libPods-RyWebChat.a */; };
+		A123A4D21E5D7A0E00B19948 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = A123A4D11E5D7A0E00B19948 /* UIPlaceHolderTextView.m */; };
 		A1431F3C1E4C0A6A001BF142 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1431F3B1E4C0A6A001BF142 /* main.m */; };
 		A1431F3F1E4C0A6A001BF142 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A1431F3E1E4C0A6A001BF142 /* AppDelegate.m */; };
 		A1431F421E4C0A6A001BF142 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1431F411E4C0A6A001BF142 /* ViewController.m */; };
@@ -49,9 +50,6 @@
 		A1CFF3F81E5AEFB000846381 /* MABaiduAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A1CFF3F71E5AEFB000846381 /* MABaiduAnnotation.m */; };
 		A1CFF3FB1E5AEFE700846381 /* UIView+MARect.m in Sources */ = {isa = PBXBuildFile; fileRef = A1CFF3FA1E5AEFE700846381 /* UIView+MARect.m */; };
 		A1CFF3FE1E5AF0DC00846381 /* MAChatMsg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A1CFF3FD1E5AF0DC00846381 /* MAChatMsg.bundle */; };
-		A1CFF4021E5AF43900846381 /* MABg_default.png in Resources */ = {isa = PBXBuildFile; fileRef = A1CFF3FF1E5AF43900846381 /* MABg_default.png */; };
-		A1CFF4031E5AF43900846381 /* RadioButton-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A1CFF4001E5AF43900846381 /* RadioButton-Selected.png */; };
-		A1CFF4041E5AF43900846381 /* RadioButton-Unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = A1CFF4011E5AF43900846381 /* RadioButton-Unselected.png */; };
 		A1EDE1861E54490700F9904D /* MARequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A1EDE1851E54490700F9904D /* MARequest.m */; };
 		A1EDE1891E544ADA00F9904D /* MASession.m in Sources */ = {isa = PBXBuildFile; fileRef = A1EDE1881E544ADA00F9904D /* MASession.m */; };
 		A1EDE18C1E544B4E00F9904D /* MAAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = A1EDE18B1E544B4E00F9904D /* MAAgent.m */; };
@@ -80,6 +78,8 @@
 
 /* Begin PBXFileReference section */
 		3902B84CAA24AEBB509DDF6C /* Pods-RyWebChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RyWebChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat.release.xcconfig"; sourceTree = "<group>"; };
+		A123A4D01E5D7A0E00B19948 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		A123A4D11E5D7A0E00B19948 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		A13A0D561E4D9632009E4B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A13A0D571E4D9632009E4B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A1431F371E4C0A6A001BF142 /* RyWebChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RyWebChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,9 +138,6 @@
 		A1CFF3F91E5AEFE700846381 /* UIView+MARect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MARect.h"; sourceTree = "<group>"; };
 		A1CFF3FA1E5AEFE700846381 /* UIView+MARect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MARect.m"; sourceTree = "<group>"; };
 		A1CFF3FD1E5AF0DC00846381 /* MAChatMsg.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MAChatMsg.bundle; sourceTree = "<group>"; };
-		A1CFF3FF1E5AF43900846381 /* MABg_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MABg_default.png; sourceTree = "<group>"; };
-		A1CFF4001E5AF43900846381 /* RadioButton-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RadioButton-Selected.png"; sourceTree = "<group>"; };
-		A1CFF4011E5AF43900846381 /* RadioButton-Unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RadioButton-Unselected.png"; sourceTree = "<group>"; };
 		A1EDE1841E54490700F9904D /* MARequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARequest.h; sourceTree = "<group>"; };
 		A1EDE1851E54490700F9904D /* MARequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MARequest.m; sourceTree = "<group>"; };
 		A1EDE1871E544ADA00F9904D /* MASession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASession.h; sourceTree = "<group>"; };
@@ -337,6 +334,8 @@
 				A1CFF3FA1E5AEFE700846381 /* UIView+MARect.m */,
 				A1CFF3E11E5AC1D500846381 /* MASatisfactionView.h */,
 				A1CFF3E21E5AC1D500846381 /* MASatisfactionView.m */,
+				A123A4D01E5D7A0E00B19948 /* UIPlaceHolderTextView.h */,
+				A123A4D11E5D7A0E00B19948 /* UIPlaceHolderTextView.m */,
 			);
 			name = MAViews;
 			path = MAMessageUtils/MAViews;
@@ -376,9 +375,6 @@
 		A1CFF3FC1E5AF0DC00846381 /* MAResource */ = {
 			isa = PBXGroup;
 			children = (
-				A1CFF3FF1E5AF43900846381 /* MABg_default.png */,
-				A1CFF4001E5AF43900846381 /* RadioButton-Selected.png */,
-				A1CFF4011E5AF43900846381 /* RadioButton-Unselected.png */,
 				A1CFF3FD1E5AF0DC00846381 /* MAChatMsg.bundle */,
 			);
 			path = MAResource;
@@ -520,13 +516,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1CFF4031E5AF43900846381 /* RadioButton-Selected.png in Resources */,
 				A1CFF3FE1E5AF0DC00846381 /* MAChatMsg.bundle in Resources */,
 				A1431F4A1E4C0A6A001BF142 /* LaunchScreen.storyboard in Resources */,
 				A1431F471E4C0A6A001BF142 /* Assets.xcassets in Resources */,
-				A1CFF4021E5AF43900846381 /* MABg_default.png in Resources */,
 				A1431F451E4C0A6A001BF142 /* Main.storyboard in Resources */,
-				A1CFF4041E5AF43900846381 /* RadioButton-Unselected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +595,7 @@
 				A1EDE1891E544ADA00F9904D /* MASession.m in Sources */,
 				A1F3995E1E5419A10082D513 /* MAMessageUtils.m in Sources */,
 				A1EDE1861E54490700F9904D /* MARequest.m in Sources */,
+				A123A4D21E5D7A0E00B19948 /* UIPlaceHolderTextView.m in Sources */,
 				A1CFF3F21E5AEEAB00846381 /* MALocationCell.m in Sources */,
 				A1F3995A1E5419A10082D513 /* MAJSONObject.m in Sources */,
 				A1431F8D1E4C16D5001BF142 /* MASessionTimeOut.m in Sources */,

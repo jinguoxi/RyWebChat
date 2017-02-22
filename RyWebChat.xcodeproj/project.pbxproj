@@ -493,7 +493,7 @@
 				TargetAttributes = {
 					A1431F361E4C0A6A001BF142 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = EBW3P2T227;
+						DevelopmentTeam = RT38BC53F3;
 					};
 				};
 			};
@@ -723,14 +723,18 @@
 			baseConfigurationReference = F557F79445B3893E4B491F15 /* Pods-RyWebChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 倪 文康 (4B4RHM3PEZ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
+				DEVELOPMENT_TEAM = RT38BC53F3;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "RyWebChat/RyChat-PrefixHeader.pch";
 				INFOPLIST_FILE = RyWebChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.n22.RyWebChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elitecrm.webchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "10922c98-1d37-4e92-b0a0-491e9c55c2cd";
+				PROVISIONING_PROFILE = "fb9e8713-6d4a-4c20-be1c-ea20128986a0";
+				PROVISIONING_PROFILE_SPECIFIER = DistributionRCClient;
 			};
 			name = Debug;
 		};
@@ -739,15 +743,18 @@
 			baseConfigurationReference = 3902B84CAA24AEBB509DDF6C /* Pods-RyWebChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 倪 文康 (4B4RHM3PEZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 倪 文康 (4B4RHM3PEZ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
+				DEVELOPMENT_TEAM = RT38BC53F3;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "RyWebChat/RyChat-PrefixHeader.pch";
 				INFOPLIST_FILE = RyWebChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.n22.RyWebChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elitecrm.webchat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "10922c98-1d37-4e92-b0a0-491e9c55c2cd";
+				PROVISIONING_PROFILE = "fb9e8713-6d4a-4c20-be1c-ea20128986a0";
+				PROVISIONING_PROFILE_SPECIFIER = DistributionRCClient;
 			};
 			name = Release;
 		};

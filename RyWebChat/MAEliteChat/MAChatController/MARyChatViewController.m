@@ -348,10 +348,12 @@
     extra[@"type"] = @(MARATE_SESSION);
     extra[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
     extra[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
-    extra[@"ratingId"] = @(ratingId);
-    extra[@"ratingComments"] = comment?comment:@"";
+    message.extra = [extra mj_JSONString];
     
-     message.extra = [extra mj_JSONString];
+    NSMutableDictionary *messageDic = [NSMutableDictionary dictionary];
+    messageDic[@"ratingId"] = @(ratingId);
+    messageDic[@"ratingComments"] = comment?comment:@"";
+    message.message = [messageDic mj_JSONString];
     
     [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:self.targetId content:message pushContent:nil pushData:nil success:nil error:nil];
 }

@@ -9,12 +9,6 @@
 #ifndef MAConfig_h
 #define MAConfig_h
 
-//#import "MAFNetworkingTool.h"
-//#import "MAHttpService.h"
-//#import "MAMessageUtils.h"
-
-
-
 //-----websocket消息类型说明
 
 //发送和接收通用消息

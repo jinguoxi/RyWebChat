@@ -7,12 +7,13 @@
 //
 
 #import "MASatisfactionView.h"
+#import "UIPlaceHolderTextView.h"
 
 @interface MASatisfactionView()
 {
     UIButton *radio1Btn;
     UIButton *radio2Btn;
-    UITextView *textView;
+    UIPlaceHolderTextView *textView;
     UIImageView *imageView;
     UIButton *sureBtn;
     UIView *contentView;
@@ -53,7 +54,7 @@
     contentView.clipsToBounds = YES;
     
     bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(contentView.frame), CGRectGetHeight(contentView.frame))];
-    bgImageView.image = [UIImage imageNamed:@"MABg_default"];
+    bgImageView.image = [UIImage imageNamed:@"MAChatMsg.bundle/MABg_default"];
     
     [contentView addSubview:bgImageView];
     
@@ -67,8 +68,8 @@
     radio1Btn.frame = CGRectMake(30, CGRectGetMaxY(title.frame)+10, 100, 40);
     [radio1Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [radio1Btn setTitle:@"满意" forState:UIControlStateNormal];
-    [radio1Btn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-    [radio1Btn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateSelected];
+    [radio1Btn setImage:[UIImage imageNamed:@"MAChatMsg.bundle/RadioButton-Unselected"] forState:UIControlStateNormal];
+    [radio1Btn setImage:[UIImage imageNamed:@"MAChatMsg.bundle/RadioButton-Selected"] forState:UIControlStateSelected];
     [radio1Btn addTarget:self action:@selector(clickRadioButton:) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:radio1Btn];
     
@@ -76,8 +77,8 @@
     radio2Btn.frame = CGRectMake(CGRectGetMaxX(radio1Btn.frame)+20, CGRectGetMaxY(title.frame)+10, 100, 40);
     [radio2Btn setTitle:@"不满意" forState:UIControlStateNormal];
     [radio2Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [radio2Btn setImage:[UIImage imageNamed:@"RadioButton-Unselected"] forState:UIControlStateNormal];
-    [radio2Btn setImage:[UIImage imageNamed:@"RadioButton-Selected"] forState:UIControlStateSelected];
+    [radio2Btn setImage:[UIImage imageNamed:@"MAChatMsg.bundle/RadioButton-Unselected"] forState:UIControlStateNormal];
+    [radio2Btn setImage:[UIImage imageNamed:@"MAChatMsg.bundle/RadioButton-Selected"] forState:UIControlStateSelected];
     [radio2Btn addTarget:self action:@selector(clickRadioButton:) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:radio2Btn];
     
@@ -88,9 +89,10 @@
     imageView.layer.borderWidth = 1;
     [contentView addSubview:imageView];
     
-    textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(imageView.frame)-10, CGRectGetHeight(imageView.frame))];
+    textView = [[UIPlaceHolderTextView alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(imageView.frame)-10, CGRectGetHeight(imageView.frame))];
     textView.font = [UIFont systemFontOfSize:17];
     textView.backgroundColor = [UIColor clearColor];
+    textView.placeholder = @"请输入不满意的原因";
     imageView.userInteractionEnabled = YES;
     [imageView addSubview:textView];
     
@@ -156,6 +158,21 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     [textView resignFirstResponder];
+}
+
+//隐藏键盘，实现UITextViewDelegate
+
+-(BOOL)textView:(UITextView *)textView1 shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text {
+    
+    if ([text isEqualToString:@"\n"]) {
+        
+        [textView resignFirstResponder];
+        
+        return NO;
+    }
+    
+    return YES;
+    
 }
 
 @end

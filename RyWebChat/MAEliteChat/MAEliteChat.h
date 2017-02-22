@@ -31,6 +31,16 @@ static NSString *CHAT_TARGET_ID = @"EliteCRM";
  */
 - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId complete:(void (^)(BOOL result))complete;
 /**
+ * 初始化EliteChat， 并且启动聊天
+ * @param serverAddr EliteWebChat服务地址
+ * @param userId 用户登录id
+ * @param name 用户名
+ * @param portraitUri 用户头像uri
+ * @param complete 回调
+ * @param ngs 坐席头像地址前缀
+ */
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete;
+/**
  * 初始化EliteChat
  * @param serverAddr EliteWebChat服务地址
  * @param userId 用户登录id
@@ -38,6 +48,15 @@ static NSString *CHAT_TARGET_ID = @"EliteCRM";
  * @param portraitUri 用户头像uri
  */
 - (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId;
+/**
+ * 初始化EliteChat
+ * @param serverAddr EliteWebChat服务地址
+ * @param userId 用户登录id
+ * @param name 用户名
+ * @param portraitUri 用户头像uri
+ * @param ngs 坐席头像地址前缀
+ */
+- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr;
 /**
  * 启动聊天
  * @param complete 回调

@@ -69,16 +69,16 @@ NSString * getContentTypeForPath(NSURL *url){
     
     NSLog(@"请求路径：%@",name);
     
-    NSURLSessionDataTask *dataTask = [manager POST:name parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+    NSURLSessionDataTask *dataTask = [manager POST:name parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
-            successBlock(resultsDictionary);
+            successBlock(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failedBlock) {
             failedBlock(error);
         }
     }];
+    
     if (dataTask) {
         [[MAFNetworkingTool sharedAFNHttp].operations addObject:@{name:dataTask}];
     }
@@ -101,18 +101,16 @@ NSString * getContentTypeForPath(NSURL *url){
     
     [mgr setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
-    [mgr POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
+    [mgr POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [formData appendPartWithFileURL:[NSURL fileURLWithPath:filePath] name:@"fileToUpload" error:nil];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-    } success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
         if (successBlock) {
             successBlock(resultsDictionary);
         }
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (faileBlock) {
             faileBlock(error);
         }

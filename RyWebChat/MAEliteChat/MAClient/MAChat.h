@@ -16,7 +16,6 @@
 @interface MAChat : NSObject
 
 @property (strong, nonatomic, readonly) NSString *tokenStr;
-@property (strong, nonatomic, readonly) NSArray *agents;
 
 + (instancetype)getInstance;
 
@@ -24,19 +23,17 @@
 - (void)setRequest:(MARequest *)request;
 - (void)setSession:(MASession *)session;
 - (void)setTokenStr:(NSString *)tokenStr;
-- (void)setAgents:(NSArray *)agents;
 
+- (MAClient *)getClient;
+- (MASession *)getSession;
 - (long)getRequestId;
 - (long)getSessionId;
-- (MAClient *)getClient;
-- (MAAgent *)getCurrentAgent;
-- (NSDictionary *)getAgentWithId:(NSString *)agentId;
 /**
  *  更新坐席信息
  *
  *  @param agent 坐席信息
  */
-- (void)updateSession:(MAAgent *)agent;
+- (void)updateSession:(MAAgent *)currentAgent;
 /**
  *  保存未发送消息
  *

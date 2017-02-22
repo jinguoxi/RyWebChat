@@ -12,11 +12,12 @@
 @interface MAClient : NSObject
 
 @property (strong, nonatomic, readonly) NSString *serverAddr;
+@property (strong, nonatomic, readonly) NSString *ngsAddr;
 @property (strong, nonatomic, readonly) NSString *userId;
 @property (strong, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) NSString *portraitUri;
 @property (strong, nonatomic, readonly) NSString *tokenStr;
 
-+ (instancetype)initWithServerAddr:(NSString *)serverAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri;
++ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri;
 
 @end

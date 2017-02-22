@@ -11,6 +11,7 @@
 @interface MAClient()
 
 @property (strong, nonatomic, readwrite) NSString *serverAddr;
+@property (strong, nonatomic, readwrite) NSString *ngsAddr;
 @property (strong, nonatomic, readwrite) NSString *userId;
 @property (strong, nonatomic, readwrite) NSString *name;
 @property (strong, nonatomic, readwrite) NSString *portraitUri;
@@ -20,10 +21,11 @@
 
 @implementation MAClient
 
-+ (instancetype)initWithServerAddr:(NSString *)serverAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri {
++ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri {
     MAClient *client = [[MAClient alloc] init];
     
     client.serverAddr = serverAddr;
+    client.ngsAddr = ngsAddr;
     client.name = name;
     client.userId = userId;
     client.portraitUri = portraitUri;

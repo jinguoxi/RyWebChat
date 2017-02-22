@@ -11,9 +11,9 @@
 
 @interface MASession : NSObject
 
-@property (strong, nonatomic) MAAgent *agent;
+@property (strong, nonatomic) MAAgent *currentAgent;
 @property (assign, nonatomic) long sessionId;
 
-+ (instancetype)initWithSessionId:(long)sessionId agent:(MAAgent *)agent;
++ (instancetype)initWithSessionId:(long)sessionId agent:(MAAgent *)currentAgent;
 
 @end

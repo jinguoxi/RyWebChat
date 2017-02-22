@@ -37,7 +37,6 @@
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
     
     [[MAEliteChat shareEliteChat] sendQueueRequest];
-    
 }
 
 //小灰色提示条
@@ -79,14 +78,6 @@
         
         [self parseMessage:infoMsg.message rcMsg:message];
 
-    } else if ([message.content isKindOfClass:[RCTextMessage class]]) {
-        
-        RCTextMessage *textMsg = (RCTextMessage *)message.content;
-        MAJSONObject *json = [MAJSONObject initJSONObject:textMsg.extra];
-        NSString *agentId = [json getString:@"agentId"];
-        message.senderUserId = agentId;
-        [self updateSession:agentId];
-        
     } else if ([message.content isKindOfClass:[EliteMessage class]]) {
         EliteMessage *eliteMsg = (EliteMessage *)message.content;
 
@@ -96,14 +87,24 @@
     }
 }
 /**
- *  更新session
- *
- *  @param agentId 坐席ID
+ *  刷新用户信息，更新session
  */
-- (void)updateSession:(NSString *)agentId {
-    NSDictionary *dic = [[MAChat getInstance] getAgentWithId:agentId];
-    MAAgent *agent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
-    [[MAChat getInstance] updateSession:agent];
+- (void)refreshUserInfoSession {
+    MASession *session = [[MAChat getInstance] getSession];
+    
+    NSString *icon = session.currentAgent.portraitUri;
+    if (icon && ![icon isEqualToString:@""]) {
+        NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
+        
+        icon = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:icon];
+    }
+    
+    session.currentAgent.portraitUri = icon;
+    
+    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:self.targetId];
+    userInfo.name = session.currentAgent.name;
+    userInfo.portraitUri = icon;
+    [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:self.targetId];
 }
 
 -(BOOL)onRCIMCustomAlertSound:(RCMessage*)message {
@@ -233,14 +234,15 @@
             
             NSDictionary *dic = agents.firstObject;
             
-            MAAgent *agent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
+            MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
             
-            MASession *session = [MASession initWithSessionId:sessionId agent:agent];
+            MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent];
             
             [[MAChat getInstance] setSession:session];
-            [[MAChat getInstance] setAgents:[json getObject:@"agents"]];
             
-            NSString *tipsMsg = [NSString stringWithFormat:@"坐席[%@]为您服务",agent.name];
+            [self refreshUserInfoSession];
+            
+            NSString *tipsMsg = [NSString stringWithFormat:@"坐席[%@]为您服务",currentAgent.name];
             [self addTipsMessage:tipsMsg];
             
             [self sendUnsendMessages];
@@ -252,8 +254,16 @@
             
             break;
         case MAAGENT_UPDATED://坐席人员变更
+        {
             NSLog(@"坐席人员变更");
+            NSArray *agents = [json getObject:@"agents"];
+            NSDictionary *dic = agents.firstObject;
+            MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
             
+            [[MAChat getInstance] updateSession:currentAgent];
+            
+            [self refreshUserInfoSession];
+        }
             break;
         case MAAGENT_CLOSE_SESSION://坐席关闭
             NSLog(@"坐席关闭");
@@ -276,6 +286,10 @@
                     RCMessage *message = [[RCMessage alloc] initWithType:self.conversationType targetId:self.targetId direction:rcMsg.messageDirection messageId:rcMsg.messageId content:textMsg];
                     
                     [self appendAndDisplayMessage:message];
+                } else if (noticeType == MATRANSFER_NOTICE || noticeType == MAINVITE_NOTICE) {
+                    NSString *content = [msgDic getString:@"content"];
+                    
+                    [self addTipsMessage:content];
                 }
             }
         }

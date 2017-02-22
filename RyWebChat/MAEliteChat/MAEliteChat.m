@@ -48,13 +48,13 @@ static MAEliteChat *eliteChat=nil;
 
 - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId complete:(void (^)(BOOL result))complete {
     
-    MAClient *client = [MAClient initWithServerAddr:serverAddr name:name userId:userId portraitUri:portraitUri];
+    [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil complete:complete];
+    
+}
 
-    [[MAChat getInstance] setClient:client];
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete {
     
-    self.queueId = queueId;
-    
-    self.initialized = YES;
+    [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr];
     
     [self startChat:complete];
     
@@ -62,7 +62,21 @@ static MAEliteChat *eliteChat=nil;
 
 - (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId {
     
-    MAClient *client = [MAClient initWithServerAddr:serverAddr name:name userId:userId portraitUri:portraitUri];
+    [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil];
+}
+
+- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr {
+    
+    if (isEliteEmpty(ngsAddr)) {
+        NSString *lastPath = [serverAddr lastPathComponent];
+        NSRange range = [serverAddr rangeOfString:lastPath];
+        NSString *ipStr = [serverAddr substringToIndex:range.location-1];
+        ngsAddr = [ipStr stringByAppendingPathComponent:@"ngs"];
+    }
+    
+    serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
+    
+    MAClient *client = [MAClient initWithServerAddr:serverAddr ngsAddr:ngsAddr name:name userId:userId portraitUri:portraitUri];
     
     [[MAChat getInstance] setClient:client];
     
@@ -98,7 +112,7 @@ static MAEliteChat *eliteChat=nil;
     
     NSLog(@"----%@",userId);
     
-    MAAgent *agent = [[MAChat getInstance] getCurrentAgent];
+    MAAgent *agent = [[MAChat getInstance] getSession].currentAgent;
     
     RCUserInfo *user = [[RCUserInfo alloc] initWithUserId:agent.userId name:agent.name portrait:agent.portraitUri];
     

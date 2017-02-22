@@ -1,0 +1,42 @@
+# xcode noise .gitignore
+
+build/
+*.pbxuser
+xcuserdata/
+*.xccheckout
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+
+.svn
+
+# osx noise
+.DS_Store
+profile
+*.apk
+*.ipa
+*.tmp
+Thumbs.db
+~
+
+# AppCode noise
+.idea/
+
+# src noise .gitignore
+
+CVS
+.svn
+
+
+Output
+build.xml
+classes
+bin
+target
+R.java
+xcschememanagement.plist
+
+.settings
+.classpath
+.mymetadata
+.project
+

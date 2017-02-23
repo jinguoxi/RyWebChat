@@ -22,6 +22,7 @@
 {
     BOOL isFirstLocation;
     BOOL touchAddressCell;
+    UIButton *rightBtn;
 }
 @property(nonatomic,strong)BMKMapView* mapView;
 @property(nonatomic,strong)BMKLocationService* locService;
@@ -58,7 +59,7 @@
 
 - (UINavigationBar *)navBar {
     if (!_navBar) {
-        _navBar = [[UINavigationBar alloc]initWithFrame:CGRectZero];
+        _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 64)];
         //创建一个item
         UINavigationItem *item = [[UINavigationItem alloc]initWithTitle:@"位置"];
         _navBar.items = @[item];
@@ -68,18 +69,18 @@
         [leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         leftBtn.titleLabel.font = [UIFont systemFontOfSize:17];
         [leftBtn addTarget:self action:@selector(closeEvent) forControlEvents:UIControlEventTouchUpInside];
-        leftBtn.width = 50;
-        leftBtn.height = 50;
+        leftBtn.width = 64;
+        leftBtn.height = 64;
         item.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
         
-        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [rightBtn setTitle:@"发送" forState:UIControlStateNormal];
         [rightBtn setTitleColor:[UIColor colorWithRed:0.1563 green:0.8748 blue:0.0972 alpha:1.0] forState:UIControlStateNormal];
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:17];
         [rightBtn addTarget:self action:@selector(sendEvent) forControlEvents:UIControlEventTouchUpInside];
-        rightBtn.width = 50;
-        rightBtn.height = 50;
-        
+        rightBtn.width = 64;
+        rightBtn.height = 64;
+        rightBtn.hidden = YES;
         item.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     }
     
@@ -93,18 +94,9 @@
 //发送
 - (void)sendEvent {
     
-//    if ([self.delegate respondsToSelector:@selector(sendlocation:title:detail:image:)]) {
-//        if (self.dataSource.count<1||!self.currentSelectLocationIndex||self.dataSource.count<=self.currentSelectLocationIndex) {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"定位失败！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//            [alert show];
-//        }else{
-            BMKPoiInfo *model=[self.dataSource objectAtIndex:self.currentSelectLocationIndex];
-            
-            [self.delegate sendlocation:model.pt title:model.name detail:model.address image:[self getMapImage]];
-//        }
-//    }
-//    
-//    
+    BMKPoiInfo *model=[self.dataSource objectAtIndex:self.currentSelectLocationIndex];
+    
+    [self.delegate sendlocation:model.pt title:model.name detail:model.address image:[self getMapImage]];
     
     [self closeEvent];
 }
@@ -125,56 +117,29 @@
 
 -(void)configUI
 {
-    WS(ws);
-    
     [self.view addSubview:self.navBar];
-    
-    [self.navBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.and.left.and.right.equalTo(ws.view);
-        make.height.mas_equalTo(64);
-    }];
-    
+
     [self.view addSubview:self.mapView];
-    
-    [self.mapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws.view.mas_left);
-        make.right.equalTo(ws.view.mas_right);
-        make.top.equalTo(ws.navBar.mas_top);
-        make.height.equalTo(@kBaiduMapMaxHeight);
-    }];
     
     [self.view addSubview:self.centerCallOutImageView];
     [self.view bringSubviewToFront:self.centerCallOutImageView];
-    [self.centerCallOutImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(self.mapView);
-        make.size.mas_equalTo(CGSizeMake(60,60));
-    }];
+    
+    self.centerCallOutImageView.center = self.mapView.center;
     
     [self.mapView layoutIfNeeded];
     
     [self.view addSubview:self.tableView];
     [self.tableView registerClass:[MALocationCell class]forCellReuseIdentifier:@"MALocationCell"];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mapView.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
-        
-    }];
+    
     
     self.currentLocationBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    
+    self.currentLocationBtn.frame = CGRectMake(20, CGRectGetMaxY(self.mapView.frame)-(kCurrentLocationBtnWH+20), kCurrentLocationBtnWH, kCurrentLocationBtnWH);
     [self.currentLocationBtn setImage:[UIImage imageNamed:MAChatMsgBundleName(@"location_back_icon")]forState:UIControlStateNormal];
     [self.currentLocationBtn setImage:[UIImage imageNamed:MAChatMsgBundleName(@"location_blue_icon")]forState:UIControlStateSelected];
     [self.currentLocationBtn addTarget:self action:@selector(startLocation) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.currentLocationBtn];
     [self.view bringSubviewToFront:self.currentLocationBtn];
-    [self.currentLocationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(kCurrentLocationBtnWH,kCurrentLocationBtnWH));
-        make.bottom.equalTo(self.mapView.mas_bottom).offset(-10);
-        make.right.equalTo(self.view.mas_right).offset(-10);
-    }];
     
     [self.view bringSubviewToFront:self.navBar];
 }
@@ -360,18 +325,28 @@
         [self.dataSource removeAllObjects];
         [self.dataSource addObjectsFromArray:result.poiList];
         
-        if (isFirstLocation)
-        {
-            //把当前定位信息自定义组装放进数组首位
-            BMKPoiInfo *first =[[BMKPoiInfo alloc]init];
-            first.address=result.address;
-            first.name=@"[当前位置]";
-            first.pt=result.location;
-            first.city=result.addressDetail.city;
-            [self.dataSource insertObject:first atIndex:0];
+//        if (isFirstLocation)
+//        {
+//            //把当前定位信息自定义组装放进数组首位
+//            BMKPoiInfo *first =[[BMKPoiInfo alloc]init];
+//            first.address=result.address;
+//            first.name=@"[当前位置]";
+//            first.pt=result.location;
+//            first.city=result.addressDetail.city;
+//            [self.dataSource insertObject:first atIndex:0];
+//        }
+        
+        
+        if (self.dataSource && self.dataSource.count) {
+            //TODO 显示发送按钮
+            rightBtn.hidden = NO;
+            
+            self.currentSelectLocationIndex = 0;
+            [self.tableView reloadData];
+            
+        } else {
+            rightBtn.hidden = YES;
         }
-        self.currentSelectLocationIndex = 0;
-        [self.tableView reloadData];
     }
 }
 
@@ -410,14 +385,13 @@
     self.currentSelectLocationIndex=indexPath.row;
     [self.tableView reloadData];
 }
-
 #pragma mark - InitMethod
 
 -(BMKMapView*)mapView
 {
     if (_mapView==nil)
     {
-        _mapView =[BMKMapView new];
+        _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navBar.frame), CGRectGetWidth(self.view.frame), kBaiduMapMaxHeight)];
         _mapView.zoomEnabled=YES;
         _mapView.zoomEnabledWithTap=NO;
         _mapView.zoomLevel=17;
@@ -446,7 +420,7 @@
 {
     if (_tableView==nil)
     {
-        _tableView=[UITableView new];
+        _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mapView.frame), CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)-CGRectGetMaxY(self.mapView.frame)) style:UITableViewStylePlain];
         _tableView.delegate=self;
         _tableView.dataSource=self;
         
@@ -458,7 +432,7 @@
 {
     if (_centerCallOutImageView==nil)
     {
-        _centerCallOutImageView=[UIImageView new];
+        _centerCallOutImageView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
         [_centerCallOutImageView setImage:[UIImage imageNamed:MAChatMsgBundleName(@"pin_red_point")]];
     }
     return _centerCallOutImageView;

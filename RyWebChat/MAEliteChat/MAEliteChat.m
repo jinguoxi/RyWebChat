@@ -136,7 +136,7 @@ static MAEliteChat *eliteChat=nil;
         [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
             NSLog(@"---%@",userId);
             
-            [self loginSuccess:@"张三" userId:userId portrait:portraitUri token:token];
+            [self loginSuccess:nickName userId:userId portrait:portraitUri token:token];
             
             complete(token);
             

@@ -340,6 +340,9 @@
             extra[@"poi"] = [message.contentDic getString:@"poi"];
             extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
             extra[@"messageType"] = @(MALOCATION);
+            if(self.mapType == MAMAPTYPE_Baidu){
+                extra[@"map"] = @"baidu";
+            }
         }
         
         messageContent.extra = [extra mj_JSONString];
@@ -434,7 +437,8 @@
 
 -(void)sendlocation:(CLLocationCoordinate2D)coordinate title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     RCLocationMessage *locationMessage = [RCLocationMessage messageWithLocationImage:image location:coordinate locationName:title];
-    locationMessage.extra = [MAMessageUtils getTextMessageJsonStr];
+    BOOL isBaiduMapType = self.mapType == MAMAPTYPE_Baidu;
+    locationMessage.extra = [MAMessageUtils getLocationMessageJsonStr : &isBaiduMapType];
     
     [[RCIM sharedRCIM] sendMessage:self.conversationType targetId:self.targetId content:locationMessage pushContent:nil pushData:nil success:nil error:nil];
 }

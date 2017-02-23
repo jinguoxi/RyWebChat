@@ -28,4 +28,10 @@
  *  @param msg 消息对象
  */
 + (NSString *)getVoiceMessageJsonStr:(long long)duration;
+/**
+ *  发送位置消息
+ *
+ *  @param msg 消息对象
+ */
++ (NSString *)getLocationMessageJsonStr:(BOOL *) isBaidyMapType;
 @end

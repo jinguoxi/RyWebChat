@@ -8,6 +8,10 @@
 	<string>客服</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -35,6 +39,8 @@
 	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
 	<key>NSLocationWhenInUseDescription</key>
 	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>我们需要通过您的麦克风发送语音消息</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>请求相册权限</string>
 	<key>UILaunchStoryboardName</key>

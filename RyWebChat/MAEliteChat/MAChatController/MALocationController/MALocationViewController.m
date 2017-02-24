@@ -325,31 +325,30 @@
         [self.dataSource removeAllObjects];
         [self.dataSource addObjectsFromArray:result.poiList];
         
-//        if (isFirstLocation)
-//        {
-//            //把当前定位信息自定义组装放进数组首位
-//            BMKPoiInfo *first =[[BMKPoiInfo alloc]init];
-//            first.address=result.address;
-//            first.name=@"[当前位置]";
-//            first.pt=result.location;
-//            first.city=result.addressDetail.city;
-//            [self.dataSource insertObject:first atIndex:0];
-//        }
+        //        if (isFirstLocation)
+        //        {
+        //            //把当前定位信息自定义组装放进数组首位
+        //            BMKPoiInfo *first =[[BMKPoiInfo alloc]init];
+        //            first.address=result.address;
+        //            first.name=@"[当前位置]";
+        //            first.pt=result.location;
+        //            first.city=result.addressDetail.city;
+        //            [self.dataSource insertObject:first atIndex:0];
+        //        }
         
+        
+        self.currentSelectLocationIndex = 0;
+        [self.tableView reloadData];
         
         if (self.dataSource && self.dataSource.count) {
             //TODO 显示发送按钮
             rightBtn.hidden = NO;
-            
-            self.currentSelectLocationIndex = 0;
-            [self.tableView reloadData];
             
         } else {
             rightBtn.hidden = YES;
         }
     }
 }
-
 #pragma mark - TableViewDelegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

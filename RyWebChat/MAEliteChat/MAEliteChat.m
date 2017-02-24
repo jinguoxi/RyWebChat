@@ -23,6 +23,7 @@
 
 @implementation MAEliteChat
 
+
 static MAEliteChat *eliteChat=nil;
 
 + (instancetype)shareEliteChat {

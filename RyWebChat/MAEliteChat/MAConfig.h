@@ -25,7 +25,8 @@ typedef enum {
     MACLOSE_SESSION = 103,//结束聊天
     MARATE_SESSION = 104,//满意度评价
     MASEND_CHAT_MESSAGE = 110,//发送聊天消息
-    MASEND_PRE_CHAT_MESSAGE = 111//发送预消息（还没排完队时候的消息）
+    MASEND_PRE_CHAT_MESSAGE = 111,//发送预消息（还没排完队时候的消息）
+    SEND_CUSTOM_MESSAGE = 199 //发送自定义消息
 }MASocketSendStatus;
 
 //客户接受

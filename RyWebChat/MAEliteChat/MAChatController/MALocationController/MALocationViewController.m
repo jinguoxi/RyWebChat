@@ -64,6 +64,7 @@
         UINavigationItem *item = [[UINavigationItem alloc]initWithTitle:@"位置"];
         _navBar.items = @[item];
         
+        
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [leftBtn setTitle:@"取消" forState:UIControlStateNormal];
         [leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

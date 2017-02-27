@@ -34,4 +34,12 @@
  *  @param msg 消息对象
  */
 + (NSString *)getLocationMessageJsonStr:(BOOL *) isBaidyMapType;
+
+/**
+ * 发送自定义消息
+ * @param message
+ * @return 发送成功还是失败
+ */
++ (BOOL)sendCustomMessage:(NSString *)message;
+
 @end

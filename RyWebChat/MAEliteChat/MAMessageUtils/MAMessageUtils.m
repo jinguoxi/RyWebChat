@@ -45,6 +45,7 @@
         
     }];
 }
+
 /**
  *  发送文本消息
  *
@@ -103,6 +104,27 @@
     }
 
     return [dic mj_JSONString];
+}
+
+/**
+ * 发送自定义消息
+ * @param message
+ * @return 发送成功还是失败
+ */
++ (BOOL)sendCustomMessage:(NSString *)message { 
+    NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
+    extraDic[@"type"] = @(SEND_CUSTOM_MESSAGE);//自定义消息请求
+    extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
+    extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
+    NSString *extra = [extraDic mj_JSONString];
+    EliteMessage *messageContent = [EliteMessage messageWithContent:message];
+    messageContent.extra = extra;
+    [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+        
+    } error:^(RCErrorCode nErrorCode, long messageId) {
+        
+    }];
+    return true;
 }
 
 @end

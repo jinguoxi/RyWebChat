@@ -113,7 +113,7 @@
  */
 + (BOOL)sendCustomMessage:(NSString *)message { 
     NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
-    extraDic[@"type"] = @(SEND_CUSTOM_MESSAGE);//自定义消息请求
+    extraDic[@"type"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
     extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
     extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
     NSString *extra = [extraDic mj_JSONString];

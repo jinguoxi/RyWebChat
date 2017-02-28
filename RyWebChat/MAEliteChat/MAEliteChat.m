@@ -93,18 +93,30 @@ static MAEliteChat *eliteChat=nil;
         NSLog(@"初始化失败");
         complete(NO);
     }
+    RCConnectionStatus status = [[RCIM sharedRCIM] getConnectionStatus];
+    
+    if (status == ConnectionStatus_Connected) {//当前已连接上 无需再次登录
+        
+        self.startChatReady = YES;
+        
+        complete(YES);
+        
+        return;
+    }
     
     [self contentRyTokenService:client.serverAddr userId:client.userId nickName:client.name protrait:client.portraitUri complete:^(NSString *token) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if (isEliteEmpty(token)) {
+                complete(NO);
+            } else {
+                [[MAChat getInstance] setTokenStr:token];
+                
+                self.startChatReady = YES;
+                
+                complete(YES);
+            }
+        });
         
-        if (isEliteEmpty(token)) {
-            complete(NO);
-        } else {
-            [[MAChat getInstance] setTokenStr:token];
-            
-            self.startChatReady = YES;
-            
-            complete(YES);
-        }
     }];
 }
 

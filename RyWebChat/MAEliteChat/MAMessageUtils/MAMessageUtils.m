@@ -111,20 +111,44 @@
  * @param message
  * @return 发送成功还是失败
  */
-+ (BOOL)sendCustomMessage:(NSString *)message { 
++ (BOOL)sendCustomMessage:(NSString *)message {
+    @try {
+        NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
+        extraDic[@"type"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
+        extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
+        extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
+        NSString *extra = [extraDic mj_JSONString];
+        EliteMessage *messageContent = [EliteMessage messageWithContent:message];
+        
+        messageContent.extra = extra;
+        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+        
+        } error:^(RCErrorCode nErrorCode, long messageId) {
+        
+        }];
+        return true;
+    } @catch (NSException *exception) {
+        return false;
+    }
+    return false;
+}
+/**
+ * 获取EliteMessage对象
+ * @param message
+ * @return 返回EliteMessage对象
+ */
++ (EliteMessage *)getCustomMessage:(NSString *)message {
+   
     NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
     extraDic[@"type"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
     extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
     extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
     NSString *extra = [extraDic mj_JSONString];
-    EliteMessage *messageContent = [EliteMessage messageWithContent:message];
+    EliteMessage *messageContent = [EliteMessage messageWithContent:message];   
     messageContent.extra = extra;
-    [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
-        
-    } error:^(RCErrorCode nErrorCode, long messageId) {
-        
-    }];
-    return true;
+    
+    return messageContent;
+    
 }
 
 @end

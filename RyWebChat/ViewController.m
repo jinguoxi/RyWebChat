@@ -14,6 +14,7 @@
 #import "MAClient.h"
 #import "MAEliteChat.h"
 #import "MASatisfactionView.h"
+#import "MAMessageUtils.h"
 
 #define MACLIENTSERVERADDR @"http://118.242.18.190/webchat" //服务器地址
 //#define MACLIENTSERVERADDR @"http://192.168.2.80:8980/webchat" //服务器地址
@@ -63,7 +64,9 @@
         q_id = @"1";
     }
     int parseQueueId = [q_id intValue];
-    [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
+    NSMutableArray *eliteMessages = [NSMutableArray arrayWithObjects: [MAMessageUtils getCustomMessage:@"test CustomerMessage" ],nil];
+    NSLog(@"%@", eliteMessages);
+    [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil eliteMessages:eliteMessages complete:^(BOOL result) {
         if (result) {
             [self switchChatViewController];
             
@@ -78,7 +81,6 @@
 }
 
 - (void)switchChatViewController {
-    
     //新建一个聊天会话View Controller对象,建议这样初始化
     
     MARyChatViewController *chat = [[MARyChatViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:CHAT_TARGET_ID];

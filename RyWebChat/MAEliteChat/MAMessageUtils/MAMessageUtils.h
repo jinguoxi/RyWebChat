@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EliteMessage.h"
 
 @interface MAMessageUtils : NSObject
 /**
@@ -42,4 +43,10 @@
  */
 + (BOOL)sendCustomMessage:(NSString *)message;
 
+/**
+ * 获取EliteMessage对象
+ * @param message
+ * @return 返回EliteMessage对象
+ */
++ (EliteMessage *)getCustomMessage:(NSString *)message ;
 @end

@@ -70,7 +70,7 @@
 }
 
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left {
-    
+    NSLog(@"message.content:%@",message.content);
     if ([message.content isKindOfClass:[RCInformationNotificationMessage class]]) {
         RCInformationNotificationMessage *infoMsg = (RCInformationNotificationMessage *)message.content;
         
@@ -84,8 +84,18 @@
         NSLog(@"---%@",eliteMsg.message);
         
         [self parseMessage:eliteMsg.message rcMsg:message];
+        
+    }else if ([message.content isKindOfClass:[RCFileMessage class]]) {
+        RCFileMessage *fileMsg = (RCFileMessage *)message.content;
+        
+        NSLog(@"localPath---%@",fileMsg.localPath);
+        NSLog(@"extra---%@",fileMsg.extra);
+        NSLog(@"name---%@",fileMsg.name);
+        NSLog(@"type---%@",fileMsg.type);
     }
+
 }
+
 /**
  *  刷新用户信息，更新session
  */
@@ -115,6 +125,7 @@
     
     return YES;
 }
+
 /**
  *  解析消息
  *
@@ -322,29 +333,30 @@
         
         NSMutableDictionary *extra = [NSMutableDictionary dictionary];
         EliteMessage *messageContent = [EliteMessage messageWithContent:content];
-        extra[@"type"] = @(MASEND_CHAT_MESSAGE);
+        
         extra[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
         extra[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
-        
-        if ([message.objectName isEqual:TXT_MSG]) {
-            extra[@"messageType"] = @(MATEXT);
-        } else if ([message.objectName isEqual:IMG_MSG]) {
-            extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
-            extra[@"messageType"] = @(MAIMG);
-        } else if ([message.objectName isEqual:VC_MSG]) {
-            extra[@"length"] = [message.contentDic getString:@"duration"];
-            extra[@"messageType"] = @(MAVOICE);
-        } else if ([message.objectName isEqual:LBS_MSG]) {
-            extra[@"latitude"] = [message.contentDic getString:@"latitude"];
-            extra[@"longitude"] = [message.contentDic getString:@"longitude"];
-            extra[@"poi"] = [message.contentDic getString:@"poi"];
-            extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
-            extra[@"messageType"] = @(MALOCATION);
-            if(self.mapType == MAMAPTYPE_Baidu){
-                extra[@"map"] = @"baidu";
+        if(!([message.objectName isEqual:ELITE_MSG])){
+            extra[@"type"] = @(MASEND_CHAT_MESSAGE);
+            if ([message.objectName isEqual:TXT_MSG]) {
+                extra[@"messageType"] = @(MATEXT);
+            } else if ([message.objectName isEqual:IMG_MSG]) {
+                extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
+                extra[@"messageType"] = @(MAIMG);
+            } else if ([message.objectName isEqual:VC_MSG]) {
+                extra[@"length"] = [message.contentDic getString:@"duration"];
+                extra[@"messageType"] = @(MAVOICE);
+            } else if ([message.objectName isEqual:LBS_MSG]) {
+                extra[@"latitude"] = [message.contentDic getString:@"latitude"];
+                extra[@"longitude"] = [message.contentDic getString:@"longitude"];
+                extra[@"poi"] = [message.contentDic getString:@"poi"];
+                extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
+                extra[@"messageType"] = @(MALOCATION);
+                if(self.mapType == MAMAPTYPE_Baidu){
+                    extra[@"map"] = @"baidu";
+                }
             }
         }
-        
         messageContent.extra = [extra mj_JSONString];
         
         [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:self.targetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {

@@ -42,11 +42,18 @@
  * @return 发送成功还是失败
  */
 + (BOOL)sendCustomMessage:(NSString *)message;
+/*
+* 构造一个自定义消息对象
+* @param message
+* @return
+*/
++ (EliteMessage *)generateCustomMessage:(NSString *) token sessionId:(long) sessionId message:(NSString *) message;
 
 /**
- * 获取EliteMessage对象
- * @param message
- * @return 返回EliteMessage对象
+ * 添加自定义未读消息 在初始化之前，用于传递相关业务数据到前台，比如商品信息
+ * @param message json字符串，自己定义
  */
-+ (EliteMessage *)getCustomMessage:(NSString *)message ;
+
++ (void)addUnsendCustomMessage:(NSString *) message;
+
 @end

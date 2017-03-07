@@ -64,9 +64,7 @@
         q_id = @"1";
     }
     int parseQueueId = [q_id intValue];
-    NSMutableArray *eliteMessages = [NSMutableArray arrayWithObjects: [MAMessageUtils getCustomMessage:@"test CustomerMessage" ],nil];
-    NSLog(@"%@", eliteMessages);
-    [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil eliteMessages:eliteMessages complete:^(BOOL result) {
+    [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
         if (result) {
             [self switchChatViewController];
             

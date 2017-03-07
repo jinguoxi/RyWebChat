@@ -47,11 +47,11 @@ static MAEliteChat *eliteChat=nil;
 
 - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId complete:(void (^)(BOOL result))complete {
     
-    [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil eliteMessages:nil complete:complete];
+    [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil complete:complete];
     
 }
 
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr eliteMessages:(NSMutableArray *) eliteMessages complete:(void (^)(BOOL result))complete {
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete {
     
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr];
     

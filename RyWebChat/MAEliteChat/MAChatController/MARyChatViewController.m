@@ -336,33 +336,37 @@
         
         extra[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
         extra[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
-        if(!([message.objectName isEqual:ELITE_MSG])){
-            extra[@"type"] = @(MASEND_CHAT_MESSAGE);
-            if ([message.objectName isEqual:TXT_MSG]) {
-                extra[@"messageType"] = @(MATEXT);
-            } else if ([message.objectName isEqual:IMG_MSG]) {
-                extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
-                extra[@"messageType"] = @(MAIMG);
-            } else if ([message.objectName isEqual:VC_MSG]) {
-                extra[@"length"] = [message.contentDic getString:@"duration"];
-                extra[@"messageType"] = @(MAVOICE);
-            } else if ([message.objectName isEqual:LBS_MSG]) {
-                extra[@"latitude"] = [message.contentDic getString:@"latitude"];
-                extra[@"longitude"] = [message.contentDic getString:@"longitude"];
-                extra[@"poi"] = [message.contentDic getString:@"poi"];
-                extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
-                extra[@"messageType"] = @(MALOCATION);
-                if(self.mapType == MAMAPTYPE_Baidu){
-                    extra[@"map"] = @"baidu";
+        if(messageContent.message != nil){
+            if(!([message.objectName isEqual:ELITE_MSG])){
+                extra[@"type"] = @(MASEND_CHAT_MESSAGE);
+                if ([message.objectName isEqual:TXT_MSG]) {
+                    extra[@"messageType"] = @(MATEXT);
+                } else if ([message.objectName isEqual:IMG_MSG]) {
+                    extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
+                    extra[@"messageType"] = @(MAIMG);
+                } else if ([message.objectName isEqual:VC_MSG]) {
+                    extra[@"length"] = [message.contentDic getString:@"duration"];
+                    extra[@"messageType"] = @(MAVOICE);
+                } else if ([message.objectName isEqual:LBS_MSG]) {
+                    extra[@"latitude"] = [message.contentDic getString:@"latitude"];
+                    extra[@"longitude"] = [message.contentDic getString:@"longitude"];
+                    extra[@"poi"] = [message.contentDic getString:@"poi"];
+                    extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
+                    extra[@"messageType"] = @(MALOCATION);
+                    if(self.mapType == MAMAPTYPE_Baidu){
+                        extra[@"map"] = @"baidu";
+                    }
                 }
+            }else{
+                extra[@"type"] = @(MASEND_CUSTOM_MESSAGE);//elite消息类型
             }
+            messageContent.extra = [extra mj_JSONString];
+            
+            [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:self.targetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+                [array removeObject:message];
+                [[MAChat getInstance] updateUnsendMessage:array];
+            } error:nil];
         }
-        messageContent.extra = [extra mj_JSONString];
-        
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:self.targetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
-            [array removeObject:message];
-            [[MAChat getInstance] updateUnsendMessage:array];
-        } error:nil];
     }
 }
 /**

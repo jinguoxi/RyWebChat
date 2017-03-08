@@ -13,6 +13,8 @@
 #import "MAEliteChat.h"
 #import "MAConfig.h"
 #import "EliteMessage.h"
+#import "MAJSONObject.h"
+#import "MJExtension.h"
 
 @implementation MAMessageUtils
 /**
@@ -157,22 +159,16 @@
  * @return
  */
 + (EliteMessage *)generateCustomMessage:(NSString *) token sessionId:(long) sessionId message:(NSString *) message{
-    @try {
-        NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
-        extraDic[@"type"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
-        extraDic[@"token"] = token;//登录成功后获取到的凭据
-        extraDic[@"sessionId"] = @(sessionId);//sessionId
-        NSString *extra = [extraDic mj_JSONString];
-        EliteMessage *eliteMessage= [EliteMessage messageWithContent:message];
-        eliteMessage.extra = extra;
-        return eliteMessage;
-        
 
-    } @catch (NSException *exception) {
-        NSLog(@"generateCustomMessage.error %@", exception);
+    NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
+    extraDic[@"messageType"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
+    extraDic[@"token"] = token;//登录成功后获取到的凭据
+    extraDic[@"sessionId"] = @(sessionId);//sessionId
+    NSString *extra = [extraDic mj_JSONString];
+    EliteMessage *eliteMessage= [EliteMessage messageWithContent:message];
+    eliteMessage.extra = extra;
+    return eliteMessage;
     }
-    return nil;
-}
 
 /**
  * 添加自定义未读消息 在初始化之前，用于传递相关业务数据到前台，比如商品信息
@@ -180,10 +176,26 @@
  */
 
 + (void)addUnsendCustomMessage:(NSString *) message{
-    EliteMessage *eliteMessage = [self generateCustomMessage:nil sessionId:0 message:message];
-    if(eliteMessage != nil){
-        [[MAChat getInstance] addUnsendMessage:eliteMessage];
-    }
+    //EliteMessage *eliteMessage = [self generateCustomMessage:nil sessionId:0 message:message];
+    MASaveMessage *maSaveMessage = [MASaveMessage new];
+    maSaveMessage.objectName = ELITE_MSG;
+   // NSMutableDictionary *content = [NSMutableDictionary dictionary];
+//    content[@"messageType"] = @(MASEND_CUSTOM_MESSAGE);
+//    content[@"content"] = message;
+    maSaveMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:message,@"content",nil];
+    [[MAChat getInstance] addUnsendMessage:maSaveMessage];
+}
+
+/**
+ * 添加自定义未读消息 在初始化之前，用于传递相关提示语，比如之前点了哪个商品 传入商品名称
+ * @param message 字符串，自己定义
+ */
+
++ (void)addUnsendTxtMessage:(NSString *) message{
+    MASaveMessage *txtMessage = [MASaveMessage new];
+    txtMessage.objectName = TXT_MSG;
+    txtMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:message, @"content", nil];
+    [[MAChat getInstance] addUnsendMessage:txtMessage];
 }
 
 @end

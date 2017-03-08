@@ -25,9 +25,20 @@
 @property (weak, nonatomic) IBOutlet UITextField *headUrl;
 @property (weak, nonatomic) IBOutlet UITextField *queueId;
 
+@property (strong, nonatomic) MARyChatViewController *chatViewController;
+
 @end
 
 @implementation ViewController
+
+- (MARyChatViewController *)chatViewController {
+    if (!_chatViewController) {
+        _chatViewController = [[MARyChatViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:CHAT_TARGET_ID];
+    }
+    
+    return _chatViewController;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,9 +75,12 @@
         q_id = @"1";
     }
     int parseQueueId = [q_id intValue];
+    
+    __weak typeof(self) myself = self;
+    
     [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
         if (result) {
-            [self switchChatViewController];
+            [myself switchChatViewController];
             
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
             [user setObject:self.userName.text forKey:@"userName"];
@@ -79,16 +93,18 @@
 }
 
 - (void)switchChatViewController {
-    //新建一个聊天会话View Controller对象,建议这样初始化
     
-    MARyChatViewController *chat = [[MARyChatViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:CHAT_TARGET_ID];
-    //设置聊天会话界面要显示的标题
-    chat.title = CHAT_TITLE;
-    chat.mapType = MAMAPTYPE_Baidu;
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        //显示聊天会话界面
-        [self.navigationController pushViewController:chat animated:YES];
-    });
+    //删除会话页面
+    if (_chatViewController) {
+        [self.chatViewController.view removeFromSuperview];
+        self.chatViewController = nil;
+    }
+
+    self.chatViewController.title = CHAT_TITLE;
+    self.chatViewController.mapType = MAMAPTYPE_Baidu;
+    //显示聊天会话界面
+    [self.navigationController pushViewController:self.chatViewController animated:YES];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

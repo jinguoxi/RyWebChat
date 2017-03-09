@@ -109,44 +109,18 @@
 }
 
 /**
- * 发送自定义消息
- * @param message
- * @return 发送成功还是失败
- */
-+ (BOOL)sendCustomMessage:(NSString *)message {
-    @try {
-        NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
-        extraDic[@"type"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
-        extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
-        extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
-        NSString *extra = [extraDic mj_JSONString];
-        EliteMessage *messageContent = [EliteMessage messageWithContent:message];
-        
-        messageContent.extra = extra;
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
-        
-        } error:^(RCErrorCode nErrorCode, long messageId) {
-        
-        }];
-        return true;
-    } @catch (NSException *exception) {
-        return false;
-    }
-    return false;
-}
-/**
  * 获取EliteMessage对象
  * @param message
  * @return 返回EliteMessage对象
  */
-+ (EliteMessage *)getCustomMessage:(NSString *)message {
-   
++ (EliteMessage *)generateCustomerMessage:message {
+    
     NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
     extraDic[@"type"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
     extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
     extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
     NSString *extra = [extraDic mj_JSONString];
-    EliteMessage *messageContent = [EliteMessage messageWithContent:message];   
+    EliteMessage *messageContent = [EliteMessage messageWithContent:message];
     messageContent.extra = extra;
     
     return messageContent;
@@ -154,36 +128,44 @@
 }
 
 /**
- * 构造一个自定义消息对象
+ * 构造一个自定义RCTxtMessage消息对象
  * @param message
  * @return
  */
-+ (EliteMessage *)generateCustomMessage:(NSString *) token sessionId:(long) sessionId message:(NSString *) message{
-
++ (RCTextMessage *)generateTxtMessage:message{
+    RCTextMessage *txtMessage = [RCTextMessage messageWithContent:message];
     NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
-    extraDic[@"messageType"] = @(MASEND_CUSTOM_MESSAGE);//自定义消息请求
-    extraDic[@"token"] = token;//登录成功后获取到的凭据
-    extraDic[@"sessionId"] = @(sessionId);//sessionId
+    extraDic[@"type"] = @(MASEND_CHAT_MESSAGE);//自定义消息请求
+    extraDic[@"messageType"] = @(MATEXT);
+    extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
+    extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
     NSString *extra = [extraDic mj_JSONString];
-    EliteMessage *eliteMessage= [EliteMessage messageWithContent:message];
-    eliteMessage.extra = extra;
-    return eliteMessage;
-    }
+    txtMessage.extra = extra;
+    return txtMessage;
+}
 
 /**
  * 添加自定义未读消息 在初始化之前，用于传递相关业务数据到前台，比如商品信息
  * @param message json字符串，自己定义
  */
-
-+ (void)addUnsendCustomMessage:(NSString *) message{
-    //EliteMessage *eliteMessage = [self generateCustomMessage:nil sessionId:0 message:message];
-    MASaveMessage *maSaveMessage = [MASaveMessage new];
-    maSaveMessage.objectName = ELITE_MSG;
-    NSMutableDictionary *content = [NSMutableDictionary dictionary];
-    content[@"type"] = @(MASEND_CUSTOM_MESSAGE);
-    content[@"content"] = message;
-    maSaveMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:content,@"content",nil];
-    [[MAChat getInstance] addUnsendMessage:maSaveMessage];
++ (void)sendCustomMessage :(NSString *) message{
+    
+    if([[MAChat getInstance] getSessionId]){
+        EliteMessage *eliteMessage = [self generateCustomerMessage:message];
+        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:eliteMessage pushContent:nil pushData:nil success:^(long messageId) {
+            
+        } error:^(RCErrorCode nErrorCode, long messageId) {
+            
+        }];
+    }else{
+        MASaveMessage *maSaveMessage = [MASaveMessage new];
+        maSaveMessage.objectName = ELITE_MSG;
+        NSMutableDictionary *content = [NSMutableDictionary dictionary];
+        content[@"type"] = @(MASEND_CUSTOM_MESSAGE);
+        content[@"content"] = message;
+        maSaveMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:content,@"content",nil];
+        [[MAChat getInstance] addUnsendMessage:maSaveMessage];
+    }
 }
 
 /**
@@ -191,11 +173,20 @@
  * @param message 字符串，自己定义
  */
 
-+ (void)addUnsendTxtMessage:(NSString *) message{
++ (void)sendTxtMessage:(NSString *) message{
+    if([[MAChat getInstance] getSessionId]){
+        RCTextMessage *txtMessage = [self generateTxtMessage:message];
+        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
+            
+        } error:^(RCErrorCode nErrorCode, long messageId) {
+            
+        }];
+    }
     MASaveMessage *txtMessage = [MASaveMessage new];
     txtMessage.objectName = TXT_MSG;
     txtMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:message, @"content", nil];
     [[MAChat getInstance] addUnsendMessage:txtMessage];
+    
 }
 
 @end

@@ -40,13 +40,16 @@
  * 添加自定义未读消息 在初始化之前，用于传递相关业务数据到前台，比如商品信息
  * @param message json字符串，自己定义
  */
++ (EliteMessage *)generateCustomerMessage:(NSString *) message;
 
-+ (void)addUnsendCustomMessage:(NSString *) message;
++ (RCTextMessage *)generateTxtMessage:(NSString *)message;
+
++ (void)sendCustomMessage:(NSString *) message;
 
 /**
  * 添加自定义未读消息 在初始化之前，用于传递相关提示语，比如之前点了哪个商品 传入商品名称
  * @param message json字符串，自己定义
  */
 
-+ (void)addUnsendTxtMessage:(NSString *) message;
++ (void)sendTxtMessage:(NSString *) message;
 @end

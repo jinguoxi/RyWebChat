@@ -77,6 +77,8 @@
     int parseQueueId = [q_id intValue];
     
     __weak typeof(self) myself = self;
+    [MAMessageUtils addUnsendTxtMessage:@"txt_Message"];
+    [MAMessageUtils addUnsendCustomMessage:@"customer_dana"];
     
     [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
         if (result) {

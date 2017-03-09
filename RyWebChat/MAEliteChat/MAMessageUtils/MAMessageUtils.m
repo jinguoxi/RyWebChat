@@ -179,10 +179,10 @@
     //EliteMessage *eliteMessage = [self generateCustomMessage:nil sessionId:0 message:message];
     MASaveMessage *maSaveMessage = [MASaveMessage new];
     maSaveMessage.objectName = ELITE_MSG;
-   // NSMutableDictionary *content = [NSMutableDictionary dictionary];
-//    content[@"messageType"] = @(MASEND_CUSTOM_MESSAGE);
-//    content[@"content"] = message;
-    maSaveMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:message,@"content",nil];
+    NSMutableDictionary *content = [NSMutableDictionary dictionary];
+    content[@"type"] = @(MASEND_CUSTOM_MESSAGE);
+    content[@"content"] = message;
+    maSaveMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:content,@"content",nil];
     [[MAChat getInstance] addUnsendMessage:maSaveMessage];
 }
 

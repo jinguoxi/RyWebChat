@@ -104,7 +104,8 @@ static MAEliteChat *eliteChat=nil;
     }
     
     [self contentRyTokenService:client.serverAddr userId:client.userId nickName:client.name protrait:client.portraitUri complete:^(NSString *token) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        NSLog(@"token:%@", token);
+       // dispatch_sync(dispatch_get_main_queue(), ^{
             if (isEliteEmpty(token)) {
                 complete(NO);
             } else {
@@ -114,7 +115,7 @@ static MAEliteChat *eliteChat=nil;
                 
                 complete(YES);
             }
-        });
+       // });
         
     }];
 }

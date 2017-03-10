@@ -44,7 +44,10 @@
 ///将消息内容编码成json
 - (NSData *)encode {
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionary];
-    [dataDict setObject:self.message forKey:@"message"];
+    if(self.message){
+        [dataDict setObject:self.message forKey:@"message"];
+    }
+    
     if (self.extra) {
         [dataDict setObject:self.extra forKey:@"extra"];
     }

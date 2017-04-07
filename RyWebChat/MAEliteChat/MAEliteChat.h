@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 static NSString *CHAT_TITLE = @"在线客服";
-static NSString *CHAT_TARGET_ID = @"EliteCRM";
+//static NSString *CHAT_TARGET_ID = @"EliteCRM";
 
 @interface MAEliteChat : NSObject
 
@@ -29,7 +29,7 @@ static NSString *CHAT_TARGET_ID = @"EliteCRM";
  * @param portraitUri 用户头像uri
  * @param complete 回调
  */
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId complete:(void (^)(BOOL result))complete;
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId complete:(void (^)(BOOL result))complete;
 /**
  * 初始化EliteChat， 并且启动聊天
  * @param serverAddr EliteWebChat服务地址
@@ -39,7 +39,7 @@ static NSString *CHAT_TARGET_ID = @"EliteCRM";
  * @param complete 回调
  * @param ngs 坐席头像地址前缀
  */
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete;
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete;
 /**
  * 初始化EliteChat
  * @param serverAddr EliteWebChat服务地址

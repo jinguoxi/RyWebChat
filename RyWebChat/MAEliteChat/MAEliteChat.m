@@ -45,14 +45,14 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
 }
 
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId complete:(void (^)(BOOL result))complete {
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId complete:(void (^)(BOOL result))complete {
     
-    [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil complete:complete];
+    [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:nil complete:complete];
     
 }
 
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete {
-    
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete {
+    [[MAChat getInstance] setChatTargetId:chatTargetId];
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr];
     
     [self startChat:complete];
@@ -140,7 +140,8 @@ static MAEliteChat *eliteChat=nil;
     dic[@"userId"] = userId;
     dic[@"name"] = nickName;
     dic[@"portraitUri"] = portraitUri;
-    
+    NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+    dic[@"targetId"] = chatTargetId;
     [MAHttpService getRyToken:serverAddr paramer:dic success:^(NSString *token) {
         
         if (isEliteEmpty(token)) return complete(nil);

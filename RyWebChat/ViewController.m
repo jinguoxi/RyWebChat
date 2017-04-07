@@ -13,6 +13,7 @@
 #import <RongIMKit/RongIMKit.h>
 #import "MAClient.h"
 #import "MAEliteChat.h"
+#import "MAChat.h"
 #import "MASatisfactionView.h"
 #import "MAMessageUtils.h"
 
@@ -32,8 +33,9 @@
 @implementation ViewController
 
 - (MARyChatViewController *)chatViewController {
+    NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
     if (!_chatViewController) {
-        _chatViewController = [[MARyChatViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:CHAT_TARGET_ID];
+        _chatViewController = [[MARyChatViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:chatTargetId];
     }
     
     return _chatViewController;
@@ -77,8 +79,8 @@
     int parseQueueId = [q_id intValue];
     
     __weak typeof(self) myself = self;
-    
-    [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
+   // NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+    [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
         if (result) {
             [myself switchChatViewController];
             

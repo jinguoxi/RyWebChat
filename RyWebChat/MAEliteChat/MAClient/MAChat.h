@@ -23,11 +23,14 @@
 - (void)setRequest:(MARequest *)request;
 - (void)setSession:(MASession *)session;
 - (void)setTokenStr:(NSString *)tokenStr;
+- (void)setChatTargetId:(NSString *)chatTargetId;
+
 
 - (MAClient *)getClient;
 - (MASession *)getSession;
 - (long)getRequestId;
 - (long)getSessionId;
+- (NSString *)getChatTargetId;
 /**
  *  更新坐席信息
  *

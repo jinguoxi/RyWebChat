@@ -15,6 +15,7 @@
 @property (strong, nonatomic) MARequest *request;
 @property (strong, nonatomic) MASession *session;
 @property (strong, nonatomic, readwrite) NSString *tokenStr;
+@property (strong, nonatomic, readwrite) NSString *chatTargetId;
 @end
 
 @implementation MAChat
@@ -46,6 +47,11 @@ static MAChat *chat;
     _session = session;
 }
 
+- (void)setChatTargetId:(NSString *)chatTargetId {
+    _chatTargetId = chatTargetId;
+    
+}
+
 - (long)getRequestId {
     if (self.request) {
         return self.request.requestId;
@@ -68,6 +74,10 @@ static MAChat *chat;
 
 - (MASession *)getSession {
     return self.session;
+}
+
+- (NSString *)getChatTargetId {
+    return self.chatTargetId;
 }
 
 - (void)updateSession:(MAAgent *)currentAgent {

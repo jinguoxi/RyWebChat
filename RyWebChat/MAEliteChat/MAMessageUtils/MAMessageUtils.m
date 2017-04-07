@@ -40,8 +40,8 @@
     // RCInformationNotificationMessage *warningMsg =
     // [RCInformationNotificationMessage
     //notificationWithMessage:jsonStr extra:nil];
-    
-    [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+    NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+    [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
             
     } error:^(RCErrorCode nErrorCode, long messageId) {
         
@@ -152,7 +152,8 @@
     
     if([[MAChat getInstance] getSessionId]){
         EliteMessage *eliteMessage = [self generateCustomerMessage:message];
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:eliteMessage pushContent:nil pushData:nil success:^(long messageId) {
+        NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:eliteMessage pushContent:nil pushData:nil success:^(long messageId) {
             
         } error:^(RCErrorCode nErrorCode, long messageId) {
             
@@ -176,7 +177,8 @@
 + (void)sendTxtMessage:(NSString *) message{
     if([[MAChat getInstance] getSessionId]){
         RCTextMessage *txtMessage = [self generateTxtMessage:message];
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:CHAT_TARGET_ID content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
+        NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
             
         } error:^(RCErrorCode nErrorCode, long messageId) {
             

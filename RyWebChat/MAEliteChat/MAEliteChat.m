@@ -17,7 +17,7 @@
 @property (assign, nonatomic) int queueId;//排队号;
 @property (assign, nonatomic) BOOL initialized;
 @property (assign, nonatomic) BOOL startChatReady;
-@property (assign, nonatomic) NSString* oldClientId;
+@property (strong, nonatomic) NSString* oldClientId;
 
 @end
 

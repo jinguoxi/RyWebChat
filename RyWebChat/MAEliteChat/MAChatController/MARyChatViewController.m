@@ -103,11 +103,11 @@
     MASession *session = [[MAChat getInstance] getSession];
     
     NSString *icon = session.currentAgent.portraitUri;
-    //if (icon && ![icon isEqualToString:@""]) {
-        //NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
+    if (icon && ![icon isEqualToString:@""]) {
+        NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
         
-        //icon = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:icon];
-    //}
+        icon = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:icon];
+    }
     
     session.currentAgent.portraitUri = icon;
     
@@ -244,21 +244,8 @@
             NSArray *agents = [json getObject:@"agents"];
             
             NSDictionary *dic = agents.firstObject;
-            NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
-            NSString *iconImg = [dic getString:@"icon"];
-            if (iconImg != nil && ![iconImg isEqualToString:@""]) {
-                if([iconImg hasPrefix:@"https://"]){
-                    NSLog(@"string contain https://");
-                }else{
-                    iconImg = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:iconImg];
-                }
-                
-            }else{
-                iconImg = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:@"headimg/4E8A5A05-440D-2015-761D-565439404341.jpg"];
-                //iconImg = @"http://139.196.108.236/ngs/fs/get?file=/headimg/4E8A5A05-440D-2015-761D-565439404341.jpg";
-            }
             
-            MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:iconImg];
+            MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
             
             MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent];
             
@@ -268,6 +255,8 @@
             
             NSString *tipsMsg = [NSString stringWithFormat:@"坐席[%@]为您服务",currentAgent.name];
             [self addTipsMessage:tipsMsg];
+            [MAMessageUtils sendTxtMessage:@"txtMessage__"];
+            [MAMessageUtils sendCustomMessage:@"customer.."];
             [self sendUnsendMessages];
         }
             break;

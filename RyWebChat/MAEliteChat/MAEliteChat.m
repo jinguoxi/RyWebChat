@@ -112,11 +112,10 @@ static MAEliteChat *eliteChat=nil;
             if (isEliteEmpty(token)) {
                 complete(NO);
             } else {
-                
                 [[MAChat getInstance] setTokenStr:token];
                 self.oldClientId = client.userId;
                 self.startChatReady = YES;
-                
+                [MAChat clearRequestAndSession];
                 complete(YES);
             }
        // });
@@ -187,6 +186,7 @@ static MAEliteChat *eliteChat=nil;
 
 - (void)setDeviceToken:(NSString *)token {
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
+    
 }
 
 - (void)loginSuccess:(NSString *)userName

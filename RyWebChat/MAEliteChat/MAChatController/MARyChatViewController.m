@@ -277,10 +277,8 @@
             break;
         case MAAGENT_CLOSE_SESSION://坐席关闭
             NSLog(@"坐席关闭");
+            [MAChat clearRequestAndSession];
             [self addTipsMessage:@"会话结束"];
-            
-            
-            
             break;
         case MAAGENT_SEND_MESSAGE://坐席发送消息
             NSLog(@"坐席发送消息");
@@ -296,6 +294,7 @@
                     RCMessage *message = [[RCMessage alloc] initWithType:self.conversationType targetId:self.targetId direction:rcMsg.messageDirection messageId:rcMsg.messageId content:textMsg];
                     
                     [self appendAndDisplayMessage:message];
+                      // [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:rcMsg.sentStatus content:rcMsg.content];
                 } else if (noticeType == MATRANSFER_NOTICE || noticeType == MAINVITE_NOTICE) {
                     NSString *content = [msgDic getString:@"content"];
                     

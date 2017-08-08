@@ -10,60 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RyWebChat/ViewController.m"
-            timestampString = "509446072.507657"
+            timestampString = "513239393.014428"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "-webChatPressed:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAEliteChat.m"
-            timestampString = "509437562.525458"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "-initAndStart:userId:name:portraitUri:queueId:complete:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAEliteChat.m"
-            timestampString = "509437570.240608"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-initElite:userId:name:portraitUri:queueId:ngsAddr:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAEliteChat.m"
-            timestampString = "509437574.352124"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "-getUserInfoWithUserId:completion:"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "-chatViewController"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,46 +25,62 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MACommot/MAHttpService/MAHttpService.m"
-            timestampString = "509437579.938754"
+            filePath = "RyWebChat/ViewController.m"
+            timestampString = "514869181.217421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "+getRyToken:paramer:success:error:"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "+[MAHttpService getRyToken:paramer:success:error:]"
-                  moduleName = "RyWebChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/elitecrm/Desktop/RyWebChat/RyWebChat/MACommot/MAHttpService/MAHttpService.m"
-                  timestampString = "509437580.154682"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "154">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__50+[MAHttpService getRyToken:paramer:success:error:]_block_invoke"
-                  moduleName = "RyWebChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/elitecrm/Desktop/RyWebChat/RyWebChat/MACommot/MAHttpService/MAHttpService.m"
-                  timestampString = "509437580.156489"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "44">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
+            timestampString = "510739047.422759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "+sendChatRequest:from:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
+            timestampString = "510739047.422759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "+sendChatRequest:from:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
+            timestampString = "510739047.422759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "+sendChatRequest:from:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -121,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MACommot/MAHttpService/MAHttpService.m"
-            timestampString = "509437585.046349"
+            filePath = "RyWebChat/MAEliteChat/MAChatModel/MASaveMessage.m"
+            timestampString = "510648765.059444"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "+getRyToken:paramer:success:error:"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "+saveMessageWithLocation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -135,15 +103,207 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
+            timestampString = "510739047.422759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "+getLocationMessageJsonStr:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509613689.808572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "-closeEvent"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509609713.623232"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509613689.808572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "@implementation MALocationViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509613689.808572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509613689.808572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509613689.808572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "321"
+            endingLineNumber = "321"
+            landmarkName = "-onGetReverseGeoCodeResult:result:errorCode:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MALocationController/MALocationViewController.m"
+            timestampString = "509613689.808572"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
+            landmarkName = "-onGetReverseGeoCodeResult:result:errorCode:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RyWebChat/ViewController.m"
-            timestampString = "509446072.507657"
+            timestampString = "513239393.014428"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "-webChatPressed:"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-chatViewController"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAClient/MAChat.m"
+            timestampString = "513228974.02491"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "-getUnsendMessage"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MACommot/AFNHttpService/MAFNetworkingTool.m"
+            timestampString = "514869308.239103"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "+POST:parameters:successBlock:failedBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MACommot/AFNHttpService/MAFNetworkingTool.m"
+            timestampString = "514869360.025028"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "+POST:parameters:successBlock:failedBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MACommot/AFNHttpService/MAFNetworkingTool.m"
+            timestampString = "514869385.663613"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "+POST:parameters:successBlock:failedBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -153,14 +313,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAEliteChat.m"
-            timestampString = "509437731.14242"
+            filePath = "Pods/RongCloudIM/RongCloudIM/RongIMKit.framework/Headers/RCIM.h"
+            timestampString = "514870451.577503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "7">
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "-connectWithToken:success:error:tokenIncorrect:"
+            landmarkType = "6">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RyWebChat/MAEliteChat/MAEliteChat.m"
-            timestampString = "509437823.504675"
+            timestampString = "521001105.18062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "-contentRyTokenService:userId:nickName:protrait:complete:"
             landmarkType = "7">
          </BreakpointContent>
@@ -182,16 +342,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MARyChatViewController.m"
+            timestampString = "515991997.078555"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-onRCIMReceiveMessage:left:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/ViewController.m"
-            timestampString = "509446072.507657"
+            filePath = "RyWebChat/MAEliteChat/MAChatController/MARyChatViewController.m"
+            timestampString = "521000202.997255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "-switchChatViewController"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "-parseMessage:rcMsg:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -201,14 +377,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/main.m"
-            timestampString = "509445519.62079"
+            filePath = "RyWebChat/ViewController.m"
+            timestampString = "522555141.409104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "main()"
-            landmarkType = "9">
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "-webChatPressed:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -218,28 +394,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RyWebChat/ViewController.m"
-            timestampString = "509446160.438757"
+            timestampString = "522555143.160179"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "@implementation ViewController"
-            landmarkType = "3">
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-webChatPressed:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/ViewController.m"
-            timestampString = "509446169.480415"
+            filePath = "RyWebChat/MAEliteChat/MAEliteChat.m"
+            timestampString = "522555356.01414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "-initAndStart:userId:name:portraitUri:chatTargetId:queueId:ngsAddr:complete:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

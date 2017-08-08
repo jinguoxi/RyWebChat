@@ -41,7 +41,6 @@
     return _chatViewController;
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -95,7 +94,6 @@
 }
 
 - (void)switchChatViewController {
-    
     //删除会话页面
     if (_chatViewController) {
         [self.chatViewController.view removeFromSuperview];

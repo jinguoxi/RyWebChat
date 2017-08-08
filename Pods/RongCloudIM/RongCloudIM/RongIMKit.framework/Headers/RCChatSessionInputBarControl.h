@@ -14,15 +14,18 @@
 
 #define RC_ChatSessionInputBar_Height 50.f
 ///输入栏扩展输入的唯一标示
-#define INPUT_MENTIONED_SELECT_TAG       1000
-#define PLUGIN_BOARD_ITEM_ALBUM_TAG      1001
-#define PLUGIN_BOARD_ITEM_CAMERA_TAG     1002
-#define PLUGIN_BOARD_ITEM_LOCATION_TAG   1003
-#define PLUGIN_BOARD_ITEM_VOIP_TAG       1101
-#define PLUGIN_BOARD_ITEM_VIDEO_VOIP_TAG 1102
-#define PLUGIN_BOARD_ITEM_FILE_TAG       1006
-#define PLUGIN_BOARD_ITEM_EVA_TAG        1103
-
+#define INPUT_MENTIONED_SELECT_TAG        1000
+#define PLUGIN_BOARD_ITEM_ALBUM_TAG       1001
+#define PLUGIN_BOARD_ITEM_CAMERA_TAG      1002
+#define PLUGIN_BOARD_ITEM_LOCATION_TAG    1003
+#define PLUGIN_BOARD_ITEM_FILE_TAG        1006
+#define PLUGIN_BOARD_ITEM_VOIP_TAG        1101
+#define PLUGIN_BOARD_ITEM_VIDEO_VOIP_TAG  1102
+#define PLUGIN_BOARD_ITEM_EVA_TAG         1103
+#define PLUGIN_BOARD_ITEM_RED_PACKET_TAG  1104
+#define PLUGIN_BOARD_ITEM_VOICE_INPUT_TAG 1105
+#define PLUGIN_BOARD_ITEM_PTT_TAG         1106
+#define PLUGIN_BOARD_ITEM_CARD_TAG        1107
 
 /*!
  输入工具栏的显示布局
@@ -165,7 +168,7 @@ typedef NS_ENUM(NSInteger, KBottomBarStatus) {
 @property(weak, nonatomic) id<RCChatSessionInputBarControlDelegate> delegate;
 
 /*!
- 输入工具栏的点击回调监听
+ 输入工具栏获取用户信息的回调
  */
 @property(weak, nonatomic) id<RCChatSessionInputBarControlDataSource> dataSource;
 
@@ -503,6 +506,11 @@ __deprecated_msg("已废弃，请勿使用。");
 - (void)recordDidBegin;
 
 /*!
+ 取消录制语音消息
+ */
+- (void)recordDidCancel;
+
+/*!
  结束录制语音消息
  */
 - (void)recordDidEnd:(NSData *)recordData duration:(long)duration error:(NSError *)error;
@@ -513,6 +521,13 @@ __deprecated_msg("已废弃，请勿使用。");
  @param image   相机拍摄，选择发送的图片
  */
 - (void)imageDidCapture:(UIImage *)image;
+
+/**
+ 相机录制小视频
+ 
+ @param url 小视频url
+ */
+- (void)sightDidFinishRecord:(NSString*)url thumbnail:(UIImage*)image duration:(NSUInteger)duration;
 
 /*!
  地理位置选择完成之后的回调
@@ -538,7 +553,7 @@ __deprecated_msg("已废弃，请勿使用。");
 - (void)fileDidSelect:(NSArray *)filePathList;
 
 /*!
- 输入工具栏状态变化时的回调
+ 输入工具栏状态变化时的回调（暂未实现）
  
  @param bottomBarStatus 当前状态
  */

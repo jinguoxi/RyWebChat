@@ -75,4 +75,5 @@ static NSString *CHAT_TITLE = @"在线客服";
  *  @param queueId 队列号
  */
 - (void)sendQueueRequest;
+
 @end

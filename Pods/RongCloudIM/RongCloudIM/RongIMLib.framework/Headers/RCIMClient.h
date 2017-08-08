@@ -7,7 +7,7 @@
  *
  */
 
-//  RongIMClient.h
+//  RCIMClient.h
 //  Created by xugang on 14/12/23.
 
 #ifndef __RongIMClient
@@ -30,6 +30,7 @@
 #import "RCCustomerServiceGroupItem.h"
 #import "RCUserOnlineStatusInfo.h"
 #import "RCSearchConversationResult.h"
+#import "RCPushProfile.h"
 
 #pragma mark - 消息接收监听器
 
@@ -294,7 +295,7 @@
  @param fileServer     文件服务器地址，具体的格式参考下面的说明
  @return               是否设置成功
 
- @warning 仅限独立数据中心使用，使用前必须先联系商务开通。
+ @warning 仅限独立数据中心使用，使用前必须先联系商务开通。必须在SDK init之前进行设置。
  @discussion
  naviServer必须为有效的服务器地址，fileServer如果想使用默认的，可以传nil。
  naviServer和fileServer的格式说明：
@@ -302,6 +303,21 @@
  2、如果使用http，则设置为cn.xxx.com:port或cn.xxx.com格式，其中域名部分也可以是IP，如果不指定端口，将默认使用80端口。
  */
 - (BOOL)setServerInfo:(NSString *)naviServer fileServer:(NSString *)fileServer;
+
+/**
+ 设置统计服务器的信息
+
+ @param statisticServer 统计服务器地址，具体的格式参考下面的说明
+ @return 是否设置成功
+ 
+ @warning 仅限独立数据中心使用，使用前必须先联系商务开通。必须在SDK init和setDeviceToken之前进行设置。
+ @discussion
+ statisticServer必须为有效的服务器地址，否则会造成推送等业务不能正常使用。
+ 格式说明：
+ 1、如果使用https，则设置为https://cn.xxx.com:port或https://cn.xxx.com格式，其中域名部分也可以是IP，如果不指定端口，将默认使用443端口。
+ 2、如果使用http，则设置为cn.xxx.com:port或cn.xxx.com格式，其中域名部分也可以是IP，如果不指定端口，将默认使用80端口。
+ */
+- (BOOL)setStatisticServer:(NSString *)statisticServer;
 
 #pragma mark - 连接与断开服务器
 
@@ -657,24 +673,62 @@ __deprecated_msg("已废弃，请勿使用。");
                             targetId:(NSString *)targetId
                           sentStatus:(RCSentStatus)sentStatus
                              content:(RCMessageContent *)content;
-
 /*!
- 插入向外发送的、指定时间的消息
+ 插入向外发送的、指定时间的消息（此方法如果 sentTime 有问题会影响消息排序，慎用！！）
  
  @param conversationType    会话类型
  @param targetId            目标会话ID
  @param sentStatus          发送状态
  @param content             消息的内容
- @param sentTime            消息发送的Unix时间戳，单位为毫秒
+ @param sentTime            消息发送的Unix时间戳，单位为毫秒（传 0 会按照本地时间插入）
  @return                    插入的消息实体
  
  @discussion 此方法不支持聊天室的会话类型。如果sentTime<=0，则被忽略，会以插入时的时间为准。
  */
-//- (RCMessage *)insertOutgoingMessage:(RCConversationType)conversationType
-//                            targetId:(NSString *)targetId
-//                          sentStatus:(RCSentStatus)sentStatus
-//                             content:(RCMessageContent *)content
-//                            sentTime:(long long)sentTime;
+- (RCMessage *)insertOutgoingMessage:(RCConversationType)conversationType
+                            targetId:(NSString *)targetId
+                          sentStatus:(RCSentStatus)sentStatus
+                             content:(RCMessageContent *)content
+                            sentTime:(long long)sentTime;
+
+/*!
+ 插入接收的消息
+ 
+ @param conversationType    会话类型
+ @param targetId            目标会话ID
+ @param senderUserId        发送者ID
+ @param receivedStatus      接收状态
+ @param content             消息的内容
+ @return                    插入的消息实体
+ 
+ @discussion 此方法不支持聊天室的会话类型。
+ */
+- (RCMessage *)insertIncomingMessage:(RCConversationType)conversationType
+                            targetId:(NSString *)targetId
+                        senderUserId:(NSString *)senderUserId
+                      receivedStatus:(RCReceivedStatus)receivedStatus
+                             content:(RCMessageContent *)content;
+
+/*!
+ 插入接收的消息（此方法如果 sentTime 有问题会影响消息排序，慎用！！）
+ 
+ @param conversationType    会话类型
+ @param targetId            目标会话ID
+ @param senderUserId        发送者ID
+ @param receivedStatus      接收状态
+ @param content             消息的内容
+ @param sentTime            消息发送的Unix时间戳，单位为毫秒 （传 0 会按照本地时间插入）
+ @return                    插入的消息实体
+ 
+ @discussion 此方法不支持聊天室的会话类型。
+ */
+- (RCMessage *)insertIncomingMessage:(RCConversationType)conversationType
+                            targetId:(NSString *)targetId
+                        senderUserId:(NSString *)senderUserId
+                      receivedStatus:(RCReceivedStatus)receivedStatus
+                             content:(RCMessageContent *)content
+                            sentTime:(long long)sentTime;
+
 
 /*!
  下载消息内容中的媒体信息
@@ -1327,6 +1381,22 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
 - (NSArray *)getConversationList:(NSArray *)conversationTypeList;
 
 /*!
+ 分页获取会话列表
+ 
+ @param conversationTypeList 会话类型的数组(需要将RCConversationType转为NSNumber构建Array)
+ @param count                获取的数量
+ @param startTime            会话的时间戳（获取这个时间戳之前的会话列表，0表示从最新开始获取）
+ @return                     会话RCConversation的列表
+ 
+ @discussion 此方法会从本地数据库中，读取会话列表。
+ 返回的会话列表按照时间从前往后排列，如果有置顶的会话，则置顶的会话会排列在前面。
+ */
+- (NSArray *)getConversationList:(NSArray *)conversationTypeList
+                           count:(int)count
+                       startTime:(long long)startTime;
+
+
+/*!
  获取单个会话数据
 
  @param conversationType    会话类型
@@ -1433,6 +1503,14 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
              targetId:(NSString *)targetId;
 
 /*!
+ 获取某些会话的总未读消息数
+ 
+ @param conversations       会话列表 （RCConversation 对象只需要 conversationType 和 targetId ）
+ @return                    传入会话列表的未读消息数
+ */
+- (int)getTotalUnreadCount:(NSArray<RCConversation *> *)conversations;
+
+/*!
  获取某个类型的会话中所有的未读消息数
 
  @param conversationTypes   会话类型的数组
@@ -1483,7 +1561,7 @@ FOUNDATION_EXPORT NSString *const RCLibDispatchReadReceiptNotification;
  @param errorBlock                  设置失败的回调 [status:设置失败的错误码]
 
  @discussion
- 如果您使用IMLib，此方法会屏蔽该会话的远程推送；如果您使用IMKit，此方法会屏蔽该会话的所有提醒（远程推送、本地通知、前台提示音）。
+ 如果您使用IMLib，此方法会屏蔽该会话的远程推送；如果您使用IMKit，此方法会屏蔽该会话的所有提醒（远程推送、本地通知、前台提示音）,该接口不支持聊天室。
  */
 - (void)
 setConversationNotificationStatus:(RCConversationType)conversationType
@@ -2069,6 +2147,13 @@ getConversationNotificationStatus:(RCConversationType)conversationType
 - (NSString *)getSDKVersion;
 
 /*!
+ 获取当前手机与服务器的时间差
+ 
+ @return 时间差
+ */
+- (long long)getDeltaTime;
+
+/*!
  将AMR格式的音频数据转化为WAV格式的音频数据，数据开头携带WAVE文件头
 
  @param data    AMR格式的音频数据，必须是AMR-NB的格式
@@ -2312,6 +2397,8 @@ startCustomerService:(NSString *)kefuId
                  error:(void (^)(RCErrorCode nErrorCode))errorBlock;
 
 
+//远程推送相关设置
+@property(nonatomic,strong,readonly)RCPushProfile *pushProfile;
 @end
 
 #endif

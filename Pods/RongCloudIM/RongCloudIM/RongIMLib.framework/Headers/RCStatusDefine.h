@@ -348,7 +348,25 @@ typedef NS_ENUM(NSInteger, RCErrorCode) {
   /*!
     消息大小超限，消息体（序列化成json格式之后的内容）最大128k bytes。
    */
-   RC_MSG_SIZE_OUT_OF_LIMIT = 30016
+  RC_MSG_SIZE_OUT_OF_LIMIT = 30016,
+
+  /*!
+  撤回消息参数无效。
+  */
+  RC_RECALLMESSAGE_PARAMETER_INVALID   = 25101,
+  /*!
+  push设置参数无效。
+  */
+  RC_PUSHSETTING_PARAMETER_INVALID  = 26001,
+  /*!
+  操作被禁止。
+  */
+  RC_OPERATION_BLOCKED  = 20605,
+    
+  /*!
+  操作不支持。
+  */
+  RC_OPERATION_NOT_SUPPORT  = 20606
 };
 
 #pragma mark - 连接状态
@@ -461,9 +479,7 @@ typedef NS_ENUM(NSInteger, RCConnectionStatus) {
   ConnectionStatus_TOKEN_INCORRECT = 31004,
 
   /*!
-   与服务器的连接已断开
-
-   @discussion 建立连接的临时状态，SDK会做好自动重连，开发者无须处理。
+   与服务器的连接已断开,用户被封禁
    */
   ConnectionStatus_DISCONN_EXCEPTION = 31011
 };
@@ -999,6 +1015,12 @@ typedef NS_ENUM(NSUInteger, RCPlatform) {
    PC
    */
   RCPlatform_PC = 4
+};
+
+#pragma mark RCPushLauguageType - push 语音设置
+typedef NS_ENUM(NSUInteger, RCPushLauguage) {
+    RCPushLauguage_EN_US = 1, //英文
+    RCPushLauguage_ZH_CN, //中文
 };
 
 #endif

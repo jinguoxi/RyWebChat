@@ -163,6 +163,7 @@
 		A1F399561E5419A10082D513 /* MAMessageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAMessageUtils.h; sourceTree = "<group>"; };
 		A1F399571E5419A10082D513 /* MAMessageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAMessageUtils.m; sourceTree = "<group>"; };
 		A2D949C3E5F6BEDA70379934 /* libPods-RyWebChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RyWebChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC467AEB1EC589E900574B42 /* RyWebChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RyWebChat.entitlements; sourceTree = "<group>"; };
 		F557F79445B3893E4B491F15 /* Pods-RyWebChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RyWebChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -264,6 +265,7 @@
 		A1431F391E4C0A6A001BF142 /* RyWebChat */ = {
 			isa = PBXGroup;
 			children = (
+				AC467AEB1EC589E900574B42 /* RyWebChat.entitlements */,
 				A1F399441E5419A10082D513 /* MAEliteChat */,
 				A1431F841E4C16D5001BF142 /* MACommot */,
 				A1431F3D1E4C0A6A001BF142 /* AppDelegate.h */,
@@ -484,12 +486,18 @@
 		A1431F2F1E4C0A6A001BF142 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = nwkcom.sh.n22;
 				TargetAttributes = {
 					A1431F361E4C0A6A001BF142 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = RT38BC53F3;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -538,7 +546,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		101624627E9319B0B876822F /* [CP] Copy Pods Resources */ = {
@@ -634,6 +642,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -644,11 +653,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shuangchun Mou (6VPW3JACLM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -678,6 +689,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -688,11 +700,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -717,18 +731,19 @@
 			baseConfigurationReference = F557F79445B3893E4B491F15 /* Pods-RyWebChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
-				DEVELOPMENT_TEAM = RT38BC53F3;
+				CODE_SIGN_ENTITLEMENTS = RyWebChat/RyWebChat.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Shuangchun Mou (6VPW3JACLM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "RyWebChat/RyChat-PrefixHeader.pch";
 				INFOPLIST_FILE = RyWebChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.elitecrm.webchat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elitecrm.RCClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fb9e8713-6d4a-4c20-be1c-ea20128986a0";
-				PROVISIONING_PROFILE_SPECIFIER = DistributionRCClient;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -737,18 +752,19 @@
 			baseConfigurationReference = 3902B84CAA24AEBB509DDF6C /* Pods-RyWebChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RyWebChat/RyWebChat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
-				DEVELOPMENT_TEAM = RT38BC53F3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "RyWebChat/RyChat-PrefixHeader.pch";
 				INFOPLIST_FILE = RyWebChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.elitecrm.webchat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.elitecrm.RCClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fb9e8713-6d4a-4c20-be1c-ea20128986a0";
-				PROVISIONING_PROFILE_SPECIFIER = DistributionRCClient;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

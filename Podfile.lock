@@ -14,12 +14,12 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - BaiduMapKit (3.2.1)
+  - BaiduMapKit (3.3.4)
   - Masonry (1.0.2)
   - MJExtension (3.0.13)
-  - RongCloudIM/IMKit (2.8.7):
+  - RongCloudIM/IMKit (2.8.14):
     - RongCloudIM/IMLib
-  - RongCloudIM/IMLib (2.8.7)
+  - RongCloudIM/IMLib (2.8.14)
 
 DEPENDENCIES:
   - AFNetworking
@@ -31,10 +31,10 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  BaiduMapKit: 9c748785aa3dddfc41dcb70c14b21ce32f680930
+  BaiduMapKit: 6f2d76a04b72e9af938afb5ca0f97d4417bbf9c0
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  RongCloudIM: 7bbe81602eac7224de201f0e56621f88c39d0174
+  RongCloudIM: 04334f9285db8bc5e2f69bda0e3ce5431a6bec72
 
 PODFILE CHECKSUM: d528922d8b99ace967a8cb5c6c6d9d59048d40c8
 

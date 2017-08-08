@@ -5,7 +5,7 @@
 
 --------------------------------------------------------------------------------------
 
-iOS 地图 SDK v3.2.1是适用于iOS系统移动设备的矢量地图开发包
+iOS 地图 SDK v3.3.4是适用于iOS系统移动设备的矢量地图开发包
 
 --------------------------------------------------------------------------------------
 
@@ -35,14 +35,24 @@ LBS云检索：支持查询存储在LBS云内的自有数据；
 
 
 --------------------------------------------------------------------------------------
+ 
+ 
+ 【 新 版 提 示 】
+ 【 注 意 】
+ 1、自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）
+ 添加方法：在 TARGETS->Build Phases-> Link Binary With Libaries中点击“+”按钮，在弹出的窗口中点击“Add Other”按钮，选择libssl.a和libcrypto.a添加到工程中 。
+ 
+ 2、支持CocoaPods导入
+ pod setup //更新CocoPods的本地库
+ pod search BaiduMapKit  //查看最新地图SDK
+ 
+ 【 新 增 】
+ 1.BMKLocationViewDisplayParam类中增加 canShowCallOut 属性，用于设定用户点击定位图标时，是否弹出paopaoView。
+ 2.BMKLocationViewDisplayParam类中增加 locationViewHierarchy 属性，用于设定locationView始终处于视图层级的最下层或最上层。
 
- 注：自v3.2.0起，百度地图iOS SDK全面支持HTTPS，需要广大开发者导入第三方openssl静态库：libssl.a和libcrypto.a（存放于thirdlib目录下）。
- 
- 【 新版提示 】
- 1、自v3.2.0起，全面支持HTTPS
- 2、自v3.2.0起，地图引擎全面升级，主要升级特征有：
-    渲染架构技术升级，OpenGL ES从1.0升级到2.0
-    地图数据加载升级，加载性能大幅提升
- 
- 【 修  复 】
- 修复下载离线地图时，delegate方法返回state错误问题
+ 【 优 化 】
+ 1.修复添加Annotation时，Overlay偶尔绘制不完整的BUG。
+ 2.修复Swift调用SDK时，cityCode countryCode等字段类型不兼容的问题。
+ 3.保证新添加的Annotation会在mapView的视图层级的上层。
+ 4.DEMO中绘制路径规划结果时，修复计算显示区域的BUG。
+

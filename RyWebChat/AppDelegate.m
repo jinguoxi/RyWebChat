@@ -104,14 +104,17 @@
       withString:@""]
      stringByReplacingOccurrencesOfString:@" "
      withString:@""];
-    
+    NSLog(@"token: %@", token);
     [[MAEliteChat shareEliteChat] setDeviceToken:token];
 }
+
+
 /**
  *  如果 App 未被系统冻结，则您在 AppDelegate 的 -application:didReceiveRemoteNotification: 中可以捕获该消息。
  */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     // userInfo为远程推送的内容
+    NSLog(@"%@", userInfo);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -135,5 +138,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
 
 @end

@@ -12,7 +12,6 @@
 		A1431F3C1E4C0A6A001BF142 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1431F3B1E4C0A6A001BF142 /* main.m */; };
 		A1431F3F1E4C0A6A001BF142 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A1431F3E1E4C0A6A001BF142 /* AppDelegate.m */; };
 		A1431F421E4C0A6A001BF142 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1431F411E4C0A6A001BF142 /* ViewController.m */; };
-		A1431F451E4C0A6A001BF142 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1431F431E4C0A6A001BF142 /* Main.storyboard */; };
 		A1431F471E4C0A6A001BF142 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1431F461E4C0A6A001BF142 /* Assets.xcassets */; };
 		A1431F4A1E4C0A6A001BF142 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1431F481E4C0A6A001BF142 /* LaunchScreen.storyboard */; };
 		A1431F521E4C0C17001BF142 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1431F511E4C0C17001BF142 /* AssetsLibrary.framework */; };
@@ -61,6 +60,8 @@
 		A1F3995C1E5419A10082D513 /* MAClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399511E5419A10082D513 /* MAClient.m */; };
 		A1F3995D1E5419A10082D513 /* MAEliteChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399541E5419A10082D513 /* MAEliteChat.m */; };
 		A1F3995E1E5419A10082D513 /* MAMessageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399571E5419A10082D513 /* MAMessageUtils.m */; };
+		AC9B17941F4AC61F005EE487 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9B17931F4AC61F005EE487 /* NSString+MD5.m */; };
+		ACAE04CB20CE541C0054EA7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1431F431E4C0A6A001BF142 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -164,6 +165,8 @@
 		A1F399571E5419A10082D513 /* MAMessageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAMessageUtils.m; sourceTree = "<group>"; };
 		A2D949C3E5F6BEDA70379934 /* libPods-RyWebChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RyWebChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC467AEB1EC589E900574B42 /* RyWebChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RyWebChat.entitlements; sourceTree = "<group>"; };
+		AC9B17921F4AC61F005EE487 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		AC9B17931F4AC61F005EE487 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		F557F79445B3893E4B491F15 /* Pods-RyWebChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RyWebChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -443,6 +446,8 @@
 				A1F3994F1E5419A10082D513 /* MAChat.m */,
 				A1F399501E5419A10082D513 /* MAClient.h */,
 				A1F399511E5419A10082D513 /* MAClient.m */,
+				AC9B17921F4AC61F005EE487 /* NSString+MD5.h */,
+				AC9B17931F4AC61F005EE487 /* NSString+MD5.m */,
 			);
 			path = MAClient;
 			sourceTree = "<group>";
@@ -527,7 +532,7 @@
 				A1CFF3FE1E5AF0DC00846381 /* MAChatMsg.bundle in Resources */,
 				A1431F4A1E4C0A6A001BF142 /* LaunchScreen.storyboard in Resources */,
 				A1431F471E4C0A6A001BF142 /* Assets.xcassets in Resources */,
-				A1431F451E4C0A6A001BF142 /* Main.storyboard in Resources */,
+				ACAE04CB20CE541C0054EA7A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +611,7 @@
 				A123A4D21E5D7A0E00B19948 /* UIPlaceHolderTextView.m in Sources */,
 				A1CFF3F21E5AEEAB00846381 /* MALocationCell.m in Sources */,
 				A1F3995A1E5419A10082D513 /* MAJSONObject.m in Sources */,
+				AC9B17941F4AC61F005EE487 /* NSString+MD5.m in Sources */,
 				A1431F8D1E4C16D5001BF142 /* MASessionTimeOut.m in Sources */,
 				A1F3995D1E5419A10082D513 /* MAEliteChat.m in Sources */,
 				A1431F8C1E4C16D5001BF142 /* MAFNetworkingTool.m in Sources */,

@@ -1,8 +1,8 @@
- //
+//
 //  MARyChatViewController.m
 //  RyWebChat
 //
-//  Created by nwk on 2017/2/9.
+//  Created by nwk on 2017/2/9.MARyChatViewController.h
 //  Copyright © 2017年 nwkcom.sh.n22. All rights reserved.
 //
 
@@ -21,8 +21,11 @@
 #import "MASatisfactionView.h"
 #import "MALocationViewController.h"
 #import "MALocationDetailController.h"
+#import "SimpleMessageCell.h"
+#import "SimpleMessage.h"
+#import "NSString+Category.h"
 
-@interface MARyChatViewController ()<RCIMReceiveMessageDelegate,MASatisfactionViewDelegate,MALocationDelegate>
+@interface MARyChatViewController ()<RCIMReceiveMessageDelegate,MASatisfactionViewDelegate,MALocationDelegate, RCAttributedLabelDelegate>
 
 @end
 
@@ -37,19 +40,20 @@
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
     
     [[MAEliteChat shareEliteChat] sendQueueRequest];
+    [self registerClass:[SimpleMessageCell class] forMessageClass:[SimpleMessage class]];
 }
 
 //小灰色提示条
 - (void)addTipsMessage:(NSString *)msg {
     RCInformationNotificationMessage *warningMsg = [RCInformationNotificationMessage
-     notificationWithMessage:msg extra:nil];
+                                                    notificationWithMessage:msg extra:nil];
     
     // 如果不保存到本地数据库，需要初始化消息实体并将messageId要设置为－1。
     RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
-                                          targetId:self.targetId
-                                         direction:MessageDirection_SEND
-                                         messageId:-1
-                                           content:warningMsg];
+                                                     targetId:self.targetId
+                                                    direction:MessageDirection_SEND
+                                                    messageId:-1
+                                                      content:warningMsg];
     
     // 在当前聊天界面插入该消息
     [self appendAndDisplayMessage:insertMessage];
@@ -77,10 +81,10 @@
         NSLog(@"---%@",infoMsg.message);
         
         [self parseMessage:infoMsg.message rcMsg:message];
-
+        
     } else if ([message.content isKindOfClass:[EliteMessage class]]) {
         EliteMessage *eliteMsg = (EliteMessage *)message.content;
-
+        
         NSLog(@"---%@",eliteMsg.message);
         
         [self parseMessage:eliteMsg.message rcMsg:message];
@@ -93,7 +97,7 @@
         NSLog(@"name---%@",fileMsg.name);
         NSLog(@"type---%@",fileMsg.type);
     }
-
+    
 }
 
 /**
@@ -126,6 +130,20 @@
     return YES;
 }
 
+-(void)sentRobotMessage:(NSString *)content state:(NSString *) state{
+    RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:content extra:state];
+    NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
+    [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae];
+    
+    RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
+                                                     targetId:self.targetId
+                                                    direction:MessageDirection_RECEIVE
+                                                    messageId:-1
+                                                      content:simpleMessgae];
+    // 在当前聊天界面插入该消息
+    [self appendAndDisplayMessage:insertMessage];
+}
+
 /**
  *  解析消息
  *
@@ -134,8 +152,52 @@
 - (void)parseMessage:(NSString *)message rcMsg:(RCMessage *)rcMsg {
     
     MAJSONObject *json = [MAJSONObject initJSONObject:message];
-    
     switch ([json getInt:@"type"]) {
+            //机器人消息
+        case ROBOT_MESSAGE_STATUS:{
+            NSDictionary *robotContent = [json getObject:@"content"];
+            NSDictionary *robotData = [robotContent getObject:@"data"];
+            int state = [robotData getInt:@"state"];
+            NSArray *answers = [robotData objectForKey:@"answers"];
+            
+            if(state == 1){
+                NSString *answerStr = [answers firstObject];
+                [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state]];
+            }else if(state == 2){
+                NSArray *recommend = [robotData objectForKey:@"recommend"];
+                int recommendList = (int)recommend.count;//减少调用次数
+                NSString *answersStr = @"";
+                for( int i=0; i < recommendList; i++){
+                    NSLog(@"%i-%@", i, [recommend objectAtIndex:i]);
+                    if(i != (recommendList - 1)){
+                        answersStr = [[answersStr stringByAppendingString:[recommend objectAtIndex:i]] stringByAppendingString:@"\n\n"];
+                    }else {
+                        answersStr = [answersStr stringByAppendingString:[recommend objectAtIndex:i]];
+                    }
+                }
+                NSLog(@"%@",answersStr);//假酒
+                [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state]];
+            }else if(state == 3){
+                // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];//左右
+                [self sentRobotMessage:@"亲的问题无法识别， 您可以【转人工】" state:[NSString stringWithFormat:@"%d", state]];
+            }else {
+                [self addTipsMessage:@"无法识别"];
+            }
+            break;
+        }
+            //转人工
+        case ROBOT_TRANSFER_MESSAGE:{
+            int result = [json getInt:@"result"];
+            NSString *message = [json getString:@"message"];;
+            if(result == MASUCCESS){
+                int queueLength = [json getInt:@"queueLength"];
+                if (queueLength != 0) {
+                    message = [[@"当前排在第" stringByAppendingString:[NSString stringWithFormat:@"%d",queueLength]] stringByAppendingString:@"位"];
+                }
+            }
+            [self addTipsMessage:message];
+            break;
+        }
             //客户发送
         case MASEND_CHAT_REQUEST: //发出聊天请求 tips 提示
         {
@@ -158,8 +220,9 @@
             [[MAChat getInstance] setRequest:request];
             
             [self addTipsMessage:msg];
-        }
             break;
+        }
+            
         case MACANCEL_CHAT_REQUEST: //取消聊天请求
             NSLog(@"取消聊天请求");
             
@@ -182,7 +245,7 @@
                 
                 NSDictionary *originalMessage = [json getObject:@"originalMessage"];
                 NSString *objectName = [originalMessage getString:@"objectName"];
-
+                
                 MASaveMessage *saveUnmsg = nil;
                 if([objectName isEqual:TXT_MSG]) {
                     
@@ -242,13 +305,13 @@
             NSLog(@"通知客户端可以开始聊天");
             long sessionId = [json getLong:@"sessionId"];
             NSArray *agents = [json getObject:@"agents"];
+            BOOL robotMode = [json objectForKey:@"robotMode"];
             
-            NSDictionary *dic = agents.firstObject;
+            NSDictionary *dic = agents.firstObject; //你好请问你那边有假酒吗
             
             MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
             
-            MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent];
-            
+            MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent robotMode:robotMode];
             [[MAChat getInstance] setSession:session];
             
             [self refreshUserInfoSession];
@@ -294,7 +357,7 @@
                     RCMessage *message = [[RCMessage alloc] initWithType:self.conversationType targetId:self.targetId direction:rcMsg.messageDirection messageId:rcMsg.messageId content:textMsg];
                     
                     [self appendAndDisplayMessage:message];
-                      // [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:rcMsg.sentStatus content:rcMsg.content];
+                    // [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:rcMsg.sentStatus content:rcMsg.content];
                 } else if (noticeType == MATRANSFER_NOTICE || noticeType == MAINVITE_NOTICE) {
                     NSString *content = [msgDic getString:@"content"];
                     
@@ -361,7 +424,7 @@
                 id type = [content getString:@"type"];
                 extra[@"type"] = type;//elite消息类型
             }
-           
+            
         }
         messageContent.extra = [extra mj_JSONString];
         
@@ -465,7 +528,7 @@
 
 //点击cell
 - (void)didTapMessageCell:(RCMessageModel *)model {
-
+    NSLog(@"didTapMessageCell");
     if (nil == model) return;
     
     RCMessageContent *_messageContent = model.content;
@@ -489,5 +552,59 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+    RCMessageModel *msgModel = self.conversationDataRepository[indexPath.item];
+    
+    if ([cell isKindOfClass:[SimpleMessageCell class]]) {
+        SimpleMessageCell *newCell = (SimpleMessageCell *)cell;
+        SimpleMessage *msg = (SimpleMessage *)msgModel.content;
+        if([msg.extra isEqualToString:@"2"]){
+            NSArray *array = [msg.content splitStringWithSymbol:@"\n\n"];//你好
+            int count = (int)array.count;
+            
+            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.content];
+            NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
+                                         NSFontAttributeName:[UIFont systemFontOfSize:16]};
+            for( int i=0; i<count; i++){
+                NSString *temp = [array objectAtIndex:i];
+                NSLog(@"%i-%@", i, temp);
+                NSString *confirmString = temp;
+                NSRange range = [msg.content rangeOfString:confirmString];
+                [muString addAttributes:attributes range:range];
+                NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                                              (CFStringRef)temp,
+                                                                                                              NULL,
+                                                                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                              kCFStringEncodingUTF8));
+                NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
+                [newCell.textLabel.attributedStrings addObject:textCheckingResult];
+            }
+            newCell.textLabel.attributedText = muString;
+        }else if([msg.extra isEqualToString:@"3"]){
+            NSString *confirmString = @"【转人工】";
+            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.content];
+            NSRange range = [msg.content rangeOfString:confirmString];
+            NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
+                                         NSFontAttributeName:[UIFont systemFontOfSize:16]};
+            [muString addAttributes:attributes range:range];
+            NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                                          (CFStringRef)@"【转人工】",
+                                                                                                          NULL,
+                                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                          kCFStringEncodingUTF8));
+            NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
+            [newCell.textLabel.attributedStrings addObject:textCheckingResult];
+            newCell.textLabel.attributedText = muString;
+        }
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return YES;
+}
+
+
 
 @end

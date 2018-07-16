@@ -119,7 +119,7 @@
 -(void)configUI
 {
     [self.view addSubview:self.navBar];
-
+    
     [self.view addSubview:self.mapView];
     
     [self.view addSubview:self.centerCallOutImageView];
@@ -166,8 +166,10 @@
 
 -(void)startGeocodesearchWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    reverseGeocodeSearchOption.reverseGeoPoint = coordinate;
+    BMKReverseGeoCodeSearchOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeSearchOption alloc]init];
+    //    reverseGeocodeSearchOption.reverseGeoPoint = coordinate;
+    reverseGeocodeSearchOption.location = coordinate;
+    reverseGeocodeSearchOption.isLatestAdmin = true;
     BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
     if(flag)
     {
@@ -307,7 +309,7 @@
  *@param result 搜索结BMKGeoCodeSearch果
  *@param error 错误号，@see BMKSearchErrorCode
  */
-- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error
 {
     NSLog(@"返回地址信息搜索结果,失败-------------");
 }
@@ -319,7 +321,8 @@
  *@param error 错误号，@see BMKSearchErrorCode
  */
 
-- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+
+- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeSearchResult *)result errorCode:(BMKSearchErrorCode)error
 {
     if (error ==BMK_SEARCH_NO_ERROR && !touchAddressCell)
     {

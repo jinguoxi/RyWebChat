@@ -17,7 +17,8 @@
 #import "MASatisfactionView.h"
 #import "MAMessageUtils.h"
 
-#define MACLIENTSERVERADDR @"http://118.242.18.190/webchat" //服务器地址
+//#define MACLIENTSERVERADDR @"https://cht.1919.cn/EliteWebChat"
+#define MACLIENTSERVERADDR @"http://dev.elitecrm.com/webchat" //服务器地址
 //#define MACLIENTSERVERADDR @"http://192.168.2.80:8980/webchat" //服务器地址
 
 @interface ViewController ()
@@ -78,7 +79,7 @@
     int parseQueueId = [q_id intValue];
     
     __weak typeof(self) myself = self;
-   // NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+    // NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
     [[MAEliteChat shareEliteChat] initAndStart:MACLIENTSERVERADDR userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil complete:^(BOOL result) {
         if (result) {
             [myself switchChatViewController];
@@ -99,12 +100,12 @@
         [self.chatViewController.view removeFromSuperview];
         self.chatViewController = nil;
     }
-
+    
     self.chatViewController.title = CHAT_TITLE;
     self.chatViewController.mapType = MAMAPTYPE_Baidu;
     //显示聊天会话界面
     [self.navigationController pushViewController:self.chatViewController animated:YES];
-
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

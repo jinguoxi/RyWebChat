@@ -18,6 +18,12 @@ typedef enum {
     MAREGISTER = 3
 }MALoginStatus;
 
+//机器人消息
+typedef enum {
+    ROBOT_MESSAGE_STATUS = 301,   //机器人聊天
+    ROBOT_TRANSFER_MESSAGE = 302  //转人工
+}MASocketRobotStatus;
+
 //客户发送
 typedef enum {
     MASEND_CHAT_REQUEST = 101,//发出聊天请求

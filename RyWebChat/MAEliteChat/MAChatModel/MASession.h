@@ -13,7 +13,8 @@
 
 @property (strong, nonatomic) MAAgent *currentAgent;
 @property (assign, nonatomic) long sessionId;
+@property(nonatomic, assign) BOOL robotMode;
 
-+ (instancetype)initWithSessionId:(long)sessionId agent:(MAAgent *)currentAgent;
++ (instancetype)initWithSessionId:(long)sessionId agent:(MAAgent *)currentAgent robotMode:(BOOL) robotMode;
 
 @end

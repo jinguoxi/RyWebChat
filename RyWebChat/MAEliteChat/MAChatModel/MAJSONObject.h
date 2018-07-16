@@ -21,4 +21,6 @@
 
 - (id)getObject:(NSString *)key;
 
+- (BOOL)objectForKey:(NSString *)key;
+
 @end

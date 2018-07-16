@@ -55,5 +55,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
 </dict>
 </plist>

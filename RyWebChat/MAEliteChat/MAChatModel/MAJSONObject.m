@@ -20,9 +20,7 @@
 
 + (instancetype)initJSONObject:(NSString *)jsonStr {
     MAJSONObject *object = [MAJSONObject new];
-    
     object.jsonDic = [jsonStr mj_JSONObject];
-    
     return object;
 }
 
@@ -40,6 +38,10 @@
 
 - (id)getObject:(NSString *)key {
     return [self.jsonDic getObject:key];
+}
+
+- (BOOL)objectForKey:(NSString *)key{
+    return [[self.jsonDic objectForKey:key] boolValue];
 }
 
 @end

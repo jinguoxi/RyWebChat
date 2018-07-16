@@ -11,6 +11,7 @@
 #import "MAMessageUtils.h"
 #import "MAChat.h"
 #import "MAHttpService.h"
+#import "SimpleMessage.h"
 
 @interface MAEliteChat()<RCIMUserInfoDataSource>
 
@@ -38,6 +39,7 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] initWithAppKey:key];
     
     [[RCIM sharedRCIM] registerMessageType:[EliteMessage class]];
+    [[RCIMClient sharedRCIMClient]registerMessageType:SimpleMessage.class];  //注册自定义显示消息   2017-07-04
     //开启用户信息和群组信息的持久化
     [RCIM sharedRCIM].enablePersistentUserInfoCache = YES;
     
@@ -108,7 +110,7 @@ static MAEliteChat *eliteChat=nil;
     
     [self contentRyTokenService:client.serverAddr userId:client.userId nickName:client.name protrait:client.portraitUri complete:^(NSString *token) {
         NSLog(@"token:%@", token);
-       // dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             if (isEliteEmpty(token)) {
                 complete(NO);
             } else {
@@ -118,7 +120,7 @@ static MAEliteChat *eliteChat=nil;
                 [MAChat clearRequestAndSession];
                 complete(YES);
             }
-       // });
+        });
         
     }];
 }

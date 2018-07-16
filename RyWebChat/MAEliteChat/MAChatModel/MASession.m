@@ -10,12 +10,11 @@
 
 @implementation MASession
 
-
-+ (instancetype)initWithSessionId:(long)sessionId agent:(MAAgent *)currentAgent {
++ (instancetype)initWithSessionId:(long)sessionId agent:(MAAgent *)currentAgent robotMode:(BOOL)robotMode{
     MASession *session = [MASession new];
     session.sessionId = sessionId;
     session.currentAgent = currentAgent;
-    
+    session.robotMode = robotMode;
     return session;
 }
 @end

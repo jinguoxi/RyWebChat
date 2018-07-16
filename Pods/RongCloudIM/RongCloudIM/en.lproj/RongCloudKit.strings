@@ -4,7 +4,7 @@
 "RC:ImgTextMsg"="[RichContent]";
 "RC:PSMultiImgTxtMsg"="[RichContent]";
 "RC:PSImgTxtMsg"="[RichContent]";
-"RC:SightMsg"="[Small video]";
+"RC:SightMsg"="[Video]";
 "Draft"="[Draft]";
 "conversation_private_collection_title"="Private Groups";
 "conversation_customer_collection_title"="Customer Groups";
@@ -116,7 +116,7 @@
 "Wait"="Please wait a moment...";
 "Searching"="Searching...";
 "Search"="Search:";
-"Right_unReadMessage"="%ld new message";
+"Right_unReadMessage"="%@ new message";
 "HistoryMessageTip"="Above is the historical messages";
 "DISCUSSION"="discussion";
 "DateFormat"="MM-dd";
@@ -171,7 +171,7 @@
 "GroupCreated"="%@ created the group";
 "GroupInvited"="%@ invited %@ to join the group";
 "GroupRemoved"="%@ removed %@ from the group chat";
-"GroupByRemoved"="%@ removed %@ from the group chat";
+"GroupByRemoved"="%@ were removed from the group chat by %@";
 "GroupDismiss"="%@ dismissed the group";
 "GroupQuit"="%@ quitted the group";
 "GroupChanged"="%@ changed the group name to \"%@\"";
@@ -180,9 +180,9 @@
 "GroupAnnouncementUpdated"="%@更新了群公告";
 "ImageLoadFailed"="Unable to download image";
 "ImageHasBeenDeleted"="The image has been deleted";
-"HaveMentioned"="You were mentioned";
+"HaveMentioned"="[You were mentioned]";
 "HaveMentionedForNotification"="You were mentioned ";
-"chatDate"="MMM d, yyyy";
+"chatDate"="d MMM yyyy";
 "chatListDate"="M/d/yyyy";
 "locale"="en_US";
 "SameYearDate"="M/d/yy";
@@ -203,9 +203,14 @@
 "RecommendedToYou"="recommended %@ to you.";
 "Person"="";
 "SelectContact"="Select Contact";
+"MessageTapMore"="More...";
+
+"bottom_result_view_choosed_person_prefix"="Selected";
+"bottom_result_view_choosed_person_subfix"="member(s)";
 "hold_to_talk_title"="Hold to talk";
 "release_to_send_title"="Release to send";
 "message_too_short"="Message too short";
+"message_too_long"="Message too long";
 "slide_up_to_cancel_title"="Slide up to cancel";
 "release_to_cancel_title"="Release to cancel";
 "whiteSpaceMessage"="Can't send white space message";
@@ -229,8 +234,11 @@
 "AccessRightTitle"="no access right";
 "Full_Image"="Full Image";
 "Preview"="Preview";
+"Max_Selected_Photos"="You can only select 9 photos at most";
+"Confirm"="Confirm";
 "Location_Service"="Unable to get your location data,Please enable location service in “Settings”->“Privacy”->“Location Services” and allows the application to use location services.";
-"PhotoOniCloud"="The photo has not been downloaded from the iCloud, please download the system from the album to the local post to try again.";
+"iCloudDownloading"="iCloud Downloading...";
+"iCloudDownloadFail"="iCloud Download failed";
 "SelectMentionedUser"="Select Contact";
 "ToSearch"="Search";
 "VoiceInput"="Voice Input";
@@ -238,3 +246,4 @@
 "Send"="Send";
 "TouchToTakeAPictureAndPressAndholdTheRecordingVideo"="Tap to take photo and hold to record video";
 "downloadFailedClickToDownload"="Download failed, click to download";
+"OvermMaximum"="the maximum size of file is limited to 100MB";

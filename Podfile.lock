@@ -26,8 +26,8 @@ DEPENDENCIES:
   - BaiduMapKit
   - Masonry
   - MJExtension
-  - RongCloudIM/IMKit
-  - RongCloudIM/IMLib
+  - RongCloudIM/IMKit (~> 2.9.1)
+  - RongCloudIM/IMLib (~> 2.9.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -44,6 +44,6 @@ SPEC CHECKSUMS:
   MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
   RongCloudIM: fdfa42630aec09c92d6054753ea3e7a7db75bec2
 
-PODFILE CHECKSUM: d528922d8b99ace967a8cb5c6c6d9d59048d40c8
+PODFILE CHECKSUM: 505997a9beb7fa60dad2c983c26a26201679bbe6
 
 COCOAPODS: 1.5.3

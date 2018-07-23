@@ -165,7 +165,7 @@
                 [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state]];
             }else if(state == 2){
                 NSArray *recommend = [robotData objectForKey:@"recommend"];
-                int recommendList = (int)recommend.count;//减少调用次数
+                int recommendList = (int)recommend.count;//调用次数
                 NSString *answersStr = @"";
                 for( int i=0; i < recommendList; i++){
                     NSLog(@"%i-%@", i, [recommend objectAtIndex:i]);
@@ -175,11 +175,18 @@
                         answersStr = [answersStr stringByAppendingString:[recommend objectAtIndex:i]];
                     }
                 }
-                NSLog(@"%@",answersStr);//假酒
+                NSLog(@"%@",answersStr);
                 [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state]];
             }else if(state == 3){
                 // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];//左右
-                [self sentRobotMessage:@"亲的问题无法识别， 您可以【转人工】" state:[NSString stringWithFormat:@"%d", state]];
+                 BOOL toHuman = [[robotData objectForKey:@"trans_to_human"] boolValue];
+                if(toHuman){
+                    [self sentRobotMessage:@"亲的问题无法识别， 您可以【转人工】" state:[NSString stringWithFormat:@"%d", state]];
+                }else {
+                    NSString *question = [robotData getString:@"question"];
+                    [self sentRobotMessage:question state:[NSString stringWithFormat:@"%d", state]];
+                }
+                
             }else {
                 [self addTipsMessage:@"无法识别"];
             }

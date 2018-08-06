@@ -41,7 +41,7 @@
 }
 - (UINavigationBar *)navBar {
     if (!_navBar) {
-        _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 64)];
+        _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 15, CGRectGetWidth(self.view.frame), 64)];
         //创建一个item
         UINavigationItem *item = [[UINavigationItem alloc]initWithTitle:@"位置信息"];
         _navBar.items = @[item];

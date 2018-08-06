@@ -162,7 +162,12 @@
             
             if(state == 1){
                 NSString *answerStr = [answers firstObject];
-                [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state]];
+                answerStr=[answerStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
+                 NSRange beginIndex = [answerStr rangeOfString:@"<img"];
+                if(beginIndex.location > 0 && beginIndex.length > 0){
+                     answerStr = [answerStr substringToIndex: beginIndex.location];
+                }
+               [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state]];
             }else if(state == 2){
                 NSArray *recommend = [robotData objectForKey:@"recommend"];
                 int recommendList = (int)recommend.count;//调用次数
@@ -175,20 +180,22 @@
                         answersStr = [answersStr stringByAppendingString:[recommend objectAtIndex:i]];
                     }
                 }
+                answersStr = [answersStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
                 NSLog(@"%@",answersStr);
                 [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state]];
             }else if(state == 3){
-                // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];//左右
-                 BOOL toHuman = [[robotData objectForKey:@"trans_to_human"] boolValue];
+                // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];
+                BOOL toHuman = [[robotData objectForKey:@"trans_to_human"] boolValue];
                 if(toHuman){
-                    [self sentRobotMessage:@"亲的问题无法识别， 您可以【转人工】" state:[NSString stringWithFormat:@"%d", state]];
+                    [self sentRobotMessage:@"亲，由于这个问题暂时无法解答，给你带来不便非常抱歉，是否为您转人工服务呢！ 【转人工】" state:[NSString stringWithFormat:@"%d", state]];
                 }else {
-                    NSString *question = [robotData getString:@"question"];
+//                  NSString *question = [robotData getString:@"question"];
+                    NSString *question = @"亲，能否重新阐述一下，这能让我更好的为您解答问题！";
                     [self sentRobotMessage:question state:[NSString stringWithFormat:@"%d", state]];
                 }
                 
             }else {
-                [self addTipsMessage:@"无法识别"];
+               // [self addTipsMessage:@"无法识别"];
             }
             break;
         }

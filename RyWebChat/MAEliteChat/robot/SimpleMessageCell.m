@@ -281,6 +281,9 @@
       NSLog(@"didSelectLinkWithURL");
     NSString * content = [url absoluteString];
     NSString *decodedString = [content stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding ];
+    if([decodedString hasPrefix:@"http://"] || [decodedString hasPrefix:@"https://"]){
+        return;
+    }
     if([@"【转人工】" isEqualToString:decodedString]){
         [self sendTransferMessage];
     }else {

@@ -77,11 +77,8 @@
     NSLog(@"message.content:%@",message.content);
     if ([message.content isKindOfClass:[RCInformationNotificationMessage class]]) {
         RCInformationNotificationMessage *infoMsg = (RCInformationNotificationMessage *)message.content;
-        
         NSLog(@"---%@",infoMsg.message);
-        
         [self parseMessage:infoMsg.message rcMsg:message];
-        
     } else if ([message.content isKindOfClass:[EliteMessage class]]) {
         EliteMessage *eliteMsg = (EliteMessage *)message.content;
         
@@ -130,10 +127,10 @@
     return YES;
 }
 
--(void)sentRobotMessage:(NSString *)content state:(NSString *) state{
+-(void)sentRobotMessage:(NSString *)content state:(NSString *) state receivedTime:(long long)receivedTime{
     RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:content extra:state];
     NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
-    [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae];
+    [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae sentTime:receivedTime];
     
     RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
                                                      targetId:self.targetId
@@ -158,8 +155,8 @@
             NSDictionary *robotContent = [json getObject:@"content"];
             NSDictionary *robotData = [robotContent getObject:@"data"];
             int state = [robotData getInt:@"state"];
+            long receivedTime = rcMsg.receivedTime;
             NSArray *answers = [robotData objectForKey:@"answers"];
-            
             if(state == 1){
                 NSString *answerStr = [answers firstObject];
                 answerStr=[answerStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
@@ -167,7 +164,7 @@
                 if(beginIndex.location > 0 && beginIndex.length > 0){
                      answerStr = [answerStr substringToIndex: beginIndex.location];
                 }
-               [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state]];
+                [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
             }else if(state == 2){
                 NSArray *recommend = [robotData objectForKey:@"recommend"];
                 int recommendList = (int)recommend.count;//调用次数
@@ -182,16 +179,16 @@
                 }
                 answersStr = [answersStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
                 NSLog(@"%@",answersStr);
-                [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state]];
+                [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
             }else if(state == 3){
                 // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];
                 BOOL toHuman = [[robotData objectForKey:@"trans_to_human"] boolValue];
                 if(toHuman){
-                    [self sentRobotMessage:@"亲，由于这个问题暂时无法解答，给你带来不便非常抱歉，是否为您转人工服务呢！ 【转人工】" state:[NSString stringWithFormat:@"%d", state]];
+                    [self sentRobotMessage:@"亲，由于这个问题暂时无法解答，给你带来不便非常抱歉，是否为您转人工服务呢！ 【转人工】" state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
                 }else {
 //                  NSString *question = [robotData getString:@"question"];
                     NSString *question = @"亲，能否重新阐述一下，这能让我更好的为您解答问题！";
-                    [self sentRobotMessage:question state:[NSString stringWithFormat:@"%d", state]];
+                    [self sentRobotMessage:question state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
                 }
                 
             }else {

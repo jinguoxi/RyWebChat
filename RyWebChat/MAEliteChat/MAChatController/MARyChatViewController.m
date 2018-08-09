@@ -38,7 +38,7 @@
     self.displayUserNameInCell = NO;
     
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
-    
+    //[[RCIM sharedRCIM] setUserInfoDataSource:self];
     [[MAEliteChat shareEliteChat] sendQueueRequest];
     [self registerClass:[SimpleMessageCell class] forMessageClass:[SimpleMessage class]];
 }
@@ -100,22 +100,22 @@
 /**
  *  刷新用户信息，更新session
  */
-- (void)refreshUserInfoSession {
+- (void)refreshUserInfoSession{
     MASession *session = [[MAChat getInstance] getSession];
-    
     NSString *icon = session.currentAgent.portraitUri;
     if (icon && ![icon isEqualToString:@""]) {
-        NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
-        
-        icon = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:icon];
+        if(! ([icon hasPrefix:@"http"] || [icon hasPrefix:@"https"])){
+            NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
+            icon = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:icon];
+        }
     }
     
     session.currentAgent.portraitUri = icon;
-    
-    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:self.targetId];
+    NSString * userId = self.targetId;
+    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:userId];
     userInfo.name = session.currentAgent.name;
     userInfo.portraitUri = icon;
-    [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:self.targetId];
+    [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userId];
 }
 
 -(BOOL)onRCIMCustomAlertSound:(RCMessage*)message {
@@ -128,15 +128,30 @@
 }
 
 -(void)sentRobotMessage:(NSString *)content state:(NSString *) state receivedTime:(long long)receivedTime{
+    
     RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:content extra:state];
+    MASession *session = [[MAChat getInstance] getSession];
+    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:session.currentAgent.userId];
+    userInfo.name = session.currentAgent.name;
+    userInfo.portraitUri = @"https://cdn.duitang.com/uploads/item/201508/30/20150830105732_nZCLV.jpeg";
+//    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:session.currentAgent.userId];
+//    userInfo.name = session.currentAgent.name;
+//    userInfo.portraitUri = @"https://cdn.duitang.com/uploads/item/201508/30/20150830105732_nZCLV.jpeg";
+//    simpleMessgae.senderUserInfo = userInfo;
+//    [[RCIMClient sharedRCIMClient] sendMessage:ConversationType_PRIVATE targetId:self.targetId content:simpleMessgae pushContent:nil pushData:nil success:nil error:nil];
+    
+//    [[RCIM sharedRCIM] sendMessage:self.conversationType targetId:self.targetId content:simpleMessgae pushContent:nil pushData:nil success:nil error:nil];
+    
     NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
     [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae sentTime:receivedTime];
-    
+    simpleMessgae.senderUserInfo = userInfo;
     RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
                                                      targetId:self.targetId
                                                     direction:MessageDirection_RECEIVE
                                                     messageId:-1
                                                       content:simpleMessgae];
+   
+    insertMessage.content.senderUserInfo = userInfo;
     // 在当前聊天界面插入该消息
     [self appendAndDisplayMessage:insertMessage];
 }
@@ -321,7 +336,6 @@
             NSDictionary *dic = agents.firstObject; //你好请问你那边有假酒吗
             
             MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
-            
             MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent robotMode:robotMode];
             [[MAChat getInstance] setSession:session];
             
@@ -565,7 +579,6 @@
 }
 
 - (void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    
     RCMessageModel *msgModel = self.conversationDataRepository[indexPath.item];
     
     if ([cell isKindOfClass:[SimpleMessageCell class]]) {
@@ -608,6 +621,13 @@
             NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
             [newCell.textLabel.attributedStrings addObject:textCheckingResult];
             newCell.textLabel.attributedText = muString;
+            MASession *session = [[MAChat getInstance] getSession];
+            UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
+             NSLog(@"字符串:%@",portraitView);
+            NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
+            UIImage *image =  [UIImage imageWithData:data];
+            portraitView.image = image;
+            newCell.portraitImageView = portraitView;
         }
     }
 }
@@ -616,6 +636,9 @@
     return YES;
 }
 
+//- (void)willDisplayMessageCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath{
+//    NSLog(indexPath);
+//}
 
 
 @end

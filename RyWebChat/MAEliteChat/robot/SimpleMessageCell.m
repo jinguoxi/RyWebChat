@@ -142,6 +142,7 @@
     
     if (MessageDirection_RECEIVE == self.messageDirection) {
         messageContentViewRect.size.width = __bubbleSize.width;
+        messageContentViewRect.origin.x = 50;
         self.messageContentView.frame = messageContentViewRect;
         
         self.bubbleBackgroundView.frame = CGRectMake(0, 0, __bubbleSize.width, __bubbleSize.height);
@@ -311,6 +312,6 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     return YES;
-} 
+}
 
 @end

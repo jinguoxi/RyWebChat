@@ -476,9 +476,9 @@
 		AC7497A220FC79F300BA3B1B /* robot */ = {
 			isa = PBXGroup;
 			children = (
+				AC7497A520FC79F300BA3B1B /* SimpleMessage.h */,
 				AC7497A320FC79F300BA3B1B /* SimpleMessage.m */,
 				AC7497A420FC79F300BA3B1B /* SimpleMessageCell.h */,
-				AC7497A520FC79F300BA3B1B /* SimpleMessage.h */,
 				AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */,
 			);
 			path = robot;

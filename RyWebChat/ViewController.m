@@ -112,6 +112,9 @@
     
     self.chatViewController.title = CHAT_TITLE;
     self.chatViewController.mapType = MAMAPTYPE_Baidu;
+
+    // [MAMessageUtils sendTxtMessage:@"txtmessage"];
+    
     //显示聊天会话界面
     [self.navigationController pushViewController:self.chatViewController animated:YES];
     

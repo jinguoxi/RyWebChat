@@ -163,6 +163,7 @@ static MAEliteChat *eliteChat=nil;
             
             NSLog(@"---%zd",status);
             complete(nil);
+            //[self contentRyTokenService:serverAddr userId:userId nickName:nickName protrait:portraitUri complete:complete];
             
         } tokenIncorrect:^{
             [self contentRyTokenService:serverAddr userId:userId nickName:nickName protrait:portraitUri complete:complete];

@@ -134,14 +134,6 @@
     RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:session.currentAgent.userId];
     userInfo.name = session.currentAgent.name;
     userInfo.portraitUri = @"https://cdn.duitang.com/uploads/item/201508/30/20150830105732_nZCLV.jpeg";
-//    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:session.currentAgent.userId];
-//    userInfo.name = session.currentAgent.name;
-//    userInfo.portraitUri = @"https://cdn.duitang.com/uploads/item/201508/30/20150830105732_nZCLV.jpeg";
-//    simpleMessgae.senderUserInfo = userInfo;
-//    [[RCIMClient sharedRCIMClient] sendMessage:ConversationType_PRIVATE targetId:self.targetId content:simpleMessgae pushContent:nil pushData:nil success:nil error:nil];
-    
-//    [[RCIM sharedRCIM] sendMessage:self.conversationType targetId:self.targetId content:simpleMessgae pushContent:nil pushData:nil success:nil error:nil];
-    
     NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
     [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae sentTime:receivedTime];
     simpleMessgae.senderUserInfo = userInfo;
@@ -150,10 +142,11 @@
                                                     direction:MessageDirection_RECEIVE
                                                     messageId:-1
                                                       content:simpleMessgae];
-   
+    
     insertMessage.content.senderUserInfo = userInfo;
     // 在当前聊天界面插入该消息
     [self appendAndDisplayMessage:insertMessage];
+
 }
 
 /**
@@ -298,6 +291,7 @@
                 
                 [[MAEliteChat shareEliteChat] sendQueueRequest];
             }
+             //[MAMessageUtils sendTxtMessage:@"txtMessage__"];
             
             break;
         case MASEND_PRE_CHAT_MESSAGE: //发送预消息（还没排完队时候的消息）
@@ -343,7 +337,6 @@
             
             NSString *tipsMsg = [NSString stringWithFormat:@"坐席[%@]为您服务",currentAgent.name];
             [self addTipsMessage:tipsMsg];
-           // [MAMessageUtils sendTxtMessage:@"txtMessage__"];
             [self sendUnsendMessages];
         }
             break;
@@ -405,6 +398,7 @@
 - (void)isEnableInputBarControl:(BOOL)enable {
     self.chatSessionInputBarControl.userInteractionEnabled = enable;
 }
+
 /**
  * 发送之前未送达的消,当排队之前发出的消息,会先缓存起来，如果排上队了，就会补发这些消息
  */
@@ -413,35 +407,47 @@
     NSMutableArray *array = [[MAChat getInstance] getUnsendMessage];
     
     NSArray *tempArray = [NSArray arrayWithArray:array];
-    
+    NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
     for (MASaveMessage *message in tempArray) {
         
         id content = [message.contentDic getString:@"content"];
         
         NSMutableDictionary *extra = [NSMutableDictionary dictionary];
         EliteMessage *messageContent = [EliteMessage messageWithContent:content];
-        
         extra[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
         extra[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
         if(!([message.objectName isEqual:ELITE_MSG])){
             extra[@"type"] = @(MASEND_CHAT_MESSAGE);
             if ([message.objectName isEqual:TXT_MSG]) {
+                RCTextMessage *txtMessage = [MAMessageUtils generateTxtMessage:content];
                 extra[@"messageType"] = @(MATEXT);
-            } else if ([message.objectName isEqual:IMG_MSG]) {
-                extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
-                extra[@"messageType"] = @(MAIMG);
-            } else if ([message.objectName isEqual:VC_MSG]) {
-                extra[@"length"] = [message.contentDic getString:@"duration"];
-                extra[@"messageType"] = @(MAVOICE);
-            } else if ([message.objectName isEqual:LBS_MSG]) {
-                extra[@"latitude"] = [message.contentDic getString:@"latitude"];
-                extra[@"longitude"] = [message.contentDic getString:@"longitude"];
-                extra[@"poi"] = [message.contentDic getString:@"poi"];
-                extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
-                extra[@"messageType"] = @(MALOCATION);
-                if(self.mapType == MAMAPTYPE_Baidu){
-                    extra[@"map"] = @"baidu";
+                txtMessage.extra = [extra mj_JSONString];
+                [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
+                    [array removeObject:message];
+                    [[MAChat getInstance] updateUnsendMessage:array];
+                } error:nil];
+            } else{
+                if ([message.objectName isEqual:IMG_MSG]) {
+                    extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
+                    extra[@"messageType"] = @(MAIMG);
+                } else if ([message.objectName isEqual:VC_MSG]) {
+                    extra[@"length"] = [message.contentDic getString:@"duration"];
+                    extra[@"messageType"] = @(MAVOICE);
+                } else if ([message.objectName isEqual:LBS_MSG]) {
+                    extra[@"latitude"] = [message.contentDic getString:@"latitude"];
+                    extra[@"longitude"] = [message.contentDic getString:@"longitude"];
+                    extra[@"poi"] = [message.contentDic getString:@"poi"];
+                    extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
+                    extra[@"messageType"] = @(MALOCATION);
+                    if(self.mapType == MAMAPTYPE_Baidu){
+                        extra[@"map"] = @"baidu";
+                    }
                 }
+                messageContent.extra = [extra mj_JSONString];
+                [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+                    [array removeObject:message];
+                    [[MAChat getInstance] updateUnsendMessage:array];
+                } error:nil];
             }
         }else{
             id contentMsg = [content getString:@"content"];
@@ -450,15 +456,12 @@
                 id type = [content getString:@"type"];
                 extra[@"type"] = type;//elite消息类型
             }
-            
+            messageContent.extra = [extra mj_JSONString];
+            [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+                [array removeObject:message];
+                [[MAChat getInstance] updateUnsendMessage:array];
+            } error:nil];
         }
-        messageContent.extra = [extra mj_JSONString];
-        
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:self.targetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
-            [array removeObject:message];
-            [[MAChat getInstance] updateUnsendMessage:array];
-        } error:nil];
-        
     }
     
 }
@@ -624,7 +627,7 @@
             newCell.textLabel.attributedText = muString;
             MASession *session = [[MAChat getInstance] getSession];
             UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
-             NSLog(@"字符串:%@",portraitView);
+
             NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
             UIImage *image =  [UIImage imageWithData:data];
             portraitView.image = image;

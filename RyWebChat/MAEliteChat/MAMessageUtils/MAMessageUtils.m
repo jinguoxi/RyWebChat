@@ -178,11 +178,12 @@
     if([[MAChat getInstance] getSessionId]){
         RCTextMessage *txtMessage = [self generateTxtMessage:message];
         NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
             
         } error:^(RCErrorCode nErrorCode, long messageId) {
             
         }];
+
     }else {
         MASaveMessage *txtMessage = [MASaveMessage new];
         txtMessage.objectName = TXT_MSG;

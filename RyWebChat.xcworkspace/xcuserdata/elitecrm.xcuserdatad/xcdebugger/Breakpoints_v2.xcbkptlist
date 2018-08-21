@@ -26,28 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
-            timestampString = "510739047.422759"
+            timestampString = "556511268.8656271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "78"
             endingLineNumber = "78"
             landmarkName = "+getLocationMessageJsonStr:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAClient/MAChat.m"
-            timestampString = "513228974.02491"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "-getUnsendMessage"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -168,13 +152,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAChatController/MARyChatViewController.m"
-            timestampString = "555501494.173628"
+            filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
+            timestampString = "556511268.865743"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
-            landmarkName = "-parseMessage:rcMsg:"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "+sendTxtMessage:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAClient/MAChat.m"
+            timestampString = "556509725.445055"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "-getUnsendMessage"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RyWebChat/MAEliteChat/MAClient/MAChat.m"
+            timestampString = "556509725.44519"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-addUnsendMessage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -185,12 +201,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RyWebChat/MAEliteChat/MAChatController/MARyChatViewController.m"
-            timestampString = "555501494.174226"
+            timestampString = "556511268.865822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "628"
-            endingLineNumber = "628"
-            landmarkName = "-willDisplayConversationTableCell:atIndexPath:"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "-parseMessage:rcMsg:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

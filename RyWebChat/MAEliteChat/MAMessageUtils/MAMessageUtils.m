@@ -183,12 +183,12 @@
         } error:^(RCErrorCode nErrorCode, long messageId) {
             
         }];
+    }else {
+        MASaveMessage *txtMessage = [MASaveMessage new];
+        txtMessage.objectName = TXT_MSG;
+        txtMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:message, @"content", nil];
+        [[MAChat getInstance] addUnsendMessage:txtMessage];
     }
-    MASaveMessage *txtMessage = [MASaveMessage new];
-    txtMessage.objectName = TXT_MSG;
-    txtMessage.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:message, @"content", nil];
-    [[MAChat getInstance] addUnsendMessage:txtMessage];
-    
 }
 
 @end

@@ -343,6 +343,7 @@
             
             NSString *tipsMsg = [NSString stringWithFormat:@"坐席[%@]为您服务",currentAgent.name];
             [self addTipsMessage:tipsMsg];
+           // [MAMessageUtils sendTxtMessage:@"txtMessage__"];
             [self sendUnsendMessages];
         }
             break;

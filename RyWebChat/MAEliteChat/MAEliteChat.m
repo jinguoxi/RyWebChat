@@ -48,15 +48,9 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
 }
 
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId complete:(void (^)(BOOL result))complete {
-    
-    [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:nil complete:complete];
-    
-}
-
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr complete:(void (^)(BOOL result))complete {
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr stacks:(NSString *)stacks complete:(void (^)(BOOL result))complete {
     [[MAChat getInstance] setChatTargetId:chatTargetId];
-    [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr];
+    [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr stacks: stacks];
     
     [self startChat:complete];
     
@@ -67,7 +61,7 @@ static MAEliteChat *eliteChat=nil;
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil];
 }
 
-- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr {
+- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr  stacks:(NSString *)stacks {
     
     if (isEliteEmpty(ngsAddr)) {
         NSString *lastPath = [serverAddr lastPathComponent];
@@ -78,7 +72,7 @@ static MAEliteChat *eliteChat=nil;
     
     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
     
-    MAClient *client = [MAClient initWithServerAddr:serverAddr ngsAddr:ngsAddr name:name userId:userId portraitUri:portraitUri];
+    MAClient *client = [MAClient initWithServerAddr:serverAddr ngsAddr:ngsAddr name:name userId:userId portraitUri:portraitUri stacks:stacks] ;
     
     [[MAChat getInstance] setClient:client];
     

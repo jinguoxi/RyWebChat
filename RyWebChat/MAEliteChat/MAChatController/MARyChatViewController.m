@@ -172,6 +172,10 @@
                 if(beginIndex.location > 0 && beginIndex.length > 0){
                      answerStr = [answerStr substringToIndex: beginIndex.location];
                 }
+                NSString *question = [robotData objectForKey:@"question"];
+                if([@"转接人工" isEqualToString:question]){
+                      answerStr = [answerStr stringByAppendingString:@"\n\n【转人工】"];
+                }
                 [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
             }else if(state == 2){
                 NSArray *recommend = [robotData objectForKey:@"recommend"];
@@ -186,7 +190,9 @@
                     }
                 }
                 answersStr = [answersStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
-                NSLog(@"%@",answersStr);
+                answersStr = [@"亲，你是不是要咨询以下问题：\n" stringByAppendingString:answersStr];
+                answersStr = [answersStr stringByAppendingString:@"\n\n【转人工】"];
+                NSLog(@"answers: %@",answersStr);
                 [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
             }else if(state == 3){
                 // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];
@@ -610,7 +616,7 @@
                 [newCell.textLabel.attributedStrings addObject:textCheckingResult];
             }
             newCell.textLabel.attributedText = muString;
-        }else if([msg.extra isEqualToString:@"3"]){
+        }else if([msg.extra isEqualToString:@"3"] || [msg.extra isEqualToString:@"1"]){
             NSString *confirmString = @"【转人工】";
             NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.content];
             NSRange range = [msg.content rangeOfString:confirmString];
@@ -625,14 +631,14 @@
             NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
             [newCell.textLabel.attributedStrings addObject:textCheckingResult];
             newCell.textLabel.attributedText = muString;
-            MASession *session = [[MAChat getInstance] getSession];
-            UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
-
-            NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
-            UIImage *image =  [UIImage imageWithData:data];
-            portraitView.image = image;
-            newCell.portraitImageView = portraitView;
         }
+        MASession *session = [[MAChat getInstance] getSession];
+        UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
+        
+        NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
+        UIImage *image =  [UIImage imageWithData:data];
+        portraitView.image = image;
+        newCell.portraitImageView = portraitView;
     }
 }
 

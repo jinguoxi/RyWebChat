@@ -288,6 +288,12 @@
     if([@"【转人工】" isEqualToString:decodedString]){
         [self sendTransferMessage];
     }else {
+        NSRange range = [decodedString rangeOfString:@"亲，你是不是要咨询以下问题：\n"];//匹配得到的下标
+        if(range.location == 0 && range.length == 15){
+            range.location = range.length;
+            range.length = decodedString.length - range.length;
+            decodedString = [decodedString substringWithRange:range];//截取范围类的字符串
+        }
         RCTextMessage *rcTextMessage = [RCTextMessage messageWithContent:decodedString];
         NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
         NSMutableDictionary *extra = [NSMutableDictionary dictionary];

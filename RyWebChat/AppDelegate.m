@@ -11,7 +11,8 @@
 #import <BaiduMapAPI_Base/BMKMapManager.h>
 
 //#define MARyAppKey @"pgyu6atqpg77u" //服务器
-#define MARyAppKey @"pgyu6atqpg77u" //Lori
+#define MARyAppKey @"pgyu6atqpg77u" //dev
+//#define MARyAppKey @"e5t4ouvpe60oa"
 
 @interface AppDelegate ()<BMKGeneralDelegate>
 {

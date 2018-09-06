@@ -68,6 +68,9 @@
     } else if ([messageContent isKindOfClass:[RCVoiceMessage class]]) {
         RCVoiceMessage *voiceMsg = (RCVoiceMessage *)messageContent;
         voiceMsg.extra = [MAMessageUtils getVoiceMessageJsonStr:voiceMsg.duration];
+    }else if ([messageContent isKindOfClass:[RCSightMessage class]]) {
+        RCSightMessage *sightMsg = (RCSightMessage *)messageContent;
+        sightMsg.extra = [MAMessageUtils getTextMessageJsonStr];
     }
     
     return messageContent;
@@ -633,12 +636,14 @@
             newCell.textLabel.attributedText = muString;
         }
         MASession *session = [[MAChat getInstance] getSession];
-        UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
-        
-        NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
-        UIImage *image =  [UIImage imageWithData:data];
-        portraitView.image = image;
-        newCell.portraitImageView = portraitView;
+        if(session.currentAgent.portraitUri){
+            UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
+            
+            NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
+            UIImage *image =  [UIImage imageWithData:data];
+            portraitView.image = image;
+            newCell.portraitImageView = portraitView;
+        }
     }
 }
 

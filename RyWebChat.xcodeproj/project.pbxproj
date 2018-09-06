@@ -60,6 +60,7 @@
 		A1F3995C1E5419A10082D513 /* MAClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399511E5419A10082D513 /* MAClient.m */; };
 		A1F3995D1E5419A10082D513 /* MAEliteChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399541E5419A10082D513 /* MAEliteChat.m */; };
 		A1F3995E1E5419A10082D513 /* MAMessageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399571E5419A10082D513 /* MAMessageUtils.m */; };
+		AC1002182140C85900A52898 /* RongSight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1002172140C85800A52898 /* RongSight.framework */; };
 		AC7497A020FC778900BA3B1B /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = AC74979F20FC778900BA3B1B /* NSString+Category.m */; };
 		AC7497A720FC79F300BA3B1B /* SimpleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A320FC79F300BA3B1B /* SimpleMessage.m */; };
 		AC7497A820FC79F300BA3B1B /* SimpleMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */; };
@@ -167,6 +168,7 @@
 		A1F399561E5419A10082D513 /* MAMessageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAMessageUtils.h; sourceTree = "<group>"; };
 		A1F399571E5419A10082D513 /* MAMessageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAMessageUtils.m; sourceTree = "<group>"; };
 		A2D949C3E5F6BEDA70379934 /* libPods-RyWebChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RyWebChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1002172140C85800A52898 /* RongSight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongSight.framework; sourceTree = "<group>"; };
 		AC467AEB1EC589E900574B42 /* RyWebChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RyWebChat.entitlements; sourceTree = "<group>"; };
 		AC74979E20FC777100BA3B1B /* NSString+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
 		AC74979F20FC778900BA3B1B /* NSString+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Category.m"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				A1431F6A1E4C0C70001BF142 /* libc++abi.tbd in Frameworks */,
 				A1431F681E4C0C6A001BF142 /* libc++.tbd in Frameworks */,
 				A1431F661E4C0C5F001BF142 /* ImageIO.framework in Frameworks */,
+				AC1002182140C85900A52898 /* RongSight.framework in Frameworks */,
 				A1431F641E4C0C59001BF142 /* CoreVideo.framework in Frameworks */,
 				A1431F621E4C0C44001BF142 /* CoreTelephony.framework in Frameworks */,
 				A1431F601E4C0C3F001BF142 /* CoreMedia.framework in Frameworks */,
@@ -218,6 +221,7 @@
 		48826400B833FB19D259787E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AC1002172140C85800A52898 /* RongSight.framework */,
 				A1431F7F1E4C0D0F001BF142 /* SafariServices.framework */,
 				A1431F7D1E4C0D09001BF142 /* Photos.framework */,
 				A1431F7B1E4C0D03001BF142 /* UIKit.framework */,
@@ -770,6 +774,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "RyWebChat/RyChat-PrefixHeader.pch";
 				INFOPLIST_FILE = RyWebChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -791,6 +799,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "RyWebChat/RyChat-PrefixHeader.pch";
 				INFOPLIST_FILE = RyWebChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

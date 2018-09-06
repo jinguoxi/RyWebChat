@@ -31,37 +31,37 @@
 
 3. 注册相关事件如自定义消息、自定义cell，开启用户信息持久化等相关信息具体看demo代码(MaEliteChat.m)。
 ```objective-c
-	//初始化融云
-    [[RCIM sharedRCIM] initWithAppKey:@"YourTestAppKey"]
-    //注册自定义消息
-    [[RCIM sharedRCIM] registerMessageType:[EliteMessage class]];
-    //注册自定义显示消息
-    [[RCIMClient sharedRCIMClient]registerMessageType:SimpleMessage.class];
-    //注册自定义用户信息提供者
-    RongIM.setUserInfoProvider(new EliteUserInfoProvider(), true);
-	//开启用户信息和群组信息的持久化
-    [RCIM sharedRCIM].enablePersistentUserInfoCache = YES;
-    [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
+//初始化融云
+[[RCIM sharedRCIM] initWithAppKey:@"YourTestAppKey"]
+//注册自定义消息
+[[RCIM sharedRCIM] registerMessageType:[EliteMessage class]];
+//注册自定义显示消息
+[[RCIMClient sharedRCIMClient]registerMessageType:SimpleMessage.class];
+//注册自定义用户信息提供者
+RongIM.setUserInfoProvider(new EliteUserInfoProvider(), true);
+//开启用户信息和群组信息的持久化
+[RCIM sharedRCIM].enablePersistentUserInfoCache = YES;
+[RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
 ```	
 
 4. 从github上下载过河兵demo项目， 可以直接复制或者使用SDK中相关类，其中ViewController.m不需要，使用自己app中的即可。
 
 5. 在主ViewController中，初始化并启动EliteChat
 ```objective-c
-	/**
-	 * EliteChat提供方法
-     * 初始化EliteChat， 获取rongcloud的token，并且启动聊天。
-     * 如果发现token已经存在并且融云连接状态还是连接中的，则直接进入聊天
-     * @param serverAddr EliteWebChat服务地址
-     * @param userId 用户登录id
-     * @param name 用户名
-     * @param portraitUri 用户头像uri
-     * @param context 当前上下文
-     * @param queueId 排队队列号
-     * @param ngsAddr ngs服务地址
-     * @param tracks 客户浏览轨迹 json字符串，具体格式查看相关文档
-     */
-   - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr stacks:(NSString *)stacks complete:(void (^)(BOOL result))complete
+/**
+    * EliteChat提供方法
+    * 初始化EliteChat， 获取rongcloud的token，并且启动聊天。
+    * 如果发现token已经存在并且融云连接状态还是连接中的，则直接进入聊天
+    * @param serverAddr EliteWebChat服务地址
+    * @param userId 用户登录id
+    * @param name 用户名
+    * @param portraitUri 用户头像uri
+    * @param context 当前上下文
+    * @param queueId 排队队列号
+    * @param ngsAddr ngs服务地址
+    * @param tracks 客户浏览轨迹 json字符串，具体格式查看相关文档
+    */
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr stacks:(NSString *)stacks complete:(void (^)(BOOL result))complete
 ```
 这里的EliteWebChat服务地址，需要找过河兵相关人员提供，用户登录id可以是你们系统中的用户名，不重复即可，这里会自动查询如果不存在与过河兵系统中，会自动创建相关客户。排队队列号也是找过河兵相关人员提供即可。
 
@@ -70,33 +70,34 @@
 
 1. 在排队之前，就发出一些预发消息
 ```objective-c
-	//发送文字消息，在调用[[MAEliteChat shareEliteChat] initAndStart]之前，就可以调用此方法，之后一旦聊天建立起来后，这个预发消息会自动发出。
-	[MAMessageUtils sendTxtMessage: @"firstMsg"];
-	//发送自定义消息，这个消息内容随便自己定义，坐席端可以收到相关消息自行做对应处理。比如这里发送一个商品信息的json字符串。坐席端可以收到后显示出对应的商品信息。
-	[MAMessageUtils sendCustomerMessage: @"{\"name\":\"xxx\"}"];
+//发送文字消息，在调用[[MAEliteChat shareEliteChat] initAndStart]之前，就可以调用此方法，之后一旦聊天建立起来后，这个预发消息会自动发出。
+[MAMessageUtils sendTxtMessage: @"firstMsg"];
+//发送自定义消息，这个消息内容随便自己定义，坐席端可以收到相关消息自行做对应处理。比如这里发送一个商品信息的json字符串。坐席端可以收到后显示出对应的商品信息。
+[MAMessageUtils sendCustomerMessage: @"{\"name\":\"xxx\"}"];
 ```
 
 2. 如果客户已经进入过聊天，返回到app其他页面后，再次想打开聊天，这时候可以直接启动页面，而不需要再次发起排队了
 ```objective-c
-	//先判断，当前会话是否还在活动中，如果活动中则可以不发起排队，直接显示页面,并提示“继续之前的会话”
-	//如果会话已经结束了，或者token已经失效，则重新发起聊天请求
-	 [[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil stacks:@"sb" complete:^(BOOL result);
+//先判断，当前会话是否还在活动中，如果活动中则可以不发起排队，直接显示页面,并提示“继续之前的会话”
+//如果会话已经结束了，或者token已经失效，则重新发起聊天请求
+[[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil stacks:@"sb" complete:^(BOOL result);
 ```
 
 3. 如果需要使用地图发送地图消息
 SDK支持高德地图和百度地图两种选择，这里以百度地图为例：
 ```objective-c
-	1. 在appDelegate.m中配置百度地图API_KEY 并调用_mapManager start方法初始化
-	[_mapManager start:@"Z6yG7WrkRXFfiqGosOBTIOk4MoDE9Gcl"  generalDelegate:self];
+1. 在appDelegate.m中配置百度地图API_KEY 并调用_mapManager start方法初始化
+[_mapManager start:@"Z6yG7WrkRXFfiqGosOBTIOk4MoDE9Gcl"  generalDelegate:self];
 
-	2. 在会话页面并在会话开始前需要指定地图的类型
-	self.chatViewController.mapType = MAMAPTYPE_Baidu    这里指定的是百度地图   高徳为： MAMAPTYPE_Gaode  
+2. 在会话页面并在会话开始前需要指定地图的类型
+self.chatViewController.mapType = MAMAPTYPE_Baidu    这里指定的是百度地图   高徳为： MAMAPTYPE_Gaode  
 ```
 4.发送小视频消息
 需要去融云官网下载小视频SDK 将 RongSight.framework 编译连接到自己的项目里面就可以使用小视频功能，不需要写额外的代码。
 
-	特别注意： 1、 融云SDK版本为2.9.3以后的版本才支持发送小视频。
-			  2、 如不需要小视频功能 将RongSight.framework从移除项目即可
+特别注意：
+    1、 融云SDK版本为2.9.3以后的版本才支持发送小视频。
+	2、 如不需要小视频功能 将RongSight.framework从项目移除即可
 	
 
 ###**完整的相关代码说明都可以从demo示例代码中找到**

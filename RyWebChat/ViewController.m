@@ -88,7 +88,7 @@
     
     __weak typeof(self) myself = self;
     // NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
-    [[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil stacks:@"sb" complete:^(BOOL result) {
+    [[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil tracks:@"sb" complete:^(BOOL result) {
         if (result) {
             [myself switchChatViewController];
             
@@ -111,7 +111,7 @@
     }
     
     self.chatViewController.title = CHAT_TITLE;
-    self.chatViewController.mapType = MAMAPTYPE_Baidu;
+    self.chatViewController.mapType = MAMAPTYPE_Gaode;
 
     // [MAMessageUtils sendTxtMessage:@"txtmessage"];
     

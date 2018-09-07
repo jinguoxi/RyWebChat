@@ -17,8 +17,8 @@
 @property (strong, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) NSString *portraitUri;
 @property (strong, nonatomic, readonly) NSString *tokenStr;
-@property (strong, nonatomic, readonly) NSString *stacks;
+@property (strong, nonatomic, readonly) NSString *tracks;
 
-+ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri stacks:(NSString *)stacks;
++ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri tracks:(NSString *)tracks;
 
 @end

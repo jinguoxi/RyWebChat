@@ -33,7 +33,7 @@
     NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
     extraDic[@"type"] = @(MASEND_CHAT_REQUEST);//人工聊天请求
     extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
-    extraDic[@"stacks"] = [[MAChat getInstance] getClient].stacks;
+    extraDic[@"tracks"] = [[MAChat getInstance] getClient].tracks;
     NSString *extra = [extraDic mj_JSONString];
     EliteMessage *messageContent = [EliteMessage messageWithContent:content];
     messageContent.extra = extra;

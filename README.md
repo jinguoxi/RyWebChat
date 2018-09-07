@@ -61,7 +61,7 @@ RongIM.setUserInfoProvider(new EliteUserInfoProvider(), true);
     * @param ngsAddr ngs服务地址
     * @param tracks 客户浏览轨迹 json字符串，具体格式查看相关文档
     */
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr stacks:(NSString *)stacks complete:(void (^)(BOOL result))complete
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete
 ```
 这里的EliteWebChat服务地址，需要找过河兵相关人员提供，用户登录id可以是你们系统中的用户名，不重复即可，这里会自动查询如果不存在与过河兵系统中，会自动创建相关客户。排队队列号也是找过河兵相关人员提供即可。
 
@@ -80,7 +80,7 @@ RongIM.setUserInfoProvider(new EliteUserInfoProvider(), true);
 ```objective-c
 //先判断，当前会话是否还在活动中，如果活动中则可以不发起排队，直接显示页面,并提示“继续之前的会话”
 //如果会话已经结束了，或者token已经失效，则重新发起聊天请求
-[[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil stacks:@"sb" complete:^(BOOL result);
+[[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil tracks:@"web" complete:^(BOOL result);
 ```
 
 3. 如果需要使用地图发送地图消息

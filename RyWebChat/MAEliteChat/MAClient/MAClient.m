@@ -16,13 +16,13 @@
 @property (strong, nonatomic, readwrite) NSString *name;
 @property (strong, nonatomic, readwrite) NSString *portraitUri;
 @property (strong, nonatomic, readwrite) NSString *tokenStr;
-@property (strong, nonatomic, readwrite) NSString *stacks;
+@property (strong, nonatomic, readwrite) NSString *tracks;
 
 @end
 
 @implementation MAClient
 
-+ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri stacks:(NSString *)stacks{
++ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri tracks:(NSString *)tracks{
     MAClient *client = [[MAClient alloc] init];
     
     client.serverAddr = serverAddr;
@@ -30,7 +30,7 @@
     client.name = name;
     client.userId = userId;
     client.portraitUri = portraitUri;
-    client.stacks = stacks;
+    client.tracks = tracks;
     return client;
 }
 @end

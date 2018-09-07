@@ -48,9 +48,9 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
 }
 
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr stacks:(NSString *)stacks complete:(void (^)(BOOL result))complete {
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
     [[MAChat getInstance] setChatTargetId:chatTargetId];
-    [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr stacks: stacks];
+    [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr tracks: tracks];
     
     [self startChat:complete];
     
@@ -61,7 +61,7 @@ static MAEliteChat *eliteChat=nil;
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil];
 }
 
-- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr  stacks:(NSString *)stacks {
+- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr  tracks:(NSString *)tracks {
     
     if (isEliteEmpty(ngsAddr)) {
         NSString *lastPath = [serverAddr lastPathComponent];
@@ -72,7 +72,7 @@ static MAEliteChat *eliteChat=nil;
     
     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
     
-    MAClient *client = [MAClient initWithServerAddr:serverAddr ngsAddr:ngsAddr name:name userId:userId portraitUri:portraitUri stacks:stacks] ;
+    MAClient *client = [MAClient initWithServerAddr:serverAddr ngsAddr:ngsAddr name:name userId:userId portraitUri:portraitUri tracks:tracks] ;
     
     [[MAChat getInstance] setClient:client];
     

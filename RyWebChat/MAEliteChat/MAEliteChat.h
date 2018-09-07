@@ -30,7 +30,7 @@ static NSString *CHAT_TITLE = @"在线客服";
  * @param complete 回调
  * @param ngs 坐席头像地址前缀
  */
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr stacks:(NSString *)stacks complete:(void (^)(BOOL result))complete;
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete;
 /**
  * 初始化EliteChat
  * @param serverAddr EliteWebChat服务地址
@@ -38,7 +38,7 @@ static NSString *CHAT_TITLE = @"在线客服";
  * @param name 用户名
  * @param portraitUri 用户头像uri
  */
-- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId  stacks:(NSString *)stacks;
+- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId  tracks:(NSString *)tracks;
 /**
  * 初始化EliteChat
  * @param serverAddr EliteWebChat服务地址

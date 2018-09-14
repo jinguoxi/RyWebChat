@@ -52,7 +52,7 @@ typedef enum {
     MAFILE = 3,
     MALOCATION = 4,
     MAVOICE = 5,
-    MAVIDEO = 6,
+    MASIGHT= 6,
     MASYSTEM_NOTICE = 99
 }MAChatMsgType;
 
@@ -117,6 +117,7 @@ static NSString *LBS_MSG = @"RC:LBSMsg";
 static NSString *IMG_MSG = @"RC:ImgMsg";
 static NSString *FILE_MSG = @"RC:FileMsg";
 static NSString *ELITE_MSG = @"E:Msg";
+static NSString *SIGHT_MSG = @"RC:SightMsg";
 
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 #define MAChatMsgBundle   @"MAChatMsg.bundle"

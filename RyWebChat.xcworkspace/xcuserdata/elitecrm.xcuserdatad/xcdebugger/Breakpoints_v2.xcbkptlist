@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAChatModel/MASaveMessage.m"
-            timestampString = "510648765.059444"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "+saveMessageWithLocation:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
             timestampString = "557894112.390686"
             startingColumnNumber = "9223372036854775807"
@@ -42,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/RongCloudIM/RongCloudIM/RongIMKit.framework/Headers/RCIM.h"
-            timestampString = "555476980.7054189"
+            timestampString = "558596754.9735529"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
@@ -103,76 +87,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/robot/SimpleMessageCell.m"
-            timestampString = "557232070.088163"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
-            landmarkName = "-attributedLabel:didSelectLinkWithURL:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/robot/SimpleMessageCell.m"
-            timestampString = "557232070.088236"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
-            landmarkName = "-attributedLabel:didSelectLinkWithURL:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/robot/SimpleMessageCell.m"
-            timestampString = "557232070.0882879"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "-attributedLabel:didSelectLinkWithURL:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/robot/SimpleMessageCell.m"
-            timestampString = "557232070.088334"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "-attributedLabel:didSelectLinkWithURL:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "RyWebChat/MAEliteChat/MAChatController/MARyChatViewController.m"
-            timestampString = "557917152.604569"
+            timestampString = "558611683.741557"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "-parseMessage:rcMsg:"
             landmarkType = "7">
          </BreakpointContent>
@@ -183,13 +103,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RyWebChat/MAEliteChat/MAMessageUtils/MAMessageUtils.m"
-            timestampString = "557894112.3925461"
+            filePath = "RyWebChat/MAEliteChat/MAChatModel/MASaveMessage.m"
+            timestampString = "558611683.741823"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "+getTextMessageJsonStr"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "+saveMessageWithSight:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -18,6 +18,8 @@
 + (instancetype)saveMessageWithVoice:(NSDictionary *)dic;
 + (instancetype)saveMessageWithImage:(NSDictionary *)dic;
 + (instancetype)saveMessageWithLocation:(NSDictionary *)dic;
++ (instancetype)saveMessageWithSight:(NSDictionary *)dic;
+
 @end
 
 

@@ -246,8 +246,9 @@
             
             MARequest *request = [MARequest initWithRequestId:requestId];
             [[MAChat getInstance] setRequest:request];
-            
-            [self addTipsMessage:msg];
+            if(msg != nil && ![@"" isEqualToString:msg]){
+                [self addTipsMessage:msg];
+            }
             break;
         }
             
@@ -293,6 +294,8 @@
                     
                     saveUnmsg = [MASaveMessage saveMessageWithVoice:originalMessage];
                     
+                }else if([objectName isEqual:SIGHT_MSG]){
+                    saveUnmsg = [MASaveMessage saveMessageWithSight:originalMessage];
                 }
                 if(saveUnmsg != nil){
                     [[MAChat getInstance] addUnsendMessage:saveUnmsg];
@@ -451,6 +454,13 @@
                     if(self.mapType == MAMAPTYPE_Baidu){
                         extra[@"map"] = @"baidu";
                     }
+                } if([message.objectName isEqual:SIGHT_MSG]){
+                    extra[@"messageType"] = @(MASIGHT);
+                    extra[@"content"] = [message.contentDic getString:@"content"];
+                    extra[@"name"] = [message.contentDic getString:@"name"];
+                    extra[@"sightUrl"] = [message.contentDic getString:@"sightUrl"];
+                    extra[@"duration"] = [message.contentDic getString:@"duration"];
+                    extra[@"size"] = [message.contentDic getString:@"size"];
                 }
                 messageContent.extra = [extra mj_JSONString];
                 [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {

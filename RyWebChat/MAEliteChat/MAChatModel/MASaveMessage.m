@@ -35,6 +35,21 @@
     return message;
 }
 
++ (instancetype)saveMessageWithSight:(NSDictionary *)dic {
+    NSDictionary *contentDic = dic[@"content"];
+    MASaveMessage *message = [MASaveMessage new];
+    message.objectName = dic[@"objectName"];
+    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                          contentDic[@"content"], @"content",
+                          contentDic[@"name"], @"name",
+                          contentDic[@"sightUrl"], @"sightUrl",
+                          contentDic[@"size"], @"size",
+                          contentDic[@"duration"], @"duration",
+                          nil];
+    
+    return message;
+}
+
 + (instancetype)saveMessageWithImage:(NSDictionary *)dic {
     NSDictionary *contentDic = dic[@"content"];
     

@@ -73,7 +73,7 @@ NSString * getContentTypeForPath(NSURL *url){
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {//假酒
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failedBlock) {
             failedBlock(error);
         }

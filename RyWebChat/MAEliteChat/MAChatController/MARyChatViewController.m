@@ -130,25 +130,19 @@
     return YES;
 }
 
--(void)sentRobotMessage:(NSString *)content state:(NSString *) state receivedTime:(long long)receivedTime{
+-(void)sentRobotMessage:(NSString *)content state: (NSString *)state receivedTime:(long long)receivedTime{
     
     RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:content extra:state];
-    MASession *session = [[MAChat getInstance] getSession];
-    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:session.currentAgent.userId];
-    userInfo.name = session.currentAgent.name;
-    userInfo.portraitUri = @"https://cdn.duitang.com/uploads/item/201508/30/20150830105732_nZCLV.jpeg";
     NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
     [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae sentTime:receivedTime];
-    simpleMessgae.senderUserInfo = userInfo;
     RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
                                                      targetId:self.targetId
                                                     direction:MessageDirection_RECEIVE
                                                     messageId:-1
                                                       content:simpleMessgae];
-    
-    insertMessage.content.senderUserInfo = userInfo;
     // 在当前聊天界面插入该消息
     [self appendAndDisplayMessage:insertMessage];
+    
 
 }
 
@@ -164,54 +158,65 @@
             //机器人消息
         case ROBOT_MESSAGE_STATUS:{
             NSDictionary *robotContent = [json getObject:@"content"];
-            NSDictionary *robotData = [robotContent getObject:@"data"];
-            int state = [robotData getInt:@"state"];
+            NSString *msgType = [robotContent getString:@"type"];
+            NSString *content = @"";
             long receivedTime = rcMsg.receivedTime;
-            NSArray *answers = [robotData objectForKey:@"answers"];
-            if(state == 1){
-                NSString *answerStr = [answers firstObject];
-                answerStr=[answerStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
-                 NSRange beginIndex = [answerStr rangeOfString:@"<img"];
-                if(beginIndex.location > 0 && beginIndex.length > 0){
-                     answerStr = [answerStr substringToIndex: beginIndex.location];
-                }
-                NSString *question = [robotData objectForKey:@"question"];
-                if([@"转接人工" isEqualToString:question]){
-                      answerStr = [answerStr stringByAppendingString:@"\n\n【转人工】"];
-                }
-                [self sentRobotMessage:answerStr state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
-            }else if(state == 2){
-                NSArray *recommend = [robotData objectForKey:@"recommend"];
-                int recommendList = (int)recommend.count;//调用次数
-                NSString *answersStr = @"";
-                for( int i=0; i < recommendList; i++){
-                    NSLog(@"%i-%@", i, [recommend objectAtIndex:i]);
-                    if(i != (recommendList - 1)){
-                        answersStr = [[answersStr stringByAppendingString:[recommend objectAtIndex:i]] stringByAppendingString:@"\n\n"];
-                    }else {
-                        answersStr = [answersStr stringByAppendingString:[recommend objectAtIndex:i]];
+            if([@"error" isEqualToString:msgType]){
+                content = [robotContent getString:@"message"];
+                [self sentRobotMessage:content state: @"3" receivedTime:receivedTime];
+            }else if([@"text" isEqualToString:msgType]){
+                if([robotContent objectForKey:@"content"]){
+                    content = [robotContent getString: @"content"];
+                    content=[content stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
+                    NSRange beginIndex = [content rangeOfString:@"<img"];
+                    if(beginIndex.location > 0 && beginIndex.length > 0){
+                        content = [content substringToIndex: beginIndex.location];
                     }
+
+                    [self sentRobotMessage:content state: @"3" receivedTime:receivedTime];
+                } else if([robotContent objectForKey:@"relatedQuestions"]){
+                    NSArray *relatedQuestions = [robotContent getObject:@"relatedQuestions"];
+                    int relatedQuestionsLength = (int)relatedQuestions.count;
+                    if(relatedQuestionsLength > 0){
+                        for( int i = 0; i < relatedQuestionsLength; i++){
+                            NSLog(@"%i-%@", i, [relatedQuestions objectAtIndex:i]);
+                            MAJSONObject *relatedQuestionsTemp = [relatedQuestions objectAtIndex:i];
+                            NSString *questionTitle = [relatedQuestionsTemp getString:@"title"];
+                            NSArray *relates = [relatedQuestionsTemp getObject:@"relates"];
+                            int relatesLength = (int)relates.count;
+                            //                       NSString *questionName = [relatedTemp getObject:@"name"];
+                            for( int j = 0; j < relatesLength; j++){
+                                MAJSONObject *relatedTemp = [relates objectAtIndex:j];
+                                NSString *questionName = [relatedTemp getString:@"name"];
+                                if(j != (relatesLength - 1)){
+                                    content = [[content stringByAppendingString:questionName] stringByAppendingString:@"\n\n"];
+                                }else {
+                                    content = [content stringByAppendingString:questionName];
+                                }
+                                
+                            }
+                            content = [[questionTitle stringByAppendingString: @"\n"] stringByAppendingString:content];
+                            NSLog(@"answers: %@",content);
+                        }
+                        
+                    }
+                    [self sentRobotMessage:content state: @"2" receivedTime:receivedTime];
                 }
-                answersStr = [answersStr stringByReplacingOccurrencesOfString:@"&nbsp;"withString:@" "];
-                answersStr = [@"亲，你是不是要咨询以下问题：\n" stringByAppendingString:answersStr];
-                answersStr = [answersStr stringByAppendingString:@"\n\n【转人工】"];
-                NSLog(@"answers: %@",answersStr);
-                [self sentRobotMessage:answersStr state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
-            }else if(state == 3){
-                // [self addTipsMessage:@"亲的问题无法识别， 您可以转人工服务"];
-                BOOL toHuman = [[robotData objectForKey:@"trans_to_human"] boolValue];
-                if(toHuman){
-                    [self sentRobotMessage:@"亲，由于这个问题暂时无法解答，给你带来不便非常抱歉，是否为您转人工服务呢！ 【转人工】" state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
-                }else {
-//                  NSString *question = [robotData getString:@"question"];
-                    NSString *question = @"亲，能否重新阐述一下，这能让我更好的为您解答问题！";
-                    [self sentRobotMessage:question state:[NSString stringWithFormat:@"%d", state] receivedTime:receivedTime];
+            }else if([@"command" isEqualToString:msgType]){
+                NSDictionary *commandObj = [robotContent getObject: @"content"];
+                if ([@"AUTO_ZRG" isEqualToString:[commandObj getString: @"code"]] || [robotContent objectForKey: @"extra"]) {
+                    content = [robotContent getString: @"extra"];
+                    [self sentRobotMessage:content state: @"3" receivedTime:receivedTime];
+                } else if ([@"ZRG" isEqualToString:[commandObj getString: @"code"]]) {
+                    content = @"【转人工】";
+                    [self sentRobotMessage:content state: @"1" receivedTime:receivedTime];
                 }
                 
             }else {
-               // [self addTipsMessage:@"无法识别"];
+                 [self addTipsMessage:@"消息类型暂时无法识别"];
             }
             break;
+           
         }
             //转人工
         case ROBOT_TRANSFER_MESSAGE:{
@@ -615,7 +620,7 @@
             NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
                                          NSFontAttributeName:[UIFont systemFontOfSize:16]};
             for( int i=0; i<count; i++){
-                NSString *temp = [array objectAtIndex:i];
+                NSString *temp = [array objectAtIndex:i];//卖假酒
                 NSLog(@"%i-%@", i, temp);
                 NSString *confirmString = temp;
                 NSRange range = [msg.content rangeOfString:confirmString];
@@ -629,7 +634,7 @@
                 [newCell.textLabel.attributedStrings addObject:textCheckingResult];
             }
             newCell.textLabel.attributedText = muString;
-        }else if([msg.extra isEqualToString:@"3"] || [msg.extra isEqualToString:@"1"]){
+        }else if([msg.extra isEqualToString:@"1"]){
             NSString *confirmString = @"【转人工】";
             NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.content];
             NSRange range = [msg.content rangeOfString:confirmString];
@@ -660,10 +665,5 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     return YES;
 }
-
-//- (void)willDisplayMessageCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath{
-//    NSLog(indexPath);
-//}
-
 
 @end

@@ -16,6 +16,8 @@
 @interface MAChat : NSObject
 
 @property (strong, nonatomic, readonly) NSString *tokenStr;
+@property(atomic,assign) int *queueId;
+@property (strong, nonatomic, readonly) NSString *chatTargetId;
 
 + (instancetype)getInstance;
 
@@ -24,13 +26,14 @@
 - (void)setSession:(MASession *)session;
 - (void)setTokenStr:(NSString *)tokenStr;
 - (void)setChatTargetId:(NSString *)chatTargetId;
-
+- (void)setQueueId:(int *)queueId;
 
 - (MAClient *)getClient;
 - (MASession *)getSession;
 - (long)getRequestId;
 - (long)getSessionId;
 - (NSString *)getChatTargetId;
+- (int *)getQueueId;
 /**
  *  更新坐席信息
  *
@@ -46,7 +49,7 @@
 /**
  *  清除request和session
  */
-+ (void)clearRequestAndSession;
+- (void)clearRequestAndSession;
 /**
  *  获取未发送消息集合
  *
@@ -59,4 +62,18 @@
  *  @param array 消息集合
  */
 - (void)updateUnsendMessage:(NSArray *)array;
+/**
+ *  判断当前session是否有效
+ *
+ *  @return flag
+ */
+- (bool *)isSessionAvailable;
+
+/**
+ *  判断当前token
+ *
+ *  @return flag
+ */
+- (NSString *)getTokenStr;
+
 @end

@@ -21,6 +21,19 @@ static NSString *CHAT_TITLE = @"在线客服";
  */
 - (void)startRyWithAppKey:(NSString *)key;
 
+
+/**
+ * 初始化EliteChat， 并且启动聊天
+ * @param serverAddr EliteWebChat服务地址
+ * @param userId 用户登录id
+ * @param name 用户名
+ * @param portraitUri 用户头像uri
+ * @param complete 回调
+ * @param ngs 坐席头像地址前缀
+ */
+- (void)startChat:(NSString *)serverAddr token:(NSString *)token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete;
+
+
 /**
  * 初始化EliteChat， 并且启动聊天
  * @param serverAddr EliteWebChat服务地址

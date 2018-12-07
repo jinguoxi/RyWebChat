@@ -14,7 +14,6 @@
 @property (strong, nonatomic) MAClient *client;
 @property (strong, nonatomic) MARequest *request;
 @property (strong, nonatomic) MASession *session;
-@property (strong, nonatomic, readwrite) NSString *tokenStr;
 @property (strong, nonatomic, readwrite) NSString *chatTargetId;
 @end
 
@@ -49,7 +48,9 @@ static MAChat *chat;
 
 - (void)setChatTargetId:(NSString *)chatTargetId {
     _chatTargetId = chatTargetId;
-    
+}
+- (void)setQueueId:(int *)queueId{
+    _queueId = *queueId;
 }
 
 - (long)getRequestId {
@@ -80,8 +81,23 @@ static MAChat *chat;
     return self.chatTargetId;
 }
 
+- (NSString *)getTokenStr {
+    return self.tokenStr;
+}
+
+- (int *)getQueueId {
+    return self.queueId;
+}
+
 - (void)updateSession:(MAAgent *)currentAgent {
     self.session.currentAgent = currentAgent;
+}
+
+- (bool)isSessionAvailable {
+    if (self.session != nil && self.session.sessionId != 0) {
+        return true;
+    }
+    return false;
 }
 
 - (void)addUnsendMessage:(MASaveMessage *)message {
@@ -124,7 +140,7 @@ static MAChat *chat;
     [userDefault setObject:[unsendMsg mj_JSONString] forKey:@"unsendMsg"];
 }
 
-+ (void)clearRequestAndSession {
+- (void)clearRequestAndSession {
     if (chat.request) {
         chat.request = nil;
     }

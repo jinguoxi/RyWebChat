@@ -29,11 +29,13 @@
     contentDic[@"queueId"] = @(queueId);//排队的队列号
     contentDic[@"from"] = from;//请求来源
     contentDic[@"tracks"] = [[MAChat getInstance] getClient].tracks;//添加轨迹参数
+    
     //contentDic[@"messageId"] = @([[MAChat getInstance] getSessionId]);//messageId
     NSString *content = [contentDic mj_JSONString];
     NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
     extraDic[@"type"] = @(MASEND_CHAT_REQUEST);//人工聊天请求
     extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
+    extraDic[@"targetId"] = [[MAChat getInstance] getChatTargetId];//添加房间号
     NSString *extra = [extraDic mj_JSONString];
     EliteMessage *messageContent = [EliteMessage messageWithContent:content];
     messageContent.extra = extra;

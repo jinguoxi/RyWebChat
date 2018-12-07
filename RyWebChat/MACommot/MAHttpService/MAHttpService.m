@@ -34,4 +34,38 @@
     } failedBlock:errorBlock];
 }
 
+/**
+ *  校验token
+ *  @param urlString 请求路径
+ *  @param paramer  参数
+ *  @param complete 完成回调
+ */
++ (void)checkToken:(NSString *)urlString paramer:(id)paramer success:(void (^)(NSString *token))successBlock error:(void (^)(NSError *error))errorBlock {
+    [MAFNetworkingTool POST:urlString parameters:paramer successBlock:^(id responesObj) {
+        
+        MAJSONObject *json = [MAJSONObject initJSONObject:[responesObj mj_JSONString]];
+        int result = [json getInt:@"result"];
+        NSString *resultStr = [NSString stringWithFormat:@"%d",result];
+        successBlock(resultStr);
+    } failedBlock:errorBlock];
+}
+
+/**
+ *   关闭session
+ *  @param urlString 请求路径
+ *  @param paramer  参数
+ *  @param complete 完成回调
+ */
++ (void)closeSession:(NSString *)urlString paramer:(id)paramer success:(void (^)(NSString *token))successBlock error:(void (^)(NSError *error))errorBlock {
+    [MAFNetworkingTool POST:urlString parameters:paramer successBlock:^(id responesObj) {
+        
+        MAJSONObject *json = [MAJSONObject initJSONObject:[responesObj mj_JSONString]];
+        
+        int result = [json getInt:@"result"];
+        NSString *resultStr = [NSString stringWithFormat:@"%d",result];
+        successBlock(resultStr);
+        
+    } failedBlock:errorBlock];
+}
+
 @end

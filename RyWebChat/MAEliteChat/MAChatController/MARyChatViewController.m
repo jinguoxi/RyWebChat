@@ -275,7 +275,7 @@
             //TODO 这时候也去清空会话，并且把原始消息缓存起来，同时发出聊天排队请求
             int result = [json getInt:@"result"];
             if(result == MAINVAILD_CHAT_SESSION_ID) {
-                [MAChat clearRequestAndSession];
+                [[MAChat getInstance] clearRequestAndSession];
                 
                 NSDictionary *originalMessage = [json getObject:@"originalMessage"];
                 NSString *objectName = [originalMessage getString:@"objectName"];
@@ -376,7 +376,7 @@
             break;
         case MAAGENT_CLOSE_SESSION://坐席关闭
             NSLog(@"坐席关闭");
-            [MAChat clearRequestAndSession];
+            [[MAChat getInstance] clearRequestAndSession];
             [self addTipsMessage:@"会话结束"];
             break;
         case MAAGENT_SEND_MESSAGE://坐席发送消息

@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *userId;
 @property (weak, nonatomic) IBOutlet UITextField *headUrl;
 @property (weak, nonatomic) IBOutlet UITextField *queueId;
+@property (weak, nonatomic) IBOutlet UITextField *targetId;
 @property (weak, nonatomic) IBOutlet UITextField *serverAddr;
 
 @property (strong, nonatomic) MARyChatViewController *chatViewController;
@@ -51,12 +52,14 @@
     NSString *H_Url = [ user objectForKey:@"headUrl"];
     NSString *Q_Id = [ user objectForKey:@"queueId"];
     NSString *Q_ServerAddr = [ user objectForKey:@"serverAddr"];
+    NSString *Q_TargetId = [ user objectForKey:@"targetId"];
     
     self.userName.text = U_Name;
     self.userId.text = U_Id;
     self.headUrl.text = H_Url?H_Url:@"https://avatars3.githubusercontent.com/u/15497804?v=3&u=fe6dfc22f6ae32639af26a096f8f67f65b892a28&s=400";
     self.queueId.text = Q_Id?Q_Id:@"1";
     self.serverAddr.text = Q_ServerAddr?Q_ServerAddr:@"http://dev.elitecrm.com/webchat";
+    self.targetId.text = Q_TargetId?Q_TargetId:@"elitecrm";
     
 }
 - (IBAction)webChatPressed:(id)sender {
@@ -65,6 +68,7 @@
     [self.headUrl resignFirstResponder];
     [self.queueId resignFirstResponder];
     [self.serverAddr resignFirstResponder];
+    [self.targetId resignFirstResponder];
     
     if([self.userName.text isEqualToString:@""] ||
        [self.userId.text isEqualToString:@""]) {
@@ -84,10 +88,16 @@
     if([q_serverAddr isEqualToString:@""]){
         q_serverAddr = @"http://dev.elitecrm.com/webchat";
     }
+    
+    NSString *q_targetId = self.targetId.text;
+    if([q_targetId isEqualToString:@""]){
+        q_targetId = @"elitecrm";
+    }
     int parseQueueId = [q_id intValue];
     
     __weak typeof(self) myself = self;
     // NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+     /*
     [[MAEliteChat shareEliteChat] initAndStart:q_serverAddr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:@"1919" queueId:parseQueueId ngsAddr:nil tracks:@"sb" complete:^(BOOL result) {
         if (result) {
             [myself switchChatViewController];
@@ -101,6 +111,25 @@
         }
         else NSLog(@"初始化或启动失败");
     }];
+     */
+    NSLog(@"%d",parseQueueId);
+    int queueId = [MAChat getInstance].queueId;
+    NSLog(@"%d",queueId);
+    [[MAEliteChat shareEliteChat] startChat:q_serverAddr token:[MAChat getInstance].tokenStr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:q_targetId queueId:parseQueueId ngsAddr:nil tracks:@"sb" complete:^(BOOL result) {
+        if (result) {
+            [myself switchChatViewController];
+            
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            [user setObject:self.userName.text forKey:@"userName"];
+            [user setObject:self.userId.text forKey:@"userId"];
+            [user setObject:self.headUrl.text forKey:@"headUrl"];
+            [user setObject:self.queueId.text forKey:@"queueId"];
+            [user setObject:self.serverAddr.text forKey:@"serverAddr"];
+             [user setObject:self.targetId.text forKey:@"targetId"];
+        }
+        else NSLog(@"初始化或启动失败");
+    }];
+     
 }
 
 - (void)switchChatViewController {

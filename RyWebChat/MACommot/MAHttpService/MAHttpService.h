@@ -18,4 +18,20 @@
  */
 + (void)getRyToken:(NSString *)urlString paramer:(id)paramer success:(void (^)(NSString *token))successBlock error:(void (^)(NSError *error))errorBlock;
 
+/**
+ *  check token
+ *  @param urlString 请求路径
+ *  @param paramer  参数
+ *  @param complete 完成回调
+ */
++ (void)checkToken:(NSString *)urlString paramer:(id)paramer success:(void (^)(NSString *token))successBlock error:(void (^)(NSError *error))errorBlock;
+
+/**
+ *  关闭session
+ *  @param urlString 请求路径
+ *  @param paramer  参数
+ *  @param complete 完成回调
+ */
++ (void)closeSession:(NSString *)urlString paramer:(id)paramer success:(void (^)(NSString *token))successBlock error:(void (^)(NSError *error))errorBlock;
+
 @end

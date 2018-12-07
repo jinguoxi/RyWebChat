@@ -48,8 +48,34 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
 }
 
+- (void)startChat:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+    MAChat *maChat = [MAChat getInstance];
+    [maChat setChatTargetId:chatTargetId];
+    if(maChat != nil && [maChat isSessionAvailable]){
+        if(maChat.tokenStr != nil){
+            if(queueId != [maChat getQueueId]){//如果队列改变了，则直接结束之前会话，并开启新的会话
+                [self closeSessionService:serverAddr token:token userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:complete];
+            }else {
+                // 如果队列没变化，则去检查token是否还合法，如果合法则可以直接继续聊天。如果不合法则需要重新登录
+                [self checkTokenService:serverAddr token:token userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:^(NSString *result) {
+                    if([@"1" isEqualToString:result] ){
+                        complete(YES);
+                    }else {
+                         [maChat clearRequestAndSession];
+                         [self initAndStart:(NSString *) serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:complete];
+                    }
+                }];
+            }
+        }
+    }else {
+        [self initAndStart:(NSString *) serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:complete];
+    }
+    
+}
+
 - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
     [[MAChat getInstance] setChatTargetId:chatTargetId];
+    [MAChat getInstance].queueId = &(queueId);
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr tracks: tracks];
     
     [self startChat:complete];
@@ -112,7 +138,7 @@ static MAEliteChat *eliteChat=nil;
                     [[MAChat getInstance] setTokenStr:token];
                     self.oldClientId = client.userId;
                     self.startChatReady = YES;
-                    [MAChat clearRequestAndSession];
+                    [[MAChat getInstance] clearRequestAndSession];
                     complete(YES);
                 }
             });
@@ -123,7 +149,7 @@ static MAEliteChat *eliteChat=nil;
                 [[MAChat getInstance] setTokenStr:token];
                 self.oldClientId = client.userId;
                 self.startChatReady = YES;
-                [MAChat clearRequestAndSession];
+                [[MAChat getInstance] clearRequestAndSession];
                 complete(YES);
             }
         }
@@ -177,6 +203,44 @@ static MAEliteChat *eliteChat=nil;
     } error:^(NSError *error) {
         NSLog(@"error:%@",error);
         complete(nil);
+    }];
+}
+
+- (void)checkTokenService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(NSString *result))complete  {
+    if (isEliteEmpty(serverAddr)) return complete(nil);
+     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"action"] = @"check";
+    dic[@"token"] = token;
+    [MAHttpService checkToken:serverAddr paramer:dic success:^(NSString *result) {
+        complete(result);
+        
+    } error:^(NSError *error) {
+        NSLog(@"error:%@",error);
+         complete(nil);
+    }];
+}
+
+- (void)closeSessionService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+    if (isEliteEmpty(serverAddr)) return;
+    serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"action"] = @"closeSession";
+   long sessionId = [[MAChat getInstance] getSessionId];
+    NSNumber *longlongNumber = [NSNumber numberWithLongLong:sessionId];
+    NSString *longlongStr = [longlongNumber stringValue];
+    dic[@"sessionId"] = longlongStr;
+    dic[@"token"] = token;
+    [MAHttpService closeSession:serverAddr paramer:dic success:^(NSString *result) {
+        if([@"1" isEqualToString:result] ){
+            [[MAChat getInstance] clearRequestAndSession];
+            [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:complete];
+        }
+        
+        
+    } error:^(NSError *error) {
+        NSLog(@"error:%@",error);
+       // complete(nil);
     }];
 }
 /**

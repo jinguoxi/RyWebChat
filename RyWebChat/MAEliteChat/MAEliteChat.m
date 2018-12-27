@@ -26,7 +26,7 @@
 
 static MAEliteChat *eliteChat=nil;
 
-+ (instancetype)shareEliteChat {
+ + (instancetype)shareEliteChat {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         eliteChat = [[MAEliteChat alloc] init];
@@ -49,6 +49,9 @@ static MAEliteChat *eliteChat=nil;
 }
 
 - (void)startChat:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+    if(portraitUri == nil || [@"" isEqualToString:portraitUri]){
+        portraitUri = @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545907610687&di=62e1d4ad030c001a6a2b4e6b75365981&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F37%2F93%2F581226a0335f1_610.jpg";
+    }
     MAChat *maChat = [MAChat getInstance];
     [maChat setChatTargetId:chatTargetId];
     if(maChat != nil && [maChat isSessionAvailable]){
@@ -76,6 +79,7 @@ static MAEliteChat *eliteChat=nil;
 - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
     [[MAChat getInstance] setChatTargetId:chatTargetId];
     [MAChat getInstance].queueId = &(queueId);
+    
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:ngsAddr tracks: tracks];
     
     [self startChat:complete];

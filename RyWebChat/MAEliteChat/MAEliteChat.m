@@ -77,6 +77,7 @@ static MAEliteChat *eliteChat=nil;
 }
 
 - (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+    
     [[MAChat getInstance] setChatTargetId:chatTargetId];
     [MAChat getInstance].queueId = &(queueId);
     
@@ -99,11 +100,8 @@ static MAEliteChat *eliteChat=nil;
         NSString *ipStr = [serverAddr substringToIndex:range.location-1];
         ngsAddr = [ipStr stringByAppendingPathComponent:@"ngs"];
     }
-    
     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
-    
     MAClient *client = [MAClient initWithServerAddr:serverAddr ngsAddr:ngsAddr name:name userId:userId portraitUri:portraitUri tracks:tracks] ;
-    
     [[MAChat getInstance] setClient:client];
     
     self.queueId = queueId;
@@ -212,7 +210,7 @@ static MAEliteChat *eliteChat=nil;
 
 - (void)checkTokenService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(NSString *result))complete  {
     if (isEliteEmpty(serverAddr)) return complete(nil);
-     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
+    serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"action"] = @"check";
     dic[@"token"] = token;
@@ -238,7 +236,9 @@ static MAEliteChat *eliteChat=nil;
     [MAHttpService closeSession:serverAddr paramer:dic success:^(NSString *result) {
         if([@"1" isEqualToString:result] ){
             [[MAChat getInstance] clearRequestAndSession];
-            [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:complete];
+            if(complete != nil) {
+                [self initAndStart:serverAddr userId:userId name:name portraitUri:portraitUri chatTargetId:chatTargetId queueId:queueId ngsAddr:ngsAddr tracks:tracks complete:complete];
+            }
         }
         
         

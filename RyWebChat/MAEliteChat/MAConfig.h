@@ -56,6 +56,10 @@ typedef enum {
     MASYSTEM_NOTICE = 99
 }MAChatMsgType;
 
+//-----自定义Board item 的类型参数
+typedef enum {
+    PLUGIN_BOARD_ITEM_CLOSESERVICE_TAG = 2019
+}EliteCloseService;
 
 //-----聊天请求状态码
 

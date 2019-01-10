@@ -36,6 +36,10 @@
     // Do any additional setup after loading the view.
     
     self.displayUserNameInCell = NO;
+    NSURL *url = [NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547114000938&di=fec250aca7835b1f8f6ad52322368707&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F16%2F13%2F58%2F592a709d9ef9f.png"];
+    NSData *imageData = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:imageData];
+    [self.chatSessionInputBarControl.pluginBoardView insertItemWithImage:image title:@"结束服务" atIndex:3 tag:2019];
     
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
     //[[RCIM sharedRCIM] setUserInfoDataSource:self];
@@ -559,8 +563,27 @@
                     [self presentViewController:locationController animated:YES completion:nil];
                     
                 });
-                break;
             }
+            break;
+        }
+        case  PLUGIN_BOARD_ITEM_CLOSESERVICE_TAG : {
+            
+            // 主线程执行：
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MAChat *maChat = [MAChat getInstance];
+                MAClient *maClient = [maChat getClient];
+                int queueId = [maChat getQueueId];
+                NSString * serverAddr = maClient.serverAddr;
+                NSRange range = [serverAddr rangeOfString:@"/rcs"];
+                if (range.location != NSNotFound) {
+                     serverAddr = [serverAddr substringToIndex:range.location];
+                }
+                [[MAEliteChat alloc] closeSessionService: serverAddr token:maChat.tokenStr userId:maClient.userId name:maClient.name portraitUri:maClient.portraitUri chatTargetId: [maChat getChatTargetId] queueId:queueId ngsAddr:maClient.ngsAddr tracks:[maChat getClient].tracks complete:nil];
+                [self addTipsMessage:@"会话结束"];
+            
+                
+            });
+            break;
         }
         default:
             

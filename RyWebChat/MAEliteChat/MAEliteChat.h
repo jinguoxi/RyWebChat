@@ -80,4 +80,6 @@ static NSString *CHAT_TITLE = @"在线客服";
  */
 - (void)sendQueueRequest;
 
+- (void)closeSessionService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete;
+
 @end

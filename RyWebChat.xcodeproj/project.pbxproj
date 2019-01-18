@@ -66,6 +66,8 @@
 		AC7497A820FC79F300BA3B1B /* SimpleMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */; };
 		AC9B17941F4AC61F005EE487 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9B17931F4AC61F005EE487 /* NSString+MD5.m */; };
 		ACAE04CB20CE541C0054EA7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1431F431E4C0A6A001BF142 /* Main.storyboard */; };
+		ACFE177821F1CFD900C7FB3F /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACFE177221F1CFD900C7FB3F /* LaunchScreen.strings */; };
+		ACFE177A21F1CFD900C7FB3F /* RongCloudKit.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACFE177621F1CFD900C7FB3F /* RongCloudKit.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -178,6 +180,8 @@
 		AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessageCell.m; sourceTree = "<group>"; };
 		AC9B17921F4AC61F005EE487 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		AC9B17931F4AC61F005EE487 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		ACFE177321F1CFD900C7FB3F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = LaunchScreen.strings; sourceTree = "<group>"; };
+		ACFE177721F1CFD900C7FB3F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = RongCloudKit.strings; sourceTree = "<group>"; };
 		F557F79445B3893E4B491F15 /* Pods-RyWebChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RyWebChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,6 +225,7 @@
 		48826400B833FB19D259787E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ACFE177121F1CFD900C7FB3F /* zh-Hans.lproj */,
 				AC1002172140C85800A52898 /* RongSight.framework */,
 				A1431F7F1E4C0D0F001BF142 /* SafariServices.framework */,
 				A1431F7D1E4C0D09001BF142 /* Photos.framework */,
@@ -488,6 +493,15 @@
 			path = robot;
 			sourceTree = "<group>";
 		};
+		ACFE177121F1CFD900C7FB3F /* zh-Hans.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				ACFE177221F1CFD900C7FB3F /* LaunchScreen.strings */,
+				ACFE177621F1CFD900C7FB3F /* RongCloudKit.strings */,
+			);
+			path = "zh-Hans.lproj";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -539,6 +553,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = A1431F2E1E4C0A6A001BF142;
 			productRefGroup = A1431F381E4C0A6A001BF142 /* Products */;
@@ -557,7 +572,9 @@
 			files = (
 				A1CFF3FE1E5AF0DC00846381 /* MAChatMsg.bundle in Resources */,
 				A1431F4A1E4C0A6A001BF142 /* LaunchScreen.storyboard in Resources */,
+				ACFE177A21F1CFD900C7FB3F /* RongCloudKit.strings in Resources */,
 				A1431F471E4C0A6A001BF142 /* Assets.xcassets in Resources */,
+				ACFE177821F1CFD900C7FB3F /* LaunchScreen.strings in Resources */,
 				ACAE04CB20CE541C0054EA7A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,6 +688,22 @@
 				A13A0D571E4D9632009E4B5F /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		ACFE177221F1CFD900C7FB3F /* LaunchScreen.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACFE177321F1CFD900C7FB3F /* zh-Hans */,
+			);
+			name = LaunchScreen.strings;
+			sourceTree = "<group>";
+		};
+		ACFE177621F1CFD900C7FB3F /* RongCloudKit.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACFE177721F1CFD900C7FB3F /* zh-Hans */,
+			);
+			name = RongCloudKit.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

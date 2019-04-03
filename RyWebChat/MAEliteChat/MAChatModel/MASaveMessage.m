@@ -7,80 +7,111 @@
 //
 
 #import "MASaveMessage.h"
+#import "UnSendMessage.h"
 
 @implementation MASaveMessage
 
-
-+ (instancetype)saveMessageWithText:(NSDictionary *)dic {
-    
++ (void)saveMessageWithText:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId {
     NSDictionary *contentDic = dic[@"content"];
     
-    MASaveMessage *message = [MASaveMessage new];
-    message.objectName = dic[@"objectName"];
-    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:contentDic[@"content"], @"content", nil];
+//    MASaveMessage *message = [MASaveMessage new];
+//    message.objectName = dic[@"objectName"];
+//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:contentDic[@"content"], @"content", nil];
+    NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:contentDic[@"content"], @"content", nil]];
+    NSDictionary *infoDict = @{@"target_id": targetId, @"conversation_type": conversationType, @"object_name": dic[@"objectName"], @"content":contentStr};
+    [[[UnSendMessage alloc] initWithDict:infoDict] insertMessage:conversationType];
     
-    return message;
 }
 
-+ (instancetype)saveMessageWithVoice:(NSDictionary *)dic {
++ (void)saveMessageWithVoice:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId{
     NSDictionary *contentDic = dic[@"content"];
     
-    MASaveMessage *message = [MASaveMessage new];
-    message.objectName = dic[@"objectName"];
-    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                          contentDic[@"content"], @"content",
-                          contentDic[@"duration"], @"duration",
-                          nil];
-    
-    return message;
+//    MASaveMessage *message = [MASaveMessage new];
+//    message.objectName = dic[@"objectName"];
+//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                          contentDic[@"content"], @"content",
+//                          contentDic[@"duration"], @"duration",
+//                          nil];
+    NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                  contentDic[@"content"], @"content",
+                                                  contentDic[@"duration"], @"duration",
+                                                  nil]];
+    NSDictionary *infoDict = @{@"target_id": targetId, @"conversation_type": conversationType, @"object_name": dic[@"objectName"], @"content":contentStr};
+
+    [[[UnSendMessage alloc] initWithDict:infoDict] insertMessage:dic[@"conversationType"]];
+
 }
 
-+ (instancetype)saveMessageWithSight:(NSDictionary *)dic {
++ (void)saveMessageWithSight:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId {
     NSDictionary *contentDic = dic[@"content"];
-    MASaveMessage *message = [MASaveMessage new];
-    message.objectName = dic[@"objectName"];
-    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                          contentDic[@"content"], @"content",
-                          contentDic[@"name"], @"name",
-                          contentDic[@"sightUrl"], @"sightUrl",
-                          contentDic[@"size"], @"size",
-                          contentDic[@"duration"], @"duration",
-                          nil];
-    
-    return message;
+//    MASaveMessage *message = [MASaveMessage new];
+//    message.objectName = dic[@"objectName"];
+//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                          contentDic[@"content"], @"content",
+//                          contentDic[@"name"], @"name",
+//                          contentDic[@"sightUrl"], @"sightUrl",
+//                          contentDic[@"size"], @"size",
+//                          contentDic[@"duration"], @"duration",
+//                          nil];
+    NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                  contentDic[@"content"], @"content",
+                                                  contentDic[@"name"], @"name",
+                                                  contentDic[@"sightUrl"], @"sightUrl",
+                                                  contentDic[@"size"], @"size",
+                                                  contentDic[@"duration"], @"duration",
+                                                  nil]];
+    NSDictionary *infoDict = @{@"target_id": targetId, @"conversation_type": conversationType, @"object_name": dic[@"objectName"], @"content":contentStr};
+    [[[UnSendMessage alloc] initWithDict:infoDict] insertMessage:dic[@"conversationType"]];
 }
 
-+ (instancetype)saveMessageWithImage:(NSDictionary *)dic {
++ (void)saveMessageWithImage:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId {
     NSDictionary *contentDic = dic[@"content"];
     
-    MASaveMessage *message = [MASaveMessage new];
-    message.objectName = dic[@"objectName"];
-    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                          contentDic[@"content"], @"content",
-                          contentDic[@"imageUri"], @"imageUri",
-                          nil];
-    
-    return message;
+//    MASaveMessage *message = [MASaveMessage new];
+//    message.objectName = dic[@"objectName"];
+//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                          contentDic[@"content"], @"content",
+//                          contentDic[@"imageUri"], @"imageUri",
+//                          nil];
+    NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                 contentDic[@"content"], @"content",
+                                                 contentDic[@"imageUri"], @"imageUri",
+                                                 nil]];
+    NSDictionary *infoDict = @{@"target_id": targetId, @"conversation_type": conversationType, @"object_name": dic[@"objectName"], @"content":contentStr};
+    [[[UnSendMessage alloc] initWithDict:infoDict] insertMessage:dic[@"conversationType"]];
 }
 
-+ (instancetype)saveMessageWithLocation:(NSDictionary *)dic {
++ (void)saveMessageWithLocation:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId {
     NSDictionary *contentDic = dic[@"content"];
     
-    MASaveMessage *message = [MASaveMessage new];
-    message.objectName = dic[@"objectName"];
+//    MASaveMessage *message = [MASaveMessage new];
+//    message.objectName = dic[@"objectName"];
+//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                          contentDic[@"content"], @"content",
+//                          contentDic[@"latitude"], @"latitude",
+//                          contentDic[@"longitude"], @"longitude",
+//                          contentDic[@"poi"], @"poi",
+//                          imgUri, @"imgUri",
+//                          nil];
     NSString *imgUri = contentDic[@"imgUri"];
     if (!imgUri) {
         imgUri = @"";
     }
-    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                          contentDic[@"content"], @"content",
-                          contentDic[@"latitude"], @"latitude",
-                          contentDic[@"longitude"], @"longitude",
-                          contentDic[@"poi"], @"poi",
-                          imgUri, @"imgUri",
-                          nil];
-    
-    return message;
+    NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                  contentDic[@"content"], @"content",
+                                                  contentDic[@"latitude"], @"latitude",
+                                                  contentDic[@"longitude"], @"longitude",
+                                                  contentDic[@"poi"], @"poi",
+                                                  imgUri, @"imgUri",
+                                                  nil]];
+    NSDictionary *infoDict = @{@"target_id": targetId, @"conversation_type": conversationType, @"object_name": dic[@"objectName"], @"content":contentStr};
+    [[[UnSendMessage alloc] initWithDict:infoDict] insertMessage:dic[@"conversationType"]];
+}
+
++ (NSString *)transDicToNSStr: (NSDictionary *)dic {
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:0];
+    NSString *contentStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return contentStr;
 }
 @end
 

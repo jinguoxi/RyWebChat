@@ -24,6 +24,7 @@
 #import "SimpleMessageCell.h"
 #import "SimpleMessage.h"
 #import "NSString+Category.h"
+#import "UnSendMessage.h"
 
 @interface MARyChatViewController ()<RCIMReceiveMessageDelegate,MASatisfactionViewDelegate,MALocationDelegate, RCAttributedLabelDelegate>
 
@@ -283,31 +284,28 @@
                 
                 NSDictionary *originalMessage = [json getObject:@"originalMessage"];
                 NSString *objectName = [originalMessage getString:@"objectName"];
-                
-                MASaveMessage *saveUnmsg = nil;
+                NSNumber *longNumber = [NSNumber numberWithInt:self.conversationType];
+                NSString *contervationType = [longNumber stringValue];
                 if([objectName isEqual:TXT_MSG]) {
                     
-                    saveUnmsg = [MASaveMessage saveMessageWithText:originalMessage];
+                    [MASaveMessage saveMessageWithText:originalMessage :(NSString *) contervationType :(NSString *) self.targetId];
                     
                 } else if ([objectName isEqual:IMG_MSG]) {
                     
-                    saveUnmsg = [MASaveMessage saveMessageWithImage:originalMessage];
+                   [MASaveMessage saveMessageWithImage:originalMessage:(NSString *) contervationType :(NSString *) self.targetId];
                     
                 } else if ([objectName isEqual:FILE_MSG]) {
                     
                 } else if ([objectName isEqual:LBS_MSG]) {
                     
-                    saveUnmsg = [MASaveMessage saveMessageWithLocation:originalMessage];
+                    [MASaveMessage saveMessageWithLocation:originalMessage:(NSString *) contervationType :(NSString *) self.targetId];
                     
                 } else if ([objectName isEqual:VC_MSG]) {
                     
-                    saveUnmsg = [MASaveMessage saveMessageWithVoice:originalMessage];
+                    [MASaveMessage saveMessageWithVoice:originalMessage:(NSString *) contervationType :(NSString *) self.targetId];
                     
                 }else if([objectName isEqual:SIGHT_MSG]){
-                    saveUnmsg = [MASaveMessage saveMessageWithSight:originalMessage];
-                }
-                if(saveUnmsg != nil){
-                    [[MAChat getInstance] addUnsendMessage:saveUnmsg];
+                    [MASaveMessage saveMessageWithSight:originalMessage:(NSString *) contervationType :(NSString *) self.targetId];
                 }
                 
                 [[MAEliteChat shareEliteChat] sendQueueRequest];
@@ -420,61 +418,75 @@
     self.chatSessionInputBarControl.userInteractionEnabled = enable;
 }
 
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
 /**
  * 发送之前未送达的消,当排队之前发出的消息,会先缓存起来，如果排上队了，就会补发这些消息
  */
 - (void)sendUnsendMessages {
     
-    NSMutableArray *array = [[MAChat getInstance] getUnsendMessage];
-    
-    NSArray *tempArray = [NSArray arrayWithArray:array];
-    NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
-    for (MASaveMessage *message in tempArray) {
-        
-        id content = [message.contentDic getString:@"content"];
-        
+    NSArray *array = [[MAChat getInstance] getUnsendMessage];
+    for (UnSendMessage *message in array) {
+        NSDictionary *contentDic = [self dictionaryWithJsonString:message.content];
+        NSInteger conversation_type = [message.conversation_type integerValue];
+        id content = [contentDic getString:@"content"];
         NSMutableDictionary *extra = [NSMutableDictionary dictionary];
         EliteMessage *messageContent = [EliteMessage messageWithContent:content];
         extra[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
         extra[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
-        if(!([message.objectName isEqual:ELITE_MSG])){
+        if(!([message.object_name isEqual:ELITE_MSG])){
             extra[@"type"] = @(MASEND_CHAT_MESSAGE);
-            if ([message.objectName isEqual:TXT_MSG]) {
+            if ([message.object_name isEqual:TXT_MSG]) {
                 RCTextMessage *txtMessage = [MAMessageUtils generateTxtMessage:content];
                 extra[@"messageType"] = @(MATEXT);
                 txtMessage.extra = [extra mj_JSONString];
-                [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
-                    [array removeObject:message];
-                    [[MAChat getInstance] updateUnsendMessage:array];
+                [[RCIMClient sharedRCIMClient] sendMessage:conversation_type targetId:message.target_id content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
+//                    [array removeObject:message];
+                    //[[MAChat getInstance] updateUnsendMessage:array];
                 } error:nil];
+//                [[RCIMClient sharedRCIMClient] insertOutgoingMessage:conversation_type targetId:message.target_id sentStatus:ReceivedStatus_UNREAD content:txtMessage];
             } else{
-                if ([message.objectName isEqual:IMG_MSG]) {
-                    extra[@"imageUri"] = [message.contentDic getString:@"imageUri"];
+                if ([message.object_name isEqual:IMG_MSG]) {
+                    extra[@"imageUri"] = [contentDic getString:@"imageUri"];
                     extra[@"messageType"] = @(MAIMG);
-                } else if ([message.objectName isEqual:VC_MSG]) {
-                    extra[@"length"] = [message.contentDic getString:@"duration"];
+                } else if ([message.object_name isEqual:VC_MSG]) {
+                    extra[@"length"] = [contentDic getString:@"duration"];
                     extra[@"messageType"] = @(MAVOICE);
-                } else if ([message.objectName isEqual:LBS_MSG]) {
-                    extra[@"latitude"] = [message.contentDic getString:@"latitude"];
-                    extra[@"longitude"] = [message.contentDic getString:@"longitude"];
-                    extra[@"poi"] = [message.contentDic getString:@"poi"];
-                    extra[@"imgUri"] = [message.contentDic getString:@"imgUri"];
+                } else if ([message.object_name isEqual:LBS_MSG]) {
+                    extra[@"latitude"] = [contentDic getString:@"latitude"];
+                    extra[@"longitude"] = [contentDic getString:@"longitude"];
+                    extra[@"poi"] = [contentDic getString:@"poi"];
+                    extra[@"imgUri"] = [contentDic getString:@"imgUri"];
                     extra[@"messageType"] = @(MALOCATION);
                     if(self.mapType == MAMAPTYPE_Baidu){
                         extra[@"map"] = @"baidu";
                     }
-                } if([message.objectName isEqual:SIGHT_MSG]){
+                } if([message.object_name isEqual:SIGHT_MSG]){
                     extra[@"messageType"] = @(MASIGHT);
-                    extra[@"content"] = [message.contentDic getString:@"content"];
-                    extra[@"name"] = [message.contentDic getString:@"name"];
-                    extra[@"sightUrl"] = [message.contentDic getString:@"sightUrl"];
-                    extra[@"duration"] = [message.contentDic getString:@"duration"];
-                    extra[@"size"] = [message.contentDic getString:@"size"];
+                    extra[@"content"] = [contentDic getString:@"content"];
+                    extra[@"name"] = [contentDic getString:@"name"];
+                    extra[@"sightUrl"] = [contentDic getString:@"sightUrl"];
+                    extra[@"duration"] = [contentDic getString:@"duration"];
+                    extra[@"size"] = [contentDic getString:@"size"];
                 }
                 messageContent.extra = [extra mj_JSONString];
-                [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
-                    [array removeObject:message];
-                    [[MAChat getInstance] updateUnsendMessage:array];
+                [[RCIMClient sharedRCIMClient] sendMessage:conversation_type targetId:message.target_id content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+//                    [array removeObject:message];
+                   // [[MAChat getInstance] updateUnsendMessage:array];
                 } error:nil];
             }
         }else{
@@ -485,13 +497,14 @@
                 extra[@"type"] = type;//elite消息类型
             }
             messageContent.extra = [extra mj_JSONString];
-            [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
-                [array removeObject:message];
-                [[MAChat getInstance] updateUnsendMessage:array];
+            [[RCIMClient sharedRCIMClient] sendMessage:conversation_type targetId:message.target_id content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+//                [array removeObject:message];
+               // [[MAChat getInstance] updateUnsendMessage:array];
             } error:nil];
         }
+        
+        [UnSendMessage deleteData:message.guid];
     }
-    
 }
 /**
  *  满意度评价

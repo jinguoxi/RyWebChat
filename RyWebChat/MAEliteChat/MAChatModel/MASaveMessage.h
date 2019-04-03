@@ -14,11 +14,11 @@
 
 @property (strong, nonatomic) NSDictionary *contentDic;
 
-+ (instancetype)saveMessageWithText:(NSDictionary *)dic;
-+ (instancetype)saveMessageWithVoice:(NSDictionary *)dic;
-+ (instancetype)saveMessageWithImage:(NSDictionary *)dic;
-+ (instancetype)saveMessageWithLocation:(NSDictionary *)dic;
-+ (instancetype)saveMessageWithSight:(NSDictionary *)dic;
++ (void)saveMessageWithText:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
++ (void)saveMessageWithVoice:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
++ (void)saveMessageWithImage:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
++ (void)saveMessageWithLocation:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
++ (void)saveMessageWithSight:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
 
 @end
 

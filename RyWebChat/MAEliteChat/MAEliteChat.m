@@ -12,6 +12,8 @@
 #import "MAChat.h"
 #import "MAHttpService.h"
 #import "SimpleMessage.h"
+#import "UnSendMessage.h"
+#import "SQLiteManager.h"
 
 @interface MAEliteChat()<RCIMUserInfoDataSource>
 
@@ -36,6 +38,7 @@ static MAEliteChat *eliteChat=nil;
 }
 
 - (void)startRyWithAppKey:(NSString *)key {
+    
     [[RCIM sharedRCIM] initWithAppKey:key];
     
     [[RCIM sharedRCIM] registerMessageType:[EliteMessage class]];
@@ -46,6 +49,17 @@ static MAEliteChat *eliteChat=nil;
     [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
     
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
+    BOOL flag = [[SQLiteManager shareInstance] openDB];
+    if (flag) {
+        NSLog(@"打开数据库成功");
+//        NSDictionary *infoDict = @{@"name":@"taoyali",@"password":@"taoyali"};
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoDict options:0 error:0];
+//        NSString *dataStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        NSDictionary *dict=[[NSDictionary alloc] initWithObjects:@[@"text", @"1", @"text", dataStr] forKeys:@[@"target_id", @"conversation_type", @"object_name", @"content"]];
+//        [[[UnSendMessage alloc] initWithDict:dict] insertMessage:@"1"];
+    } else {
+        NSLog(@"打开数据库失败");
+    }
 }
 
 - (void)startChat:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {

@@ -106,4 +106,17 @@ ios的GitHub代码仓库地址 ：[https://github.com/jinguoxi/RyWebChat](https:
 android的GitHub代码仓库地址 ：[https://github.com/loriling/RCClient](https://github.com/loriling/RCClient "https://github.com/loriling/RCClient")
 
 
+### 2019.04.02
+1. 未发送消息从内存中改存到了sqlite中，app关闭后重新打开时候依旧可以获取到未发消息了。
+
+### 2018.12.05
+1. 修复不同targetId入参时候，可能造成的消息错位问题。
+
+### 2018.11.30
+1. 增加了客户端主动接受聊天按钮，如果开启此功能，就可以从加号里看到结束聊天按钮。
+
+### 2018.11.27
+1. 修改了重新进入聊天界面逻辑，如果修改了队列号进入，则会先结束之前会话，重新排队新的队列。
+
+
 

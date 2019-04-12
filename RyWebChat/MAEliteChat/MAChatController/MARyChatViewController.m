@@ -267,8 +267,15 @@
             
             break;
         case MACLOSE_SESSION: //结束聊天
+        {
             NSLog(@"结束聊天");
-            
+            /**判断之前是否推送过满意度 如没有需要主动推送*/
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSInteger pushSatisfactionCount = [defaults integerForKey:@"pushSatisfactionCount"];
+            if(pushSatisfactionCount == nil || pushSatisfactionCount == 0){
+                [self pushSatisfactionView];
+            }
+        }
             break;
         case MARATE_SESSION: //满意度评价
             NSLog(@"满意度评价");
@@ -360,9 +367,12 @@
         }
             break;
         case MAAGENT_PUSH_RATING://坐席推送了满意度
+        {
             NSLog(@"坐席推送了满意度");
             [self pushSatisfactionView];
-            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setInteger:1 forKey:@"pushSatisfactionCount"];
+        }
             break;
         case MAAGENT_UPDATED://坐席人员变更
         {
@@ -377,9 +387,19 @@
         }
             break;
         case MAAGENT_CLOSE_SESSION://坐席关闭
+        {
             NSLog(@"坐席关闭");
             [[MAChat getInstance] clearRequestAndSession];
             [self addTipsMessage:@"会话结束"];
+            /**判断之前是否推送过满意度 如没有需要主动推送*/
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSInteger pushSatisfactionCount = [defaults integerForKey:@"pushSatisfactionCount"];
+            if(pushSatisfactionCount == nil || pushSatisfactionCount == 0){
+                [self pushSatisfactionView];
+            }else {
+                [defaults setInteger:0 forKey:@"pushSatisfactionCount"];
+            }
+        }
             break;
         case MAAGENT_SEND_MESSAGE://坐席发送消息
             NSLog(@"坐席发送消息");
@@ -584,17 +604,25 @@
             // 主线程执行：
             dispatch_async(dispatch_get_main_queue(), ^{
                 MAChat *maChat = [MAChat getInstance];
-                MAClient *maClient = [maChat getClient];
-                int queueId = [maChat getQueueId];
-                NSString * serverAddr = maClient.serverAddr;
-                NSRange range = [serverAddr rangeOfString:@"/rcs"];
-                if (range.location != NSNotFound) {
-                     serverAddr = [serverAddr substringToIndex:range.location];
+                NSString *session = [maChat getSession];
+                if(session != nil){
+                    MAClient *maClient = [maChat getClient];
+                    int queueId = [maChat getQueueId];
+                    NSString * serverAddr = maClient.serverAddr;
+                    NSRange range = [serverAddr rangeOfString:@"/rcs"];
+                    if (range.location != NSNotFound) {
+                        serverAddr = [serverAddr substringToIndex:range.location];
+                    }
+                    [[MAEliteChat alloc] closeSessionService: serverAddr token:maChat.tokenStr userId:maClient.userId name:maClient.name portraitUri:maClient.portraitUri chatTargetId: [maChat getChatTargetId] queueId:queueId ngsAddr:maClient.ngsAddr tracks:[maChat getClient].tracks complete:nil];
+                    [self addTipsMessage:@"会话结束"];
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    NSInteger pushSatisfactionCount = [defaults integerForKey:@"pushSatisfactionCount"];
+                    if(pushSatisfactionCount == nil || pushSatisfactionCount == 0){
+                        [self pushSatisfactionView];
+                    }else {
+                        [defaults setInteger:0 forKey:@"pushSatisfactionCount"];
+                    }
                 }
-                [[MAEliteChat alloc] closeSessionService: serverAddr token:maChat.tokenStr userId:maClient.userId name:maClient.name portraitUri:maClient.portraitUri chatTargetId: [maChat getChatTargetId] queueId:queueId ngsAddr:maClient.ngsAddr tracks:[maChat getClient].tracks complete:nil];
-                [self addTipsMessage:@"会话结束"];
-            
-                
             });
             break;
         }

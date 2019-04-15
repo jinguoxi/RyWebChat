@@ -105,6 +105,8 @@ self.chatViewController.mapType = MAMAPTYPE_Baidu    这里指定的是百度地
 ios的GitHub代码仓库地址 ：[https://github.com/jinguoxi/RyWebChat](https://github.com/jinguoxi/RyWebChat "https://github.com/jinguoxi/RyWebChat")
 android的GitHub代码仓库地址 ：[https://github.com/loriling/RCClient](https://github.com/loriling/RCClient "https://github.com/loriling/RCClient")
 
+### 2019.04.10
+1. 坐席主动结束聊天或客户主动结束聊天，需判断当前会话之前是否推送过满意度如已经推送则忽略， 如没有，则系统自动推送满意度
 
 ### 2019.04.02
 1. 未发送消息从内存中改存到了sqlite中，app关闭后重新打开时候依旧可以获取到未发消息了。

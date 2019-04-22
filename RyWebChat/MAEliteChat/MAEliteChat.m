@@ -62,7 +62,7 @@ static MAEliteChat *eliteChat=nil;
     }
 }
 
-- (void)startChat:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+- (void)startChat:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSArray *)tracks complete:(void (^)(BOOL result))complete {
     if(portraitUri == nil || [@"" isEqualToString:portraitUri]){
         portraitUri = @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545907610687&di=62e1d4ad030c001a6a2b4e6b75365981&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F37%2F93%2F581226a0335f1_610.jpg";
     }
@@ -90,7 +90,7 @@ static MAEliteChat *eliteChat=nil;
     
 }
 
-- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+- (void)initAndStart:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSArray *)tracks complete:(void (^)(BOOL result))complete {
     
     [[MAChat getInstance] setChatTargetId:chatTargetId];
     [MAChat getInstance].queueId = &(queueId);
@@ -106,7 +106,7 @@ static MAEliteChat *eliteChat=nil;
     [self initElite:serverAddr userId:userId name:name portraitUri:portraitUri queueId:queueId ngsAddr:nil];
 }
 
-- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr  tracks:(NSString *)tracks {
+- (void)initElite:(NSString *)serverAddr userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri queueId:(int)queueId ngsAddr:(NSString *)ngsAddr  tracks:(NSArray *)tracks {
     
     if (isEliteEmpty(ngsAddr)) {
         NSString *lastPath = [serverAddr lastPathComponent];
@@ -144,7 +144,7 @@ static MAEliteChat *eliteChat=nil;
         }
     }
     
-    [self contentRyTokenService:client.serverAddr userId:client.userId nickName:client.name protrait:client.portraitUri complete:^(NSString *token) {
+    [self contentRyTokenService:client.serverAddr userId:client.userId nickName:client.name protrait:client.portraitUri tryCount:0 complete:^(NSString *token) {
         NSLog(@"token:%@", token);
         if(token != nil){
             dispatch_sync(dispatch_get_main_queue(), ^{
@@ -183,7 +183,9 @@ static MAEliteChat *eliteChat=nil;
     completion(user);
 }
 
-- (void)contentRyTokenService:(NSString *)serverAddr userId:(NSString *)userId nickName:(NSString *)nickName protrait:(NSString *)portraitUri complete:(void (^)(NSString *token))complete  {
+- (void)contentRyTokenService:(NSString *)serverAddr userId:(NSString *)userId nickName:(NSString *)nickName protrait:(NSString *)portraitUri tryCount:(int)tryCount complete:(void (^)(NSString *token))complete  {
+    if(tryCount >= 3)
+        return complete(nil);
     
     if (isEliteEmpty(serverAddr)) return complete(nil);
     
@@ -207,13 +209,11 @@ static MAEliteChat *eliteChat=nil;
             
         } error:^(RCConnectErrorCode status) {
             //TODO 获取token失败
-            
             NSLog(@"---%zd",status);
-            complete(nil);
-            //[self contentRyTokenService:serverAddr userId:userId nickName:nickName protrait:portraitUri complete:complete];
+            [self contentRyTokenService:serverAddr userId:userId nickName:nickName protrait:portraitUri tryCount: (tryCount + 1) complete:complete];
             
         } tokenIncorrect:^{
-            [self contentRyTokenService:serverAddr userId:userId nickName:nickName protrait:portraitUri complete:complete];
+            [self contentRyTokenService:serverAddr userId:userId nickName:nickName protrait:portraitUri tryCount:0 complete:complete];
         }];
         
     } error:^(NSError *error) {
@@ -222,7 +222,7 @@ static MAEliteChat *eliteChat=nil;
     }];
 }
 
-- (void)checkTokenService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(NSString *result))complete  {
+- (void)checkTokenService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSArray *)tracks complete:(void (^)(NSString *result))complete  {
     if (isEliteEmpty(serverAddr)) return complete(nil);
     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -237,7 +237,7 @@ static MAEliteChat *eliteChat=nil;
     }];
 }
 
-- (void)closeSessionService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSString *)tracks complete:(void (^)(BOOL result))complete {
+- (void)closeSessionService:(NSString *)serverAddr token:(NSString *) token userId:(NSString *)userId name:(NSString *)name portraitUri:(NSString *)portraitUri chatTargetId:(NSString *)chatTargetId queueId:(int)queueId ngsAddr:(NSString *)ngsAddr tracks:(NSArray *)tracks complete:(void (^)(BOOL result))complete {
     if (isEliteEmpty(serverAddr)) return;
     serverAddr = [serverAddr stringByAppendingPathComponent:@"rcs"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];

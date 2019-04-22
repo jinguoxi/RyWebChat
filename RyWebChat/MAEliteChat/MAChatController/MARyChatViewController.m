@@ -82,7 +82,7 @@
 }
 
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left {
-    NSLog(@"message.content:%@",message.content);
+    NSLog(@"mes]sage.content:%@",message.content);
     if ([message.content isKindOfClass:[RCInformationNotificationMessage class]]) {
         RCInformationNotificationMessage *infoMsg = (RCInformationNotificationMessage *)message.content;
         NSLog(@"---%@",infoMsg.message);
@@ -589,8 +589,7 @@
         case  PLUGIN_BOARD_ITEM_LOCATION_TAG : {
             
             if (self.mapType == MAMAPTYPE_Baidu) {
-                // 主线程执行：
-                dispatch_async(dispatch_get_main_queue(), ^{
+xm                dispatch_async(dispatch_get_main_queue(), ^{
                     MALocationViewController *locationController = [MALocationViewController new];
                     locationController.delegate = self;
                     [self presentViewController:locationController animated:YES completion:nil];

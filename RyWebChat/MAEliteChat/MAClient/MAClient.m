@@ -16,13 +16,13 @@
 @property (strong, nonatomic, readwrite) NSString *name;
 @property (strong, nonatomic, readwrite) NSString *portraitUri;
 @property (strong, nonatomic, readwrite) NSString *tokenStr;
-@property (strong, nonatomic, readwrite) NSString *tracks;
+@property (strong, nonatomic, readwrite) NSArray *tracks;
 
 @end
 
 @implementation MAClient
 
-+ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri tracks:(NSString *)tracks{
++ (instancetype)initWithServerAddr:(NSString *)serverAddr ngsAddr:(NSString *)ngsAddr name:(NSString *)name userId:(NSString *)userId portraitUri:(NSString *)portraitUri tracks:(NSArray *)tracks{
     MAClient *client = [[MAClient alloc] init];
     
     client.serverAddr = serverAddr;

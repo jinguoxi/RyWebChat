@@ -114,8 +114,11 @@
      */
     NSLog(@"%d",parseQueueId);
     int queueId = [MAChat getInstance].queueId;
+    NSDictionary *track = [NSDictionary dictionaryWithObjectsAndKeys:
+                         @"Elite", @"tracks",nil ];
+    NSArray *tracks = [[NSArray alloc] initWithObjects: track, nil, nil];
     NSLog(@"%d",queueId);
-    [[MAEliteChat shareEliteChat] startChat:q_serverAddr token:[MAChat getInstance].tokenStr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:q_targetId queueId:parseQueueId ngsAddr:nil tracks:@"sb" complete:^(BOOL result) {
+    [[MAEliteChat shareEliteChat] startChat:q_serverAddr token:[MAChat getInstance].tokenStr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:q_targetId queueId:parseQueueId ngsAddr:nil tracks:tracks complete:^(BOOL result) {
         if (result) {
             [myself switchChatViewController];
             

@@ -113,8 +113,16 @@
     NSString *icon = session.currentAgent.portraitUri;
     if (icon && ![icon isEqualToString:@""]) {
         if(! ([icon hasPrefix:@"http"] || [icon hasPrefix:@"https"])){
-            NSString *ngs = [[[MAChat getInstance] getClient] ngsAddr];
-            icon = [[ngs stringByAppendingPathComponent:@"fs/get?file="] stringByAppendingPathComponent:icon];
+            MAChat *maChat = [MAChat getInstance];
+            int queue = [maChat getQueueId];
+            NSString *strQueue = [NSString stringWithFormat:@"%d",queue];
+            MAClient * maClient = [maChat getClient];
+            NSString *serverAddr = [maClient serverAddr];
+            NSRange range = [serverAddr rangeOfString:@"/rcs"];//匹配得到的下标
+            if(range.location > 0){
+                serverAddr = [serverAddr substringToIndex:range.location];//截取范围类的字符串
+            }
+            icon = [[[[serverAddr stringByAppendingString:@"/ngsIcon.do?path="] stringByAppendingString:icon] stringByAppendingString: @"&queue="] stringByAppendingString:strQueue];
         }
     }
     
@@ -589,7 +597,7 @@
         case  PLUGIN_BOARD_ITEM_LOCATION_TAG : {
             
             if (self.mapType == MAMAPTYPE_Baidu) {
-xm                dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     MALocationViewController *locationController = [MALocationViewController new];
                     locationController.delegate = self;
                     [self presentViewController:locationController animated:YES completion:nil];

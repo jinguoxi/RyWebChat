@@ -128,7 +128,7 @@
             [user setObject:self.headUrl.text forKey:@"headUrl"];
             [user setObject:self.queueId.text forKey:@"queueId"];
             [user setObject:self.serverAddr.text forKey:@"serverAddr"];
-             [user setObject:self.targetId.text forKey:@"targetId"];
+            [user setObject:self.targetId.text forKey:@"targetId"];
         }
         else NSLog(@"初始化或启动失败");
     }];

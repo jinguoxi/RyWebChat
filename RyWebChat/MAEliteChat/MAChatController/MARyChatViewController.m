@@ -596,14 +596,14 @@
             
         case  PLUGIN_BOARD_ITEM_LOCATION_TAG : {
             
-            if (self.mapType == MAMAPTYPE_Baidu) {
+//            if (self.mapType == MAMAPTYPE_Baidu) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     MALocationViewController *locationController = [MALocationViewController new];
                     locationController.delegate = self;
                     [self presentViewController:locationController animated:YES completion:nil];
                     
                 });
-            }
+//            }
             break;
         }
         case  PLUGIN_BOARD_ITEM_CLOSESERVICE_TAG : {

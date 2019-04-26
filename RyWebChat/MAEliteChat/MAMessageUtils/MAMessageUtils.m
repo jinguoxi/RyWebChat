@@ -79,7 +79,7 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
-    if(isBaidyMapType){
+    if(isBaidyMapType == true){
         dic[@"map"] = @"baidu";//坐席使用百度地图打开
     }
     if ([[MAChat getInstance] getSessionId] == 0) {

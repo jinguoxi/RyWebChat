@@ -290,6 +290,7 @@
             
             break;
         case MASEND_CHAT_MESSAGE: //客户端发送的消息
+        {
             NSLog(@"客户端发送的消息");
             //TODO 当收到发送的消息返回session不合法时候，认为服务端会话已经关闭了，而客户端由于某些原因没能收到关闭信息
             //TODO 这时候也去清空会话，并且把原始消息缓存起来，同时发出聊天排队请求
@@ -307,7 +308,7 @@
                     
                 } else if ([objectName isEqual:IMG_MSG]) {
                     
-                   [MASaveMessage saveMessageWithImage:originalMessage:(NSString *) contervationType :(NSString *) self.targetId];
+                    [MASaveMessage saveMessageWithImage:originalMessage:(NSString *) contervationType :(NSString *) self.targetId];
                     
                 } else if ([objectName isEqual:FILE_MSG]) {
                     
@@ -324,9 +325,18 @@
                 }
                 
                 [[MAEliteChat shareEliteChat] sendQueueRequest];
+            }else if([json getObject:@"sessionId"] != nil){
+                long sessionId = [json getLong:@"sessionId"];
+                NSArray *agents = [json getObject:@"agents"];
+                NSDictionary *dic = agents.firstObject;
+                MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
+                BOOL robotMode = [json objectForKey:@"robotMode"];
+                MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent robotMode:robotMode];
+                [[MAChat getInstance] setSession:session];
+                
             }
              //[MAMessageUtils sendTxtMessage:@"txtMessage__"];
-            
+        }
             break;
         case MASEND_PRE_CHAT_MESSAGE: //发送预消息（还没排完队时候的消息）
             NSLog(@"发送预消息（还没排完队时候的消息）");

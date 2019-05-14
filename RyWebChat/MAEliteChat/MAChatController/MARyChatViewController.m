@@ -329,7 +329,7 @@
                 long sessionId = [json getLong:@"sessionId"];
                 NSArray *agents = [json getObject:@"agents"];
                 NSDictionary *dic = agents.firstObject;
-                MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"id"] name:[dic getString:@"name"] portraitUri:[dic getString:@"icon"]];
+                MAAgent *currentAgent = [MAAgent initWithUserId:[dic getString:@"agentId"] name:[dic getString:@"agentName"] portraitUri:[dic getString:@"icon"]];
                 BOOL robotMode = [json objectForKey:@"robotMode"];
                 MASession *session = [MASession initWithSessionId:sessionId agent:currentAgent robotMode:robotMode];
                 [[MAChat getInstance] setSession:session];

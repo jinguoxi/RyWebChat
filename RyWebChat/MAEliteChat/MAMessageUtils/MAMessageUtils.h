@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "EliteMessage.h"
-
 @interface MAMessageUtils : NSObject
 /**
  *  发送排队请求
@@ -34,7 +33,7 @@
  *
  *  @param msg 消息对象
  */
-+ (NSString *)getLocationMessageJsonStr:(BOOL *) isBaidyMapType;
++ (NSString *)getLocationMessageJsonStr:(BOOL *) mapType;
 
 /**
  * 添加自定义未读消息 在初始化之前，用于传递相关业务数据到前台，比如商品信息

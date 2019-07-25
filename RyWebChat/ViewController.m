@@ -143,7 +143,7 @@
     }
     
     self.chatViewController.title = CHAT_TITLE;
-    self.chatViewController.mapType = MAMAPTYPE_Gaode;
+    self.chatViewController.mapType = MAMAPTYPE_Baidu;
 
     // [MAMessageUtils sendTxtMessage:@"txtmessage"];
     

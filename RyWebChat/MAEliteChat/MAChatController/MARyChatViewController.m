@@ -428,15 +428,12 @@
                 int noticeType = [msgDic getInt:@"noticeType"];
                 if(noticeType == MANORMAL) {
                     NSString *content = [msgDic getString:@"content"];
-                    
                     RCTextMessage *textMsg = [RCTextMessage messageWithContent:content];
                     RCMessage *message = [[RCMessage alloc] initWithType:self.conversationType targetId:self.targetId direction:rcMsg.messageDirection messageId:rcMsg.messageId content:textMsg];
-                    
                     [self appendAndDisplayMessage:message];
                     // [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:rcMsg.sentStatus content:rcMsg.content];
                 } else if (noticeType == MATRANSFER_NOTICE || noticeType == MAINVITE_NOTICE) {
                     NSString *content = [msgDic getString:@"content"];
-                    
                     [self addTipsMessage:content];
                 }
             }
@@ -654,9 +651,17 @@
 
 -(void)sendlocation:(CLLocationCoordinate2D)coordinate title:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     RCLocationMessage *locationMessage = [RCLocationMessage messageWithLocationImage:image location:coordinate locationName:title];
-    BOOL isBaiduMapType = self.mapType == MAMAPTYPE_Baidu;
-    locationMessage.extra = [MAMessageUtils getLocationMessageJsonStr : &isBaiduMapType];
-    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
+    if(self.mapType == MAMAPTYPE_Baidu){
+        dic[@"map"] = @"baidu";//坐席使用百度地图打开
+    }
+    if ([[MAChat getInstance] getSessionId] == 0) {
+        dic[@"requestId"] = @([[MAChat getInstance] getRequestId]);//聊天会话号，排队成功后返回
+    } else {
+        dic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
+    }
+    locationMessage.extra = [dic mj_JSONString];
     [[RCIM sharedRCIM] sendMessage:self.conversationType targetId:self.targetId content:locationMessage pushContent:nil pushData:nil success:nil error:nil];
 }
 

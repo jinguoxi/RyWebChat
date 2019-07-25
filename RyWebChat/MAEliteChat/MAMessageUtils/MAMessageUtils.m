@@ -75,13 +75,13 @@
  *
  *  @param msg 消息对象
  */
-+ (NSString *)getLocationMessageJsonStr:(BOOL *) isBaidyMapType{
++ (NSString *)getLocationMessageJsonStr:(BOOL *) mapType{
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
-    if(isBaidyMapType == true){
-        dic[@"map"] = @"baidu";//坐席使用百度地图打开
-    }
+//    if(mapType == MAMAPTYPE_Baidu){
+//        dic[@"map"] = @"baidu";//坐席使用百度地图打开
+//    }
     if ([[MAChat getInstance] getSessionId] == 0) {
         dic[@"requestId"] = @([[MAChat getInstance] getRequestId]);//聊天会话号，排队成功后返回
     } else {

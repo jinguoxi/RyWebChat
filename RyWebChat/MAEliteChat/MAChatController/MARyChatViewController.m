@@ -712,7 +712,8 @@
             NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.message];
             NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
                                          NSFontAttributeName:[UIFont systemFontOfSize:16]};
-            NSString *pattern =  @"\\【[0-9a-zA-Z\\u4e00-\\u9fa5]+\\】";
+            NSString *pattern =  @"\\【[0-9a-zA-Z\\u4e00-\\u9fa5?？%&',;=#^()]+\\】";
+//            NSString *pattern =  @"\\【[.]+\\】";
             NSRegularExpression *regular = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
             NSArray *results = [regular matchesInString:msg.message options:0 range:NSMakeRange(0, msg.message.length)];
             for (NSTextCheckingResult *result in results) {

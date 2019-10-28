@@ -4,10 +4,10 @@
 @implementation SimpleMessage
 
 
-+(instancetype)messageWithContent:(NSString *)content extra:(NSString *)extra{
++(instancetype)messageWithContent:(NSString *)message extra:(NSString *)extra{
     SimpleMessage *msg = [[SimpleMessage alloc] init];
     if (msg) {
-        msg.content = content;
+        msg.message = message;
         msg.extra = extra;
     }
     
@@ -23,14 +23,14 @@
 {
     self = [super init];
     if (self) {
-        self.content = [aDecoder decodeObjectForKey:@"content"];
+        self.message = [aDecoder decodeObjectForKey:@"message"];
         self.extra = [aDecoder decodeObjectForKey:@"extra"]; }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.content forKey:@"content"];
+    [aCoder encodeObject:self.message forKey:@"message"];
     [aCoder encodeObject:self.extra forKey:@"extra"];
     
 }
@@ -40,7 +40,7 @@
 -(NSData *)encode {
     
     NSMutableDictionary *dataDict=[NSMutableDictionary dictionary];
-    [dataDict setObject:self.content forKey:@"content"];
+    [dataDict setObject:self.message forKey:@"message"];
     if (self.extra) {
         [dataDict setObject:self.extra forKey:@"extra"];
     }
@@ -59,7 +59,6 @@
         [dataDict setObject:__dic forKey:@"user"];
     }
     
-    //NSDictionary* dataDict = [NSDictionary dictionaryWithObjectsAndKeys:self.content, @"content", nil];
     NSData *data = [NSJSONSerialization dataWithJSONObject:dataDict
                                                    options:kNilOptions
                                                      error:nil];
@@ -76,7 +75,7 @@
                                                            error:&__error];
     
     if (json) {
-        self.content = json[@"content"];
+        self.message = json[@"message"];
         self.extra = json[@"extra"];
         NSObject *__object = [json objectForKey:@"user"];
         NSDictionary *userinfoDic = nil;

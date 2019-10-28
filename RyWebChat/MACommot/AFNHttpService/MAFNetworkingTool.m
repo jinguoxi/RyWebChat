@@ -20,7 +20,7 @@
 
 static MAFNetworkingTool *afnHttp;
 
-+ (instancetype)sharedAFNHttp{
++ (instancetype)sharedAFNHttp {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         afnHttp = [[MAFNetworkingTool alloc] init];

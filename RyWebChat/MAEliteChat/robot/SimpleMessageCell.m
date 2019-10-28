@@ -102,9 +102,9 @@
         [self.delegate didTapMessageCell:self.model];
     }
 }
-- (void)didTapMessageCell:(RCMessageModel *)model{
-    NSLog(@"didTapMessageCell");
-}
+//- (void)didTapMessageCell:(RCMessageModel *)model{
+//    NSLog(@"didTapMessageCell");
+//}
 
 - (void)setDataModel:(RCMessageModel *)model {
     [super setDataModel:model];
@@ -112,15 +112,13 @@
     [self setAutoLayout];
 }
 - (void)setAutoLayout {
-    RCTextMessage *_textMessage = (RCTextMessage *)self.model.content;
-    if (_textMessage) {
-        self.textLabel.text = _textMessage.content;
-    } else {
-        //DebugLog(@”[RongIMKit]: RCMessageModel.content is NOT RCTextMessage object”);
+    SimpleMessage *robotMessage = (SimpleMessage *)self.model.content;
+    if (robotMessage) {
+        self.textLabel.text = robotMessage.message;
     }
     // ios 7
     CGSize __textSize =
-    [_textMessage.content
+    [robotMessage.message
      boundingRectWithSize:CGSizeMake(self.baseContentView.bounds.size.width -
                                      (10 + [RCIM sharedRCIM].globalMessagePortraitSize.width + 10) * 2 - 40,
                                      MAXFLOAT)
@@ -193,12 +191,12 @@
 }
 
 + (CGSize)getTextLabelSize:(SimpleMessage *)message {
-    if ([message.content length] > 0) {
+    if ([message.message length] > 0) {
         float maxWidth =
         [UIScreen mainScreen].bounds.size.width -
         (10 + [RCIM sharedRCIM].globalMessagePortraitSize.width + 10) * 2 - 5 -
         35;
-        CGRect textRect = [message.content
+        CGRect textRect = [message.message
                            boundingRectWithSize:CGSizeMake(maxWidth, 8000)
                            options:(NSStringDrawingTruncatesLastVisibleLine |
                                     NSStringDrawingUsesLineFragmentOrigin |

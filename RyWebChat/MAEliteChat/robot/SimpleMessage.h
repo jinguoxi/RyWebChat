@@ -1,7 +1,7 @@
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMLib/RCMessageContentView.h>
 
-#define RCLocalMessageTypeIdentifier @"RC:SimpleMsg"
+#define RCLocalMessageTypeIdentifier @"E:RobMsg"
 
 
 
@@ -11,7 +11,7 @@
 @interface SimpleMessage : RCMessageContent <NSCoding,RCMessageContentView>
 
 /** 文本消息内容 */
-@property(nonatomic, strong) NSString* content;
+@property(nonatomic, strong) NSString* message;
 
 /**
  * 附加信息
@@ -22,6 +22,6 @@
  * 根据参数创建文本消息对象
  * @param content 文本消息内容
  */
-+(instancetype)messageWithContent:(NSString *)content extra:(NSString *)extra;
++(instancetype)messageWithContent:(NSString *)message extra:(NSString *)extra;
 
 @end

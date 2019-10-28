@@ -10,8 +10,9 @@
 #import "MAEliteChat.h"
 #import <BaiduMapAPI_Base/BMKMapManager.h>
 
-//#define MARyAppKey @"pgyu6atqpg77u" //dev
+//#define MARyAppKey @"pgyu6atqpg77u" //test
 #define MARyAppKey @"tdrvipkstxe95" //demo
+//#define MARyAppKey @"6tnym1br6tba7"
 //#define MARyAppKey @"cpj2xarlc6rfn"
 
 @interface AppDelegate ()<BMKGeneralDelegate>

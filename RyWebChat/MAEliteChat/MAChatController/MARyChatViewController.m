@@ -143,9 +143,9 @@
     return YES;
 }
 
--(void)sentRobotMessage:(NSString *)content state: (NSString *)state receivedTime:(long long)receivedTime{
+-(void)sentRobotMessage:(NSString *)message state: (NSString *)state receivedTime:(long long)receivedTime{
     
-    RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:content extra:state];
+    RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:message extra:state];
     NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
     [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae sentTime:receivedTime];
     RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
@@ -197,7 +197,6 @@
                             NSString *questionTitle = [relatedQuestionsTemp getString:@"title"];
                             NSArray *relates = [relatedQuestionsTemp getObject:@"relates"];
                             int relatesLength = (int)relates.count;
-                            //                       NSString *questionName = [relatedTemp getObject:@"name"];
                             for( int j = 0; j < relatesLength; j++){
                                 MAJSONObject *relatedTemp = [relates objectAtIndex:j];
                                 NSString *questionName = [relatedTemp getString:@"name"];
@@ -602,15 +601,17 @@
     switch (tag) {
             
         case  PLUGIN_BOARD_ITEM_LOCATION_TAG : {
-            
-//            if (self.mapType == MAMAPTYPE_Baidu) {
+            if (self.mapType == MAMAPTYPE_Baidu) {
+                // 主线程执行：
                 dispatch_async(dispatch_get_main_queue(), ^{
                     MALocationViewController *locationController = [MALocationViewController new];
                     locationController.delegate = self;
                     [self presentViewController:locationController animated:YES completion:nil];
-                    
                 });
-//            }
+                
+            }else{
+                [super pluginBoardView:pluginBoardView clickedItemWithTag:tag];
+            }
             break;
         }
         case  PLUGIN_BOARD_ITEM_CLOSESERVICE_TAG : {
@@ -669,14 +670,23 @@
 - (void)didTapMessageCell:(RCMessageModel *)model {
     NSLog(@"didTapMessageCell");
     if (nil == model) return;
-    
     RCMessageContent *_messageContent = model.content;
-    
     if ([_messageContent isMemberOfClass:[RCLocationMessage class]] && self.mapType == MAMAPTYPE_Baidu) {
         // Show the location view controller
         RCLocationMessage *locationMessage = (RCLocationMessage *)(_messageContent);
         [self presentCustomLocationViewController:locationMessage];
-    } else {
+    }
+    else if ([_messageContent isMemberOfClass:[RCImageMessage class]]) {
+        RCImageMessage *imgMessage = (RCImageMessage *)(_messageContent);
+        NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+        (CFStringRef) imgMessage.imageUrl,
+        NULL,
+        (CFStringRef)@"",
+        kCFStringEncodingUTF8));
+        imgMessage.imageUrl = encodedString;
+        [super didTapMessageCell:model];
+    }
+    else {
         [super didTapMessageCell:model];
     }
 }
@@ -694,36 +704,32 @@
 
 - (void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     RCMessageModel *msgModel = self.conversationDataRepository[indexPath.item];
-    
     if ([cell isKindOfClass:[SimpleMessageCell class]]) {
         SimpleMessageCell *newCell = (SimpleMessageCell *)cell;
         SimpleMessage *msg = (SimpleMessage *)msgModel.content;
+        msg.extra = @"2";
         if([msg.extra isEqualToString:@"2"]){
-            NSArray *array = [msg.content splitStringWithSymbol:@"\n\n"];//你好
-            int count = (int)array.count;
-            
-            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.content];
+            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.message];
             NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
                                          NSFontAttributeName:[UIFont systemFontOfSize:16]};
-            for( int i=0; i<count; i++){
-                NSString *temp = [array objectAtIndex:i];//卖假酒
-                NSLog(@"%i-%@", i, temp);
-                NSString *confirmString = temp;
-                NSRange range = [msg.content rangeOfString:confirmString];
+            NSString *pattern =  @"\\【[0-9a-zA-Z\\u4e00-\\u9fa5]+\\】";
+            NSRegularExpression *regular = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
+            NSArray *results = [regular matchesInString:msg.message options:0 range:NSMakeRange(0, msg.message.length)];
+            for (NSTextCheckingResult *result in results) {
+                NSRange range = result.range;
+                range.length = range.length - 2;
+                range.location = range.location + 1;
+                NSString *temp = [msg.message substringWithRange:range];
                 [muString addAttributes:attributes range:range];
-                NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                                              (CFStringRef)temp,
-                                                                                                              NULL,
-                                                                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                              kCFStringEncodingUTF8));
+                NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,               (CFStringRef)temp, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8));
                 NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
                 [newCell.textLabel.attributedStrings addObject:textCheckingResult];
             }
             newCell.textLabel.attributedText = muString;
         }else if([msg.extra isEqualToString:@"1"]){
             NSString *confirmString = @"【转人工】";
-            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.content];
-            NSRange range = [msg.content rangeOfString:confirmString];
+            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.message];
+            NSRange range = [msg.message rangeOfString:confirmString];
             NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
                                          NSFontAttributeName:[UIFont systemFontOfSize:16]};
             [muString addAttributes:attributes range:range];
@@ -738,6 +744,7 @@
         }
         MASession *session = [[MAChat getInstance] getSession];
         if(session.currentAgent.portraitUri){
+            
             UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
             
             NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];

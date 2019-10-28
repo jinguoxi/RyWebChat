@@ -42,6 +42,7 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] initWithAppKey:key];
     
     [[RCIM sharedRCIM] registerMessageType:[EliteMessage class]];
+    [[RCIM sharedRCIM] registerMessageType:[SimpleMessage class]];
     [[RCIMClient sharedRCIMClient]registerMessageType:SimpleMessage.class];  //注册自定义显示消息   2017-07-04
     //开启用户信息和群组信息的持久化
     [RCIM sharedRCIM].enablePersistentUserInfoCache = YES;

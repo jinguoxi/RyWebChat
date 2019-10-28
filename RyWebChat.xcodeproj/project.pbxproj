@@ -64,6 +64,8 @@
 		AC7497A020FC778900BA3B1B /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = AC74979F20FC778900BA3B1B /* NSString+Category.m */; };
 		AC7497A720FC79F300BA3B1B /* SimpleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A320FC79F300BA3B1B /* SimpleMessage.m */; };
 		AC7497A820FC79F300BA3B1B /* SimpleMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */; };
+		AC973F6C226FFF49006088D1 /* UnSendMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC973F68226FFF49006088D1 /* UnSendMessage.m */; };
+		AC973F6D226FFF49006088D1 /* SQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC973F6B226FFF49006088D1 /* SQLiteManager.m */; };
 		AC9B17941F4AC61F005EE487 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9B17931F4AC61F005EE487 /* NSString+MD5.m */; };
 		ACAE04CB20CE541C0054EA7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1431F431E4C0A6A001BF142 /* Main.storyboard */; };
 		ACFE177821F1CFD900C7FB3F /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACFE177221F1CFD900C7FB3F /* LaunchScreen.strings */; };
@@ -178,6 +180,10 @@
 		AC7497A420FC79F300BA3B1B /* SimpleMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessageCell.h; sourceTree = "<group>"; };
 		AC7497A520FC79F300BA3B1B /* SimpleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessage.h; sourceTree = "<group>"; };
 		AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessageCell.m; sourceTree = "<group>"; };
+		AC973F68226FFF49006088D1 /* UnSendMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnSendMessage.m; sourceTree = "<group>"; };
+		AC973F69226FFF49006088D1 /* SQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteManager.h; sourceTree = "<group>"; };
+		AC973F6A226FFF49006088D1 /* UnSendMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnSendMessage.h; sourceTree = "<group>"; };
+		AC973F6B226FFF49006088D1 /* SQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteManager.m; sourceTree = "<group>"; };
 		AC9B17921F4AC61F005EE487 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		AC9B17931F4AC61F005EE487 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		ACFE177321F1CFD900C7FB3F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = LaunchScreen.strings; sourceTree = "<group>"; };
@@ -417,6 +423,7 @@
 		A1F399441E5419A10082D513 /* MAEliteChat */ = {
 			isa = PBXGroup;
 			children = (
+				AC973F67226FFF49006088D1 /* sqlite */,
 				A1F399521E5419A10082D513 /* MAConfig.h */,
 				A1F399531E5419A10082D513 /* MAEliteChat.h */,
 				A1F399541E5419A10082D513 /* MAEliteChat.m */,
@@ -493,6 +500,17 @@
 			path = robot;
 			sourceTree = "<group>";
 		};
+		AC973F67226FFF49006088D1 /* sqlite */ = {
+			isa = PBXGroup;
+			children = (
+				AC973F68226FFF49006088D1 /* UnSendMessage.m */,
+				AC973F69226FFF49006088D1 /* SQLiteManager.h */,
+				AC973F6A226FFF49006088D1 /* UnSendMessage.h */,
+				AC973F6B226FFF49006088D1 /* SQLiteManager.m */,
+			);
+			path = sqlite;
+			sourceTree = "<group>";
+		};
 		ACFE177121F1CFD900C7FB3F /* zh-Hans.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,6 +569,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -641,6 +660,7 @@
 				A1431F421E4C0A6A001BF142 /* ViewController.m in Sources */,
 				A1F399591E5419A10082D513 /* EliteMessage.m in Sources */,
 				A1431F3F1E4C0A6A001BF142 /* AppDelegate.m in Sources */,
+				AC973F6C226FFF49006088D1 /* UnSendMessage.m in Sources */,
 				A1CFF3E31E5AC1D500846381 /* MASatisfactionView.m in Sources */,
 				A1F399431E5419320082D513 /* NSDictionary+MAJSON.m in Sources */,
 				A1EDE18C1E544B4E00F9904D /* MAAgent.m in Sources */,
@@ -648,6 +668,7 @@
 				AC7497A820FC79F300BA3B1B /* SimpleMessageCell.m in Sources */,
 				A1F3995B1E5419A10082D513 /* MAChat.m in Sources */,
 				A1CFF3F81E5AEFB000846381 /* MABaiduAnnotation.m in Sources */,
+				AC973F6D226FFF49006088D1 /* SQLiteManager.m in Sources */,
 				A1CFF3FB1E5AEFE700846381 /* UIView+MARect.m in Sources */,
 				A1CFF3DF1E5A9CDC00846381 /* MASaveMessage.m in Sources */,
 				A1F399581E5419A10082D513 /* MARyChatViewController.m in Sources */,
@@ -803,9 +824,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RyWebChat/RyWebChat.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shuangchun Mou (6VPW3JACLM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RT38BC53F3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -828,9 +850,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RyWebChat/RyWebChat.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai EliteCRM e-Business CO.LTD";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RT38BC53F3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -1,4 +1,5 @@
-#import "SimpleMessageCell.h"
+#import "RobotMessageCell.h"
+#import "RobotMessage.h"
 #import "EliteMessage.h"
 #import "MAChat.h"
 #import "MAJSONObject.h"
@@ -9,7 +10,7 @@
 #import "MAConfig.h"
 #import "MJExtension.h"
 
-@interface SimpleMessageCell ()<RCAttributedLabelDelegate>
+@interface RobotMessageCell ()<RCAttributedLabelDelegate>
 #define Test_Message_Font_Size 16
 
 
@@ -18,13 +19,13 @@
 
 @end
 
-@implementation SimpleMessageCell
+@implementation RobotMessageCell
 
 + (CGSize)sizeForMessageModel:(RCMessageModel *)model
       withCollectionViewWidth:(CGFloat)collectionViewWidth
          referenceExtraHeight:(CGFloat)extraHeight {
-    SimpleMessage *message = (SimpleMessage *)model.content;
-    CGSize size = [SimpleMessageCell getBubbleBackgroundViewSize:message ];
+    RobotMessage *message = (RobotMessage *)model.content;
+    CGSize size = [RobotMessageCell getBubbleBackgroundViewSize:message ];
     
     CGFloat __messagecontentview_height = size.height;
     __messagecontentview_height += extraHeight;
@@ -112,7 +113,7 @@
     [self setAutoLayout];
 }
 - (void)setAutoLayout {
-    SimpleMessage *robotMessage = (SimpleMessage *)self.model.content;
+    RobotMessage *robotMessage = (RobotMessage *)self.model.content;
     if (robotMessage) {
         self.textLabel.text = robotMessage.message;
     }
@@ -190,7 +191,7 @@
     }
 }
 
-+ (CGSize)getTextLabelSize:(SimpleMessage *)message {
++ (CGSize)getTextLabelSize:(RobotMessage *)message {
     if ([message.message length] > 0) {
         float maxWidth =
         [UIScreen mainScreen].bounds.size.width -
@@ -232,13 +233,13 @@
     return bubbleSize;
 }
 
-+ (CGSize)getBubbleBackgroundViewSize:(SimpleMessage *)message {
++ (CGSize)getBubbleBackgroundViewSize:(RobotMessage *)message {
     CGSize textLabelSize = [[self class] getTextLabelSize:message];
     return [[self class] getBubbleSize:textLabelSize];
 }
 
 
-//@interface SimpleMessageCell () <RCAttributedLabelDelegate>
+//@interface RobotMessageCell () <RCAttributedLabelDelegate>
 //self.textLabel.delegate = self;
 
 - (void)attributedLabel:(RCAttributedLabel *)label didTapLabel:(NSString *)content {

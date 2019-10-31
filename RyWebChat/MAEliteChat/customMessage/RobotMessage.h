@@ -8,7 +8,7 @@
 /**
  * 文本消息类定义
  */
-@interface SimpleMessage : RCMessageContent <NSCoding,RCMessageContentView>
+@interface RobotMessage : RCMessageContent <NSCoding,RCMessageContentView>
 
 /** 文本消息内容 */
 @property(nonatomic, strong) NSString* message;

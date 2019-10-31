@@ -61,9 +61,11 @@
 		A1F3995D1E5419A10082D513 /* MAEliteChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399541E5419A10082D513 /* MAEliteChat.m */; };
 		A1F3995E1E5419A10082D513 /* MAMessageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399571E5419A10082D513 /* MAMessageUtils.m */; };
 		AC1002182140C85900A52898 /* RongSight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1002172140C85800A52898 /* RongSight.framework */; };
+		AC15491F2367E54B008545A1 /* CardMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC15491E2367E54B008545A1 /* CardMessage.m */; };
+		AC1549222367ECFE008545A1 /* CardMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1549212367ECFE008545A1 /* CardMessageCell.m */; };
 		AC7497A020FC778900BA3B1B /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = AC74979F20FC778900BA3B1B /* NSString+Category.m */; };
-		AC7497A720FC79F300BA3B1B /* SimpleMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A320FC79F300BA3B1B /* SimpleMessage.m */; };
-		AC7497A820FC79F300BA3B1B /* SimpleMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */; };
+		AC7497A720FC79F300BA3B1B /* RobotMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A320FC79F300BA3B1B /* RobotMessage.m */; };
+		AC7497A820FC79F300BA3B1B /* RobotMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC7497A620FC79F300BA3B1B /* RobotMessageCell.m */; };
 		AC973F6C226FFF49006088D1 /* UnSendMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC973F68226FFF49006088D1 /* UnSendMessage.m */; };
 		AC973F6D226FFF49006088D1 /* SQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC973F6B226FFF49006088D1 /* SQLiteManager.m */; };
 		AC9B17941F4AC61F005EE487 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9B17931F4AC61F005EE487 /* NSString+MD5.m */; };
@@ -173,13 +175,17 @@
 		A1F399571E5419A10082D513 /* MAMessageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAMessageUtils.m; sourceTree = "<group>"; };
 		A2D949C3E5F6BEDA70379934 /* libPods-RyWebChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RyWebChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1002172140C85800A52898 /* RongSight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongSight.framework; sourceTree = "<group>"; };
+		AC15491D2367E52D008545A1 /* CardMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardMessage.h; sourceTree = "<group>"; };
+		AC15491E2367E54B008545A1 /* CardMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardMessage.m; sourceTree = "<group>"; };
+		AC1549202367ECEA008545A1 /* CardMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardMessageCell.h; sourceTree = "<group>"; };
+		AC1549212367ECFE008545A1 /* CardMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardMessageCell.m; sourceTree = "<group>"; };
 		AC467AEB1EC589E900574B42 /* RyWebChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RyWebChat.entitlements; sourceTree = "<group>"; };
 		AC74979E20FC777100BA3B1B /* NSString+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
 		AC74979F20FC778900BA3B1B /* NSString+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Category.m"; sourceTree = "<group>"; };
-		AC7497A320FC79F300BA3B1B /* SimpleMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessage.m; sourceTree = "<group>"; };
-		AC7497A420FC79F300BA3B1B /* SimpleMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessageCell.h; sourceTree = "<group>"; };
-		AC7497A520FC79F300BA3B1B /* SimpleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessage.h; sourceTree = "<group>"; };
-		AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessageCell.m; sourceTree = "<group>"; };
+		AC7497A320FC79F300BA3B1B /* RobotMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobotMessage.m; sourceTree = "<group>"; };
+		AC7497A420FC79F300BA3B1B /* RobotMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotMessageCell.h; sourceTree = "<group>"; };
+		AC7497A520FC79F300BA3B1B /* RobotMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotMessage.h; sourceTree = "<group>"; };
+		AC7497A620FC79F300BA3B1B /* RobotMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobotMessageCell.m; sourceTree = "<group>"; };
 		AC973F68226FFF49006088D1 /* UnSendMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnSendMessage.m; sourceTree = "<group>"; };
 		AC973F69226FFF49006088D1 /* SQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteManager.h; sourceTree = "<group>"; };
 		AC973F6A226FFF49006088D1 /* UnSendMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnSendMessage.h; sourceTree = "<group>"; };
@@ -427,7 +433,7 @@
 				A1F399521E5419A10082D513 /* MAConfig.h */,
 				A1F399531E5419A10082D513 /* MAEliteChat.h */,
 				A1F399541E5419A10082D513 /* MAEliteChat.m */,
-				AC7497A220FC79F300BA3B1B /* robot */,
+				AC7497A220FC79F300BA3B1B /* customMessage */,
 				A1CFF3FC1E5AF0DC00846381 /* MAResource */,
 				A1F399451E5419A10082D513 /* MAChatController */,
 				A1F399481E5419A10082D513 /* MAChatModel */,
@@ -489,15 +495,19 @@
 			path = MAMessageUtils;
 			sourceTree = "<group>";
 		};
-		AC7497A220FC79F300BA3B1B /* robot */ = {
+		AC7497A220FC79F300BA3B1B /* customMessage */ = {
 			isa = PBXGroup;
 			children = (
-				AC7497A520FC79F300BA3B1B /* SimpleMessage.h */,
-				AC7497A320FC79F300BA3B1B /* SimpleMessage.m */,
-				AC7497A420FC79F300BA3B1B /* SimpleMessageCell.h */,
-				AC7497A620FC79F300BA3B1B /* SimpleMessageCell.m */,
+				AC7497A520FC79F300BA3B1B /* RobotMessage.h */,
+				AC7497A320FC79F300BA3B1B /* RobotMessage.m */,
+				AC7497A420FC79F300BA3B1B /* RobotMessageCell.h */,
+				AC7497A620FC79F300BA3B1B /* RobotMessageCell.m */,
+				AC15491D2367E52D008545A1 /* CardMessage.h */,
+				AC15491E2367E54B008545A1 /* CardMessage.m */,
+				AC1549202367ECEA008545A1 /* CardMessageCell.h */,
+				AC1549212367ECFE008545A1 /* CardMessageCell.m */,
 			);
-			path = robot;
+			path = customMessage;
 			sourceTree = "<group>";
 		};
 		AC973F67226FFF49006088D1 /* sqlite */ = {
@@ -663,12 +673,14 @@
 				AC973F6C226FFF49006088D1 /* UnSendMessage.m in Sources */,
 				A1CFF3E31E5AC1D500846381 /* MASatisfactionView.m in Sources */,
 				A1F399431E5419320082D513 /* NSDictionary+MAJSON.m in Sources */,
+				AC15491F2367E54B008545A1 /* CardMessage.m in Sources */,
 				A1EDE18C1E544B4E00F9904D /* MAAgent.m in Sources */,
 				A1431F911E4C185A001BF142 /* MAHttpService.m in Sources */,
-				AC7497A820FC79F300BA3B1B /* SimpleMessageCell.m in Sources */,
+				AC7497A820FC79F300BA3B1B /* RobotMessageCell.m in Sources */,
 				A1F3995B1E5419A10082D513 /* MAChat.m in Sources */,
 				A1CFF3F81E5AEFB000846381 /* MABaiduAnnotation.m in Sources */,
 				AC973F6D226FFF49006088D1 /* SQLiteManager.m in Sources */,
+				AC1549222367ECFE008545A1 /* CardMessageCell.m in Sources */,
 				A1CFF3FB1E5AEFE700846381 /* UIView+MARect.m in Sources */,
 				A1CFF3DF1E5A9CDC00846381 /* MASaveMessage.m in Sources */,
 				A1F399581E5419A10082D513 /* MARyChatViewController.m in Sources */,
@@ -684,7 +696,7 @@
 				A1431F8D1E4C16D5001BF142 /* MASessionTimeOut.m in Sources */,
 				A1F3995D1E5419A10082D513 /* MAEliteChat.m in Sources */,
 				A1431F8C1E4C16D5001BF142 /* MAFNetworkingTool.m in Sources */,
-				AC7497A720FC79F300BA3B1B /* SimpleMessage.m in Sources */,
+				AC7497A720FC79F300BA3B1B /* RobotMessage.m in Sources */,
 				A1CFF3F31E5AEEAB00846381 /* MALocationDetailController.m in Sources */,
 				A1431F3C1E4C0A6A001BF142 /* main.m in Sources */,
 			);

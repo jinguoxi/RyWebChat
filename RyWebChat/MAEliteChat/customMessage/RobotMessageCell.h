@@ -1,12 +1,10 @@
 #import <RongIMKit/RongIMKit.h>
-#import "SimpleMessage.h"
-//#import "MARyChatViewController.h"
 
 
 /**
  * 文本消息Cell
  */
-@interface SimpleMessageCell : RCMessageCell <RCMessageCellDelegate>
+@interface RobotMessageCell : RCMessageCell <RCMessageCellDelegate>
 
 /**
  * 消息显示Label

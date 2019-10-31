@@ -1,13 +1,15 @@
-#import "SimpleMessage.h"
 #import <RongIMLib/RCUtilities.h>
+#import "CardMessage.h"
+@implementation CardMessage
 
-@implementation SimpleMessage
-
-
-+(instancetype)messageWithContent:(NSString *)message extra:(NSString *)extra{
-    SimpleMessage *msg = [[SimpleMessage alloc] init];
++(instancetype)messageWithContent:(NSString *)title imageUri:(NSString *)imageUri url:(NSString *)url price:(NSString *)price from:(NSString *)from extra:(NSString *)extra;{
+    CardMessage *msg = [[CardMessage alloc] init];
     if (msg) {
-        msg.message = message;
+        msg.title = title;
+        msg.imageUri = imageUri;
+        msg.url = url;
+        msg.price = price;
+        msg.from = from;
         msg.extra = extra;
     }
     
@@ -23,14 +25,22 @@
 {
     self = [super init];
     if (self) {
-        self.message = [aDecoder decodeObjectForKey:@"message"];
+        self.title = [aDecoder decodeObjectForKey:@"title"];
+        self.imageUri = [aDecoder decodeObjectForKey:@"imageUri"];
+        self.url = [aDecoder decodeObjectForKey:@"url"];
+        self.price = [aDecoder decodeObjectForKey:@"price"];
+        self.from = [aDecoder decodeObjectForKey:@"from"];
         self.extra = [aDecoder decodeObjectForKey:@"extra"]; }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.message forKey:@"message"];
+    [aCoder encodeObject:self.title forKey:@"title"];
+    [aCoder encodeObject:self.imageUri forKey:@"imageUri"];
+    [aCoder encodeObject:self.url forKey:@"url"];
+    [aCoder encodeObject:self.price forKey:@"price"];
+    [aCoder encodeObject:self.from forKey:@"from"];
     [aCoder encodeObject:self.extra forKey:@"extra"];
     
 }
@@ -40,7 +50,11 @@
 -(NSData *)encode {
     
     NSMutableDictionary *dataDict=[NSMutableDictionary dictionary];
-    [dataDict setObject:self.message forKey:@"message"];
+    [dataDict setObject:self.title forKey:@"title"];
+    [dataDict setObject:self.imageUri forKey:@"imageUri"];
+    [dataDict setObject:self.url forKey:@"url"];
+    [dataDict setObject:self.price forKey:@"price"];
+    [dataDict setObject:self.from forKey:@"from"];
     if (self.extra) {
         [dataDict setObject:self.extra forKey:@"extra"];
     }
@@ -75,7 +89,11 @@
                                                            error:&__error];
     
     if (json) {
-        self.message = json[@"message"];
+        self.title = json[@"title"];
+        self.imageUri = json[@"imageUri"];
+        self.url = json[@"url"];
+        self.price = json[@"price"];
+        self.from = json[@"from"];
         self.extra = json[@"extra"];
         NSObject *__object = [json objectForKey:@"user"];
         NSDictionary *userinfoDic = nil;
@@ -94,7 +112,7 @@
 }
 - (NSString *)conversationDigest
 {
-    return @"会话列表要显示的内容";
+    return @"卡片消息要显示的内容";
 }
 +(NSString *)getObjectName {
     return RCLocalMessageTypeIdentifier;

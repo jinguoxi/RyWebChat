@@ -21,10 +21,12 @@
 #import "MASatisfactionView.h"
 #import "MALocationViewController.h"
 #import "MALocationDetailController.h"
-#import "SimpleMessageCell.h"
-#import "SimpleMessage.h"
+#import "RobotMessageCell.h"
+#import "RobotMessage.h"
 #import "NSString+Category.h"
 #import "UnSendMessage.h"
+#import "CardMessageCell.h"
+#import "CardMessage.h"
 
 @interface MARyChatViewController ()<RCIMReceiveMessageDelegate,MASatisfactionViewDelegate,MALocationDelegate, RCAttributedLabelDelegate>
 
@@ -45,7 +47,8 @@
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
     //[[RCIM sharedRCIM] setUserInfoDataSource:self];
     [[MAEliteChat shareEliteChat] sendQueueRequest];
-    [self registerClass:[SimpleMessageCell class] forMessageClass:[SimpleMessage class]];
+    [self registerClass:[RobotMessageCell class] forMessageClass:[RobotMessage class]];
+    [self registerClass:[CardMessageCell class] forMessageClass:[CardMessage class]];
 }
 
 //小灰色提示条
@@ -145,7 +148,7 @@
 
 -(void)sentRobotMessage:(NSString *)message state: (NSString *)state receivedTime:(long long)receivedTime{
     
-    RCMessageContent *simpleMessgae = [SimpleMessage messageWithContent:message extra:state];
+    RCMessageContent *simpleMessgae = [RobotMessage messageWithContent:message extra:state];
     NSString *agentId =  [[[MAChat getInstance] getSession ] currentAgent].userId;
     [[RCIMClient sharedRCIMClient] insertIncomingMessage:self.conversationType targetId:self.targetId senderUserId:agentId receivedStatus:ReceivedStatus_UNREAD content:simpleMessgae sentTime:receivedTime];
     RCMessage *insertMessage =[[RCMessage alloc] initWithType:self.conversationType
@@ -666,6 +669,19 @@
     [[RCIM sharedRCIM] sendMessage:self.conversationType targetId:self.targetId content:locationMessage pushContent:nil pushData:nil success:nil error:nil];
 }
 
+
+//判断是否有中文
+-(BOOL)hasChinese:(NSString *)str {
+    for(int i=0; i< [str length];i++){
+        int a = [str characterAtIndex:i];
+        if( a > 0x4e00 && a < 0x9fff)
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 //点击cell
 - (void)didTapMessageCell:(RCMessageModel *)model {
     NSLog(@"didTapMessageCell");
@@ -678,12 +694,14 @@
     }
     else if ([_messageContent isMemberOfClass:[RCImageMessage class]]) {
         RCImageMessage *imgMessage = (RCImageMessage *)(_messageContent);
-        NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-        (CFStringRef) imgMessage.imageUrl,
-        NULL,
-        (CFStringRef)@"",
-        kCFStringEncodingUTF8));
-        imgMessage.imageUrl = encodedString;
+        if ([self hasChinese:imgMessage.imageUrl]) {
+            NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+            (CFStringRef) imgMessage.imageUrl,
+            NULL,
+            (CFStringRef)@"",
+            kCFStringEncodingUTF8));
+            imgMessage.imageUrl = encodedString;
+        }
         [super didTapMessageCell:model];
     }
     else {
@@ -704,56 +722,45 @@
 
 - (void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     RCMessageModel *msgModel = self.conversationDataRepository[indexPath.item];
-    if ([cell isKindOfClass:[SimpleMessageCell class]]) {
-        SimpleMessageCell *newCell = (SimpleMessageCell *)cell;
-        SimpleMessage *msg = (SimpleMessage *)msgModel.content;
-        msg.extra = @"2";
-        if([msg.extra isEqualToString:@"2"]){
-            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.message];
-            NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
-                                         NSFontAttributeName:[UIFont systemFontOfSize:16]};
-            NSString *pattern =  @"\\【[0-9a-zA-Z\\u4e00-\\u9fa5?？%&',;=#^()]+\\】";
-//            NSString *pattern =  @"\\【[.]+\\】";
-            NSRegularExpression *regular = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
-            NSArray *results = [regular matchesInString:msg.message options:0 range:NSMakeRange(0, msg.message.length)];
-            for (NSTextCheckingResult *result in results) {
-                NSRange range = result.range;
-                range.length = range.length - 2;
-                range.location = range.location + 1;
-                NSString *temp = [msg.message substringWithRange:range];
-                [muString addAttributes:attributes range:range];
-                NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,               (CFStringRef)temp, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8));
-                NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
-                [newCell.textLabel.attributedStrings addObject:textCheckingResult];
-            }
-            newCell.textLabel.attributedText = muString;
-        }else if([msg.extra isEqualToString:@"1"]){
-            NSString *confirmString = @"【转人工】";
-            NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.message];
-            NSRange range = [msg.message rangeOfString:confirmString];
-            NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
-                                         NSFontAttributeName:[UIFont systemFontOfSize:16]};
+    MASession *session = [[MAChat getInstance] getSession];
+    if ([cell isKindOfClass:[RobotMessageCell class]]) {
+        RobotMessageCell *newCell = (RobotMessageCell *)cell;
+        RobotMessage *msg = (RobotMessage *)msgModel.content;
+        NSMutableAttributedString *muString = [[NSMutableAttributedString alloc] initWithString:msg.message];
+        NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor blueColor],
+                                     NSFontAttributeName:[UIFont systemFontOfSize:16]};
+        NSString *pattern =  @"\\【[0-9a-zA-Z\\u4e00-\\u9fa5?？ %&',;=#^()]+\\】";
+        NSRegularExpression *regular = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
+        NSArray *results = [regular matchesInString:msg.message options:0 range:NSMakeRange(0, msg.message.length)];
+        for (NSTextCheckingResult *result in results) {
+            NSRange range = result.range;
+            range.length = range.length - 2;
+            range.location = range.location + 1;
+            NSString *temp = [msg.message substringWithRange:range];
             [muString addAttributes:attributes range:range];
-            NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                                          (CFStringRef)@"【转人工】",
-                                                                                                          NULL,
-                                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                          kCFStringEncodingUTF8));
+            NSString *encodedString=(NSString*) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,               (CFStringRef)temp, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8));
             NSTextCheckingResult *textCheckingResult = [NSTextCheckingResult linkCheckingResultWithRange:range URL:[NSURL URLWithString:encodedString]];
             [newCell.textLabel.attributedStrings addObject:textCheckingResult];
-            newCell.textLabel.attributedText = muString;
         }
-        MASession *session = [[MAChat getInstance] getSession];
+        newCell.textLabel.attributedText = muString;
         if(session.currentAgent.portraitUri){
-            
             UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
-            
+            NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
+            UIImage *image =  [UIImage imageWithData:data];
+            portraitView.image = image;
+            newCell.portraitImageView = portraitView;
+        }
+    } else if ([cell isKindOfClass:[CardMessageCell class]]) {
+        CardMessageCell *newCell = (CardMessageCell *)cell;
+        if(session.currentAgent.portraitUri){
+            UIImageView *portraitView = (UIImageView*)newCell.portraitImageView;
             NSData *data = [NSData  dataWithContentsOfURL:[NSURL URLWithString:session.currentAgent.portraitUri]];
             UIImage *image =  [UIImage imageWithData:data];
             portraitView.image = image;
             newCell.portraitImageView = portraitView;
         }
     }
+    
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {

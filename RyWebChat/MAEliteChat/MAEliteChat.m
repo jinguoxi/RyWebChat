@@ -11,9 +11,10 @@
 #import "MAMessageUtils.h"
 #import "MAChat.h"
 #import "MAHttpService.h"
-#import "SimpleMessage.h"
+#import "RobotMessage.h"
 #import "UnSendMessage.h"
 #import "SQLiteManager.h"
+#import "CardMessage.h"
 
 @interface MAEliteChat()<RCIMUserInfoDataSource>
 
@@ -42,8 +43,13 @@ static MAEliteChat *eliteChat=nil;
     [[RCIM sharedRCIM] initWithAppKey:key];
     
     [[RCIM sharedRCIM] registerMessageType:[EliteMessage class]];
-    [[RCIM sharedRCIM] registerMessageType:[SimpleMessage class]];
-    [[RCIMClient sharedRCIMClient]registerMessageType:SimpleMessage.class];  //注册自定义显示消息   2017-07-04
+     //注册机器人消息   2017-07-04
+    [[RCIM sharedRCIM] registerMessageType:[RobotMessage class]];
+    [[RCIMClient sharedRCIMClient]registerMessageType:RobotMessage.class];
+    //注册自定义卡片消息 2019-10-28
+    [[RCIM sharedRCIM] registerMessageType:[CardMessage class]];
+    [[RCIMClient sharedRCIMClient]registerMessageType:CardMessage.class];
+    
     //开启用户信息和群组信息的持久化
     [RCIM sharedRCIM].enablePersistentUserInfoCache = YES;
     

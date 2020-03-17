@@ -554,7 +554,7 @@
     NSMutableDictionary *extra = [NSMutableDictionary dictionary];
     extra[@"type"] = @(MARATE_SESSION);
     extra[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
-    extra[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//聊天会话号，排队成功后返回
+    extra[@"sessionId"] = [[MAChat getInstance] getSessionId] != (long) 0 ? @([[MAChat getInstance] getSessionId]) : @(self.currentSessionId);//聊天会话号，排队成功后返回
     message.extra = [extra mj_JSONString];
     
     NSMutableDictionary *messageDic = [NSMutableDictionary dictionary];
@@ -631,10 +631,12 @@
                     if (range.location != NSNotFound) {
                         serverAddr = [serverAddr substringToIndex:range.location];
                     }
+                    self.currentSessionId = [[MAChat getInstance] getSessionId];
                     [[MAEliteChat alloc] closeSessionService: serverAddr token:maChat.tokenStr userId:maClient.userId name:maClient.name portraitUri:maClient.portraitUri chatTargetId: [maChat getChatTargetId] queueId:queueId ngsAddr:maClient.ngsAddr tracks:[maChat getClient].tracks complete:nil];
                     [self addTipsMessage:@"会话结束"];
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     NSInteger pushSatisfactionCount = [defaults integerForKey:@"pushSatisfactionCount"];
+                    
                     if(pushSatisfactionCount == nil || pushSatisfactionCount == 0){
                         [self pushSatisfactionView];
                     }else {

@@ -22,5 +22,6 @@ typedef NS_ENUM(NSInteger, MAMAPTYPE) {
  选择地图类型，默认是高德，（支持百度地图）
  */
 @property (assign, nonatomic) MAMAPTYPE mapType;
+@property (assign, nonatomic) long currentSessionId;
 
 @end

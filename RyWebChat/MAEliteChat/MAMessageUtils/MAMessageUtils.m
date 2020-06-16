@@ -39,15 +39,11 @@
     NSString *extra = [extraDic mj_JSONString];
     EliteMessage *messageContent = [EliteMessage messageWithContent:content];
     messageContent.extra = extra;
-    //EliteMessage
-    // RCInformationNotificationMessage *warningMsg =
-    // [RCInformationNotificationMessage
-    //notificationWithMessage:jsonStr extra:nil];
     NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
-    [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+    [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
             
     } error:^(RCErrorCode nErrorCode, long messageId) {
-        
+       
     }];
 }
 
@@ -156,7 +152,7 @@
     if([[MAChat getInstance] getSessionId]){
         EliteMessage *eliteMessage = [self generateCustomerMessage:message];
         NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:eliteMessage pushContent:nil pushData:nil success:^(long messageId) {
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:eliteMessage pushContent:nil pushData:nil success:^(long messageId) {
             
         } error:^(RCErrorCode nErrorCode, long messageId) {
             
@@ -180,7 +176,10 @@
 + (void)sendTxtMessage:(NSString *) message{
     if([[MAChat getInstance] getSessionId]){
         RCTextMessage *txtMessage = [self generateTxtMessage:message];
+        NSString *extra = [[self getMessageExtra] mj_JSONString];
+        txtMessage.extra = extra;
         NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+
         [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:txtMessage pushContent:nil pushData:nil success:^(long messageId) {
             
         } error:^(RCErrorCode nErrorCode, long messageId) {
@@ -195,4 +194,64 @@
     }
 }
 
+
+
+/**
+ * 构造一个自定义RCTxtMessage消息对象
+ * @param message
+ * @return
+ */
++ (NSMutableDictionary *)getMessageExtra {
+    NSMutableDictionary *extraDic = [NSMutableDictionary dictionary];
+    extraDic[@"type"] = @(MASEND_CHAT_MESSAGE);
+    extraDic[@"token"] = [MAChat getInstance].tokenStr;//登录成功后获取到的凭据
+    extraDic[@"sessionId"] = @([[MAChat getInstance] getSessionId]);//sessionId
+    return extraDic;
+}
+
+/**
+ * 添加发送图片消息
+ * @param imageUri String字符串，网络图片地址
+ * @param content   String字符串，图片的base64
+ */
++ (void)sendImageMessageWithData :(NSData *) data{
+    UIImage *image = [UIImage imageWithData:data];
+    [self sendImageMessage2:image imageUri:nil];
+}
+
+/**
+ * 添加发送图片消息
+ * @param imageUri String字符串，网络图片地址
+ * @param content   String字符串，图片的base64
+ */
++ (void)sendImageMessage :(NSString *) content imageUri:(NSString *) imageUri{
+    UIImage *image = nil;
+    if(content != nil && content != NULL){
+        NSData * base64Data =[content dataUsingEncoding:NSUTF8StringEncoding];
+        NSData * imageData = [[NSData alloc] initWithBase64EncodedData:base64Data options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        image = [UIImage imageWithData:imageData ];
+    } else if (imageUri != nil && imageUri != NULL) {
+        NSURL *url=[NSURL URLWithString: imageUri];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        image = [UIImage imageWithData:data];
+    }
+    [self sendImageMessage2:image imageUri:imageUri];
+    
+}
+
+/**
+ * @param UIImage   UIImage，图片
+ */
++ (void)sendImageMessage2 :(UIImage *) image imageUri:(NSString *) imageUri{
+    RCImageMessage *imageMessage = [RCImageMessage messageWithImage:image];
+    NSMutableDictionary *extraDic = [self getMessageExtra];
+    if (imageUri != nil) {
+         extraDic[@"imageUri"] = imageUri;
+    }
+    extraDic[@"messageType"] = @(MAIMG);
+    NSString *extra = [extraDic mj_JSONString];
+    imageMessage.extra =[extra mj_JSONString];
+    NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
+    [[RCIM sharedRCIM] sendMediaMessage:ConversationType_PRIVATE targetId:chatTargetId content:imageMessage pushContent:nil pushData:nil progress:nil success:nil error:nil cancel:nil];
+}
 @end

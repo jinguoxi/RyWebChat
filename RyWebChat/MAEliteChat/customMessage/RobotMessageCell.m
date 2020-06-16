@@ -262,7 +262,7 @@
         messageContent.extra = [extra mj_JSONString];
         
         NSString *chatTargetId = [[MAChat getInstance] getChatTargetId];
-        [[RCIM sharedRCIM] sendMessage:ConversationType_SYSTEM targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:chatTargetId content:messageContent pushContent:nil pushData:nil success:^(long messageId) {
         } error:nil];
     }else {
         [self addTipsMessage:@"您已经在人工聊天中噢😯"];

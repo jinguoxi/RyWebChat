@@ -60,7 +60,6 @@
 		A1F3995C1E5419A10082D513 /* MAClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399511E5419A10082D513 /* MAClient.m */; };
 		A1F3995D1E5419A10082D513 /* MAEliteChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399541E5419A10082D513 /* MAEliteChat.m */; };
 		A1F3995E1E5419A10082D513 /* MAMessageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F399571E5419A10082D513 /* MAMessageUtils.m */; };
-		AC1002182140C85900A52898 /* RongSight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1002172140C85800A52898 /* RongSight.framework */; };
 		AC15491F2367E54B008545A1 /* CardMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AC15491E2367E54B008545A1 /* CardMessage.m */; };
 		AC1549222367ECFE008545A1 /* CardMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1549212367ECFE008545A1 /* CardMessageCell.m */; };
 		AC7497A020FC778900BA3B1B /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = AC74979F20FC778900BA3B1B /* NSString+Category.m */; };
@@ -70,6 +69,7 @@
 		AC973F6D226FFF49006088D1 /* SQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AC973F6B226FFF49006088D1 /* SQLiteManager.m */; };
 		AC9B17941F4AC61F005EE487 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9B17931F4AC61F005EE487 /* NSString+MD5.m */; };
 		ACAE04CB20CE541C0054EA7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1431F431E4C0A6A001BF142 /* Main.storyboard */; };
+		ACD63FE62497618A00F00CFF /* RongSight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1002172140C85800A52898 /* RongSight.framework */; };
 		ACFE177821F1CFD900C7FB3F /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACFE177221F1CFD900C7FB3F /* LaunchScreen.strings */; };
 		ACFE177A21F1CFD900C7FB3F /* RongCloudKit.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACFE177621F1CFD900C7FB3F /* RongCloudKit.strings */; };
 /* End PBXBuildFile section */
@@ -192,6 +192,9 @@
 		AC973F6B226FFF49006088D1 /* SQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteManager.m; sourceTree = "<group>"; };
 		AC9B17921F4AC61F005EE487 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
 		AC9B17931F4AC61F005EE487 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		ACD1665A248DF0EF00D53014 /* temp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = temp; path = ../../Workspace/ipa/elite/temp; sourceTree = "<group>"; };
+		ACD1665C248DF10D00D53014 /* RongSight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongSight.framework; path = ../../Workspace/ipa/elite/temp/Sight/RongSight.framework; sourceTree = "<group>"; };
+		ACD1665E248DF33F00D53014 /* RongSight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongSight.framework; path = ../../Downloads/RongSight.framework; sourceTree = "<group>"; };
 		ACFE177321F1CFD900C7FB3F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = LaunchScreen.strings; sourceTree = "<group>"; };
 		ACFE177721F1CFD900C7FB3F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = RongCloudKit.strings; sourceTree = "<group>"; };
 		F557F79445B3893E4B491F15 /* Pods-RyWebChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RyWebChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACD63FE62497618A00F00CFF /* RongSight.framework in Frameworks */,
 				A1431F801E4C0D0F001BF142 /* SafariServices.framework in Frameworks */,
 				A1431F7E1E4C0D09001BF142 /* Photos.framework in Frameworks */,
 				A1431F7C1E4C0D03001BF142 /* UIKit.framework in Frameworks */,
@@ -216,7 +220,6 @@
 				A1431F6A1E4C0C70001BF142 /* libc++abi.tbd in Frameworks */,
 				A1431F681E4C0C6A001BF142 /* libc++.tbd in Frameworks */,
 				A1431F661E4C0C5F001BF142 /* ImageIO.framework in Frameworks */,
-				AC1002182140C85900A52898 /* RongSight.framework in Frameworks */,
 				A1431F641E4C0C59001BF142 /* CoreVideo.framework in Frameworks */,
 				A1431F621E4C0C44001BF142 /* CoreTelephony.framework in Frameworks */,
 				A1431F601E4C0C3F001BF142 /* CoreMedia.framework in Frameworks */,
@@ -237,6 +240,9 @@
 		48826400B833FB19D259787E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ACD1665C248DF10D00D53014 /* RongSight.framework */,
+				ACD1665E248DF33F00D53014 /* RongSight.framework */,
+				ACD1665A248DF0EF00D53014 /* temp */,
 				ACFE177121F1CFD900C7FB3F /* zh-Hans.lproj */,
 				AC1002172140C85800A52898 /* RongSight.framework */,
 				A1431F7F1E4C0D0F001BF142 /* SafariServices.framework */,
@@ -635,7 +641,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RyWebChat/Pods-RyWebChat-resources.sh",
 				"${PODS_ROOT}/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/Resources/mapapi.bundle",
 				"${PODS_ROOT}/RongCloudIM/RongCloudIM/RongCloud.bundle",
 				"${PODS_ROOT}/RongCloudIM/RongCloudIM/en.lproj",
@@ -656,7 +662,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RyWebChat/Pods-RyWebChat-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RyWebChat/Pods-RyWebChat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

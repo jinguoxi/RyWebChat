@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *CHAT_TITLE = @"在线客服";
+static NSString *CHAT_TITLE = @"客服";
 //static NSString *CHAT_TARGET_ID = @"EliteCRM";
 
 @interface MAEliteChat : NSObject

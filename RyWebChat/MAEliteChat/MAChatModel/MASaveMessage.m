@@ -66,13 +66,6 @@
 
 + (void)saveMessageWithImage:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId {
     NSDictionary *contentDic = dic[@"content"];
-    
-//    MASaveMessage *message = [MASaveMessage new];
-//    message.objectName = dic[@"objectName"];
-//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                          contentDic[@"content"], @"content",
-//                          contentDic[@"imageUri"], @"imageUri",
-//                          nil];
     NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
                                                  contentDic[@"content"], @"content",
                                                  contentDic[@"imageUri"], @"imageUri",

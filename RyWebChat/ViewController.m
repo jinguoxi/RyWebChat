@@ -120,7 +120,7 @@
     NSLog(@"%d",queueId);
     [[MAEliteChat shareEliteChat] startChat:q_serverAddr token:[MAChat getInstance].tokenStr userId:self.userId.text name:self.userName.text portraitUri:h_uri chatTargetId:q_targetId queueId:parseQueueId ngsAddr:nil tracks:tracks complete:^(BOOL result) {
         if (result) {
-            [myself switchChatViewController];
+            [myself switchChatViewController: CHAT_TITLE];
             
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
             [user setObject:self.userName.text forKey:@"userName"];
@@ -135,15 +135,15 @@
      
 }
 
-- (void)switchChatViewController {
+- (void)switchChatViewController: (NSString *)title {
     //删除会话页面
     if (_chatViewController) {
         [self.chatViewController.view removeFromSuperview];
         self.chatViewController = nil;
     }
     
-    self.chatViewController.title = CHAT_TITLE;
-    self.chatViewController.mapType = MAMAPTYPE_Gaode;
+    self.chatViewController.title = title;
+    self.chatViewController.mapType = MAMAPTYPE_Baidu;
 
     // [MAMessageUtils sendTxtMessage:@"txtmessage"];
     

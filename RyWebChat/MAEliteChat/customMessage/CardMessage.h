@@ -1,5 +1,5 @@
 #import <RongIMLib/RongIMLib.h>
-#import <RongIMLib/RCMessageContentView.h>
+//#import <RongIMLib/RCMessageContentView.h>
 
 #define RCLocalMessageTypeIdentifier @"E:CardMsg"
 

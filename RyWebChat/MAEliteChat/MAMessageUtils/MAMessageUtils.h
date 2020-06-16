@@ -51,4 +51,7 @@
  */
 
 + (void)sendTxtMessage:(NSString *) message;
+
++ (void)sendImageMessage:(NSString *) content imageUri:(NSString *) imageUri;
+
 @end

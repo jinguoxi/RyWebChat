@@ -10,7 +10,7 @@
 //  RCImageMessage.h
 //  Created by Heq.Shinoda on 14-6-13.
 
-#import "RCMessageContent.h"
+#import "RCMediaMessageContent.h"
 #import <UIKit/UIKit.h>
 
 /*!
@@ -22,47 +22,49 @@
  图片消息类
 
  @discussion 图片消息类，此消息会进行存储并计入未读消息数。
+ 
+ @remarks 内容类消息
  */
-@interface RCImageMessage : RCMessageContent <NSCoding>
+@interface RCImageMessage : RCMediaMessageContent <NSCoding>
 
 /*!
- 图片消息的URL地址
+ 图片消息的 URL 地址
 
- @discussion 发送方此字段为图片的本地路径，接收方此字段为网络URL地址。
+ @discussion 发送方此字段为图片的本地路径，接收方此字段为网络 URL 地址。
  */
-@property(nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, copy) NSString *imageUrl;
 
 /*!
  图片的本地路径
  */
-@property(nonatomic, strong) NSString *localPath;
+@property (nonatomic, copy) NSString *localPath;
 
 /*!
  图片消息的缩略图
  */
-@property(nonatomic, strong) UIImage *thumbnailImage;
+@property (nonatomic, strong) UIImage *thumbnailImage;
 
 /*!
  是否发送原图
 
- @discussion 在发送图片的时候，是否发送原图，默认值为NO。
+ @discussion 在发送图片的时候，是否发送原图，默认值为 NO。
  */
-@property(nonatomic, getter=isFull) BOOL full;
+@property (nonatomic, getter=isFull) BOOL full;
 
 /*!
  图片消息的附加信息
  */
-@property(nonatomic, strong) NSString *extra;
+@property (nonatomic, copy) NSString *extra;
 
 /*!
  图片消息的原始图片信息
  */
-@property(nonatomic, strong) UIImage *originalImage;
+@property (nonatomic, strong) UIImage *originalImage;
 
 /*!
  图片消息的原始图片信息
  */
-@property(nonatomic, strong, readonly) NSData *originalImageData;
+@property (nonatomic, strong, readonly) NSData *originalImageData;
 
 /*!
  初始化图片消息

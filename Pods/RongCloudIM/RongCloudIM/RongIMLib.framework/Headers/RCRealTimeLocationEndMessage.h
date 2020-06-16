@@ -17,13 +17,15 @@
  实时位置共享的结束消息类
 
  @discussion 实时位置共享的结束消息类，此消息会进行存储并计入未读消息数。
+ 
+ @remarks 信令类消息
  */
 @interface RCRealTimeLocationEndMessage : RCMessageContent
 
 /*!
  结束消息的附加信息
  */
-@property(nonatomic, strong) NSString *extra;
+@property (nonatomic, copy) NSString *extra;
 
 /*!
  初始化实时位置共享的结束消息

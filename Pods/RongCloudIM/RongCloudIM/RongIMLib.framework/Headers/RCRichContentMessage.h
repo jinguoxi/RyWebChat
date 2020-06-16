@@ -22,33 +22,35 @@
  图文消息类
 
  @discussion 图文消息类，此消息会进行存储并计入未读消息数。
+ 
+ @remarks 内容类消息
  */
 @interface RCRichContentMessage : RCMessageContent <NSCoding>
 
 /*!
  图文消息的标题
  */
-@property(nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 /*!
  图文消息的内容摘要
  */
-@property(nonatomic, strong) NSString *digest;
+@property (nonatomic, copy) NSString *digest;
 
 /*!
- 图文消息图片URL
+ 图文消息图片 URL
  */
-@property(nonatomic, strong) NSString *imageURL;
+@property (nonatomic, copy) NSString *imageURL;
 
 /*!
  图文消息中包含的需要跳转到的URL
  */
-@property(nonatomic, strong) NSString *url;
+@property (nonatomic, copy) NSString *url;
 
 /*!
  图文消息的扩展信息
  */
-@property(nonatomic, strong) NSString *extra;
+@property (nonatomic, copy) NSString *extra;
 
 /*!
  初始化图文消息

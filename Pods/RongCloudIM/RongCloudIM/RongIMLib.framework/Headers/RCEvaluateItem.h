@@ -7,8 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+/*!
+ 客服评价对象
+ */
 @interface RCEvaluateItem : NSObject
-@property(nonatomic, strong) NSString *describe; // description
-@property(nonatomic) int value;
+
+/*!
+ 客服评价描述
+ */
+@property (nonatomic, copy) NSString *describe; // description
+
+/*!
+ 客服评价星级，1 ~ 5 级
+ */
+@property (nonatomic) int value;
 @end

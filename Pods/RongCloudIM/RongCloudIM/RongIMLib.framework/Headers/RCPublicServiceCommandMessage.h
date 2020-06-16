@@ -19,23 +19,25 @@
 
  @discussion 公众服务请求消息类，此消息不存储，也不计入未读消息数。
  此消息仅用于客户端公共服务账号中的菜单，向服务器发送请求。
+
+ @remarks 通知类消息
  */
 @interface RCPublicServiceCommandMessage : RCMessageContent <NSCoding>
 
 /*!
  请求的名称
  */
-@property(nonatomic, strong) NSString *command;
+@property (nonatomic, copy) NSString *command;
 
 /*!
  请求的内容
  */
-@property(nonatomic, strong) NSString *data;
+@property (nonatomic, copy) NSString *data;
 
 /*!
  请求的扩展数据
  */
-@property(nonatomic, strong) NSString *extra;
+@property (nonatomic, copy) NSString *extra;
 
 /*!
  初始化公众服务请求消息

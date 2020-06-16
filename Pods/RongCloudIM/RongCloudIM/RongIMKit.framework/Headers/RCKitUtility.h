@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <RongIMLib/RongIMLib.h>
 #import <UIKit/UIKit.h>
+#import "RCMessageModel.h"
 
 @class RCConversationModel;
 
@@ -72,6 +73,39 @@
 + (CGSize)getTextDrawingSize:(NSString *)text font:(UIFont *)font constrainedSize:(CGSize)constrainedSize;
 
 /*!
+ 获取指定会话类型的消息内容的摘要
+
+ @param messageContent  消息内容
+ @param targetId  会话 Id
+ @param conversationType  会话类型
+ @param isAllMessage  是否获取全部摘要内容，如果设置为 NO，摘要内容长度大于 500 时可能被截取
+ @return                消息内容的摘要
+
+ @discussion SDK默认的消息有内置的处理，自定义消息会调用 RCMessageContent 中 RCMessageContentView 协议的
+ conversationDigest 获取消息摘要。
+*/
++ (NSString *)formatMessage:(RCMessageContent *)messageContent
+                   targetId:(NSString *)targetId
+           conversationType:(RCConversationType)conversationType
+               isAllMessage:(BOOL)isAllMessage;
+
+/*!
+ 获取指定会话类型的消息内容的摘要
+
+ @param messageContent  消息内容
+ @param targetId  会话 Id
+ @param conversationType  会话类型
+ @return                消息内容的摘要
+
+ @discussion SDK默认的消息有内置的处理，
+ 自定义消息会调用RCMessageContent中RCMessageContentView协议的conversationDigest获取消息摘要。
+ @discussion 与 formatMessage:targetId:conversationType:isAllMessage 区别是，该方法在摘要内容长度大于 500 时可能被截取
+ */
++ (NSString *)formatMessage:(RCMessageContent *)messageContent
+                   targetId:(NSString *)targetId
+           conversationType:(RCConversationType)conversationType;
+
+/*!
  获取消息内容的摘要
 
  @param messageContent  消息内容
@@ -79,6 +113,7 @@
 
  @discussion SDK默认的消息有内置的处理，
  自定义消息会调用RCMessageContent中RCMessageContentView协议的conversationDigest获取消息摘要。
+ @discussion 与 formatMessage:targetId:conversationType:isAllMessage 区别是，该方法在摘要内容长度大于 500 时可能被截取
  */
 + (NSString *)formatMessage:(RCMessageContent *)messageContent;
 
@@ -238,4 +273,68 @@
  验证邮箱
  */
 + (BOOL)validateEmail:(NSString *)email;
+
+/**
+获取 keyWindow
+
+@return UIWindow
+*/
++ (UIWindow *)getKeyWindow;
+
+/**
+ 获取 AppDelegate window 的 safeAreaInsets
+
+ @return AppDelegate window 的 safeAreaInsets
+ */
++ (UIEdgeInsets)getWindowSafeAreaInsets;
+
+/**
+ 修正iOS系统图片的图片方向
+
+ @param image 需要修正的图片
+ @return 修正后的图片
+ */
++ (UIImage *)fixOrientation:(UIImage *)image;
+
+/**
+判断当前设备是否是 iPad
+*/
++ (BOOL)currentDeviceIsIPad;
+
+/**
+在 controller 弹出弹窗
+
+@param title title
+@param message message
+@param style 弹窗的风格
+@param actions UIAlertAction 的数组
+@param controller 用哪个页面弹出
+*/
++ (void)showAlertController:(NSString *)title
+                    message:(NSString *)message
+             preferredStyle:(UIAlertControllerStyle)style
+                    actions:(NSArray<UIAlertAction *> *)actions
+           inViewController:(UIViewController *)controller;
+
+/**
+动态颜色设置
+
+ @param lightColor  亮色
+ @param darkColor  暗色
+ @return 修正后的图片
+*/
++ (UIColor *)generateDynamicColor:(UIColor *)lightColor darkColor:(UIColor *)darkColor;
+
+/**
+根据图片消息的 imageUrl 判断图片是否加载
+*/
++ (BOOL)hasLoadedImage:(NSString *)imageUrl;
+
+/**
+根据图片消息的 imageUrl 获取已下载的图片 data
+
+ @param imageUrl  图片消息的 imageUrl
+ @return 图片 data
+*/
++ (NSData *)getImageDataForURLString:(NSString *)imageUrl;
 @end

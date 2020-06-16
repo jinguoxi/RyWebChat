@@ -109,9 +109,9 @@
 /*!
  消息内容的基类
 
- @discussion 此类为消息实体类RCMessage中的消息内容content的基类。
- 所有的消息内容均为此类的子类，包括SDK自带的消息（如RCTextMessage、RCImageMessage等）和用户自定义的消息。
- 所有的自定义消息必须继承此类，并实现RCMessageCoding和RCMessagePersistentCompatible、RCMessageContentView协议。
+ @discussion 此类为消息实体类 RCMessage 中的消息内容 content 的基类。
+ 所有的消息内容均为此类的子类，包括 SDK 自带的消息（如 RCTextMessage、RCImageMessage 等）和用户自定义的消息。
+ 所有的自定义消息必须继承此类，并实现 RCMessageCoding 和 RCMessagePersistentCompatible、RCMessageContentView 协议。
  */
 @interface RCMessageContent : NSObject <RCMessageCoding, RCMessagePersistentCompatible, RCMessageContentView>
 
@@ -121,12 +121,27 @@
  @discussion
  如果您使用IMKit，可以通过RCIM的enableMessageAttachUserInfo属性设置在每次发送消息中携带发送者的用户信息。
  */
-@property(nonatomic, strong) RCUserInfo *senderUserInfo;
+@property (nonatomic, strong) RCUserInfo *senderUserInfo;
 
 /*!
- 消息中的@提醒信息
+ 消息中的 @ 提醒信息
  */
-@property(nonatomic, strong) RCMentionedInfo *mentionedInfo;
+@property (nonatomic, strong) RCMentionedInfo *mentionedInfo;
+
+/**
+ 设置焚烧时间
+
+ @discussion 默认是 0，0 代表该消息非阅后即焚消息。
+ */
+@property (nonatomic, assign) NSUInteger destructDuration;
+
+/**
+ 将用户信息编码到字典中
+
+ @param userInfo 要编码的用户信息
+ @return 存有用户信息的 Dictionary
+ */
+- (NSDictionary *)encodeUserInfo:(RCUserInfo *)userInfo;
 
 /*!
  将消息内容中携带的用户信息解码
@@ -134,6 +149,14 @@
  @param dictionary 用户信息的Dictionary
  */
 - (void)decodeUserInfo:(NSDictionary *)dictionary;
+
+/**
+ 将@提醒信息编码到字典中
+
+ @param mentionedInfo 要编码的@信息
+ @return 存有@信息的 Dictionary
+ */
+- (NSDictionary *)encodeMentionedInfo:(RCMentionedInfo *)mentionedInfo;
 
 /*!
  将消息内容中携带的@提醒信息解码
@@ -148,7 +171,7 @@
  @discussion 此字段存放消息内容中未编码的json数据。
  SDK内置的消息，如果消息解码失败，默认会将消息的内容存放到此字段；如果编码和解码正常，此字段会置为nil。
  */
-@property(nonatomic, strong, setter=setRawJSONData:) NSData *rawJSONData;
+@property (nonatomic, strong, setter=setRawJSONData:) NSData *rawJSONData;
 
 @end
 #endif

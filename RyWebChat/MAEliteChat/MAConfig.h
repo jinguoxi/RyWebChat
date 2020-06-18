@@ -52,6 +52,7 @@ typedef enum {
     MAFILE = 3,
     MALOCATION = 4,
     MAVOICE = 5,
+    MAQHVOICE = 11,  //新增高质量消息
     MASIGHT= 6,
     MASYSTEM_NOTICE = 99
 }MAChatMsgType;
@@ -117,6 +118,7 @@ static NSString *INFO_NTF = @"RC:InfoNtf";
 static NSString *PROFILE_NTF = @"RC:ProfileNtf";
 static NSString *CS_HS = @"RC:CsHs";
 static NSString *VC_MSG = @"RC:VcMsg";
+static NSString *HQVCMsg = @"RC:HQVCMsg";
 static NSString *LBS_MSG = @"RC:LBSMsg";
 static NSString *IMG_MSG = @"RC:ImgMsg";
 static NSString *FILE_MSG = @"RC:FileMsg";

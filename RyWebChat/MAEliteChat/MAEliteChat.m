@@ -57,6 +57,9 @@ static MAEliteChat *eliteChat=nil;
     
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
     BOOL flag = [[SQLiteManager shareInstance] openDB];
+    
+    //设置语音消息类型为高质量语音
+    [RCIMClient sharedRCIMClient].voiceMsgType = RCVoiceMessageTypeHighQuality;
     if (flag) {
         NSLog(@"打开数据库成功");
 //        NSDictionary *infoDict = @{@"name":@"taoyali",@"password":@"taoyali"};

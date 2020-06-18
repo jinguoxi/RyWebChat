@@ -19,6 +19,7 @@
 + (void)saveMessageWithImage:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
 + (void)saveMessageWithLocation:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
 + (void)saveMessageWithSight:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
++ (void)saveMessageWithHQVoice:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId;
 
 @end
 

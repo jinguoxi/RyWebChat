@@ -25,13 +25,6 @@
 
 + (void)saveMessageWithVoice:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId{
     NSDictionary *contentDic = dic[@"content"];
-    
-//    MASaveMessage *message = [MASaveMessage new];
-//    message.objectName = dic[@"objectName"];
-//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                          contentDic[@"content"], @"content",
-//                          contentDic[@"duration"], @"duration",
-//                          nil];
     NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
                                                   contentDic[@"content"], @"content",
                                                   contentDic[@"duration"], @"duration",
@@ -42,17 +35,21 @@
 
 }
 
++ (void)saveMessageWithHQVoice:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId{
+    NSDictionary *contentDic = dic[@"content"];
+    NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                  contentDic[@"remoteUrl"], @"remoteUrl",
+                                                  contentDic[@"name"], @"name",
+                                                  contentDic[@"duration"], @"duration",
+                                                  nil]];
+    NSDictionary *infoDict = @{@"target_id": targetId, @"conversation_type": conversationType, @"object_name": dic[@"objectName"], @"content":contentStr};
+
+    [[[UnSendMessage alloc] initWithDict:infoDict] insertMessage:dic[@"conversationType"]];
+
+}
+
 + (void)saveMessageWithSight:(NSDictionary *)dic :(NSString *) conversationType :(NSString *)targetId {
     NSDictionary *contentDic = dic[@"content"];
-//    MASaveMessage *message = [MASaveMessage new];
-//    message.objectName = dic[@"objectName"];
-//    message.contentDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                          contentDic[@"content"], @"content",
-//                          contentDic[@"name"], @"name",
-//                          contentDic[@"sightUrl"], @"sightUrl",
-//                          contentDic[@"size"], @"size",
-//                          contentDic[@"duration"], @"duration",
-//                          nil];
     NSString *contentStr = [self transDicToNSStr:[NSDictionary dictionaryWithObjectsAndKeys:
                                                   contentDic[@"content"], @"content",
                                                   contentDic[@"name"], @"name",

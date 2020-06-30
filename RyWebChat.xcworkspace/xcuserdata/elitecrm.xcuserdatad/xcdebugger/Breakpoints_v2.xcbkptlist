@@ -144,8 +144,8 @@
             filePath = "RyWebChat/MAEliteChat/MAChatController/MARyChatViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
             landmarkName = "-sendUnsendMessages"
             landmarkType = "7">
          </BreakpointContent>

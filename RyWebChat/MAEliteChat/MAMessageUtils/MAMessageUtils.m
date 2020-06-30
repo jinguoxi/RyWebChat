@@ -220,9 +220,10 @@
 }
 
 /**
- * 添加发送图片消息
- * @param imageUri String字符串，网络图片地址
+ * 预发送图片消息
  * @param content   String字符串，图片的base64
+ * @param imageUri String字符串，网络图片地址
+ * 注： 两者选其一
  */
 + (void)sendImageMessage :(NSString *) content imageUri:(NSString *) imageUri{
     UIImage *image = nil;
@@ -240,8 +241,10 @@
 }
 
 /**
- * @param UIImage   UIImage，图片
- */
+* 预发送图片消息
+* @param content   UIImage
+* @param imageUri String字符串，网络图片地址
+*/
 + (void)sendImageMessage2 :(UIImage *) image imageUri:(NSString *) imageUri{
     RCImageMessage *imageMessage = [RCImageMessage messageWithImage:image];
     NSMutableDictionary *extraDic = [self getMessageExtra];
